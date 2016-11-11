@@ -21,4 +21,8 @@ co(function*() {
   log('cyan', msg1)
   log('cyan', msg2)
 
+  yield db.lpushAsync('messages', 'Hello, this is dog')
+  const list = yield db.lrangeAsync('messages', 0, -1)
+  log('blue', list)
+
 }).catch(onError)
