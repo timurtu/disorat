@@ -7,10 +7,12 @@ import React from 'react'
 
 const CreatePost = () =>
   <div className="ui segment">
-    <label htmlFor="option1">Option 1</label>
-    <input id="option1" type="text"/>
-    <label htmlFor="option2">Option 2</label>
-    <input id="option2" type="text"/>
+    <div className="fields">
+      <div className="field">
+        <label>First name</label>
+        <input type="text" placeholder="First Name"/>
+      </div>
+    </div>
   </div>
 
 export default CreatePost
