@@ -3,23 +3,17 @@
  */
 
 import 'whatwg-fetch'
-import {el} from 'psydux'
+import dom from 'domali'
 import $ from 'jquery'
 
-const li = x => el('li', {}, () => x)
-const ul = lis => el('ul', {}, () => lis.map(li))
 
-const getPosts = () => fetch('/posts')
-  .then(res => res.json())
-  .then(body => createPost(body))
-  .catch((e) => console.error('parsing failed', e))
+const getPosts = () => $.get('/posts', createPost)
+const ul = dom.getClass('post-list')[0]
 
-el('button', {}, () => 'Get Posts').onclick = getPosts
+dom.getId('get-posts').onclick = getPosts
 getPosts()
-
-let list = ul(['standard', 'default', 'list'])
 
 function createPost(blocks) {
 
-  list = blocks.map(li)
+  ul.innerHTML = blocks.map(b => dom.create('li').text(b))
 }

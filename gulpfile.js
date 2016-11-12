@@ -20,10 +20,10 @@ gulp.task('transpile', ['clean'], () => gulp.src(allJS)
   .pipe(babel())
   .pipe(gulp.dest(paths.dist)))
 
-gulp.task('bundle', ['clean'], () => execAsync('./node_modules/.bin/webpack')
-  .then(res => log('green', res)))
+gulp.task('bundle', ['clean'], () => execAsync('webpack')
+  .then(res => /ERROR/.test(res) ? log('red', res) : log('green', res)))
 
 gulp.task('build', ['transpile', 'bundle'])
 
-gulp.task('watch', ['build'], () => gulp.watch(allJS, ['build']))
+gulp.task('watch', () => gulp.watch(allJS, ['build']))
 
