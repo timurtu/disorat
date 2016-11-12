@@ -14,7 +14,6 @@ app.use(express.json())
 app.use(express.static('public'))
 app.use(logger)
 
-
 app.listen(port, () => log('cyan', 'listening on port ' + port))
 
 export default app
