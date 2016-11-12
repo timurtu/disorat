@@ -7,13 +7,19 @@ import dom from 'domali'
 import $ from 'jquery'
 
 
-const getPosts = () => $.get('/posts', createPost)
+const getPosts = () => $.get('/posts', createPosts)
 const ul = dom.getClass('post-list')[0]
 
 dom.getId('get-posts').onclick = getPosts
 getPosts()
 
-function createPost(blocks) {
+function createPosts(blocks) {
 
-  ul.innerHTML = blocks.map(b => dom.create('li').text(b))
+  const tempUL = dom.create('ul')
+
+  blocks.forEach(b => {
+    tempUL.appendChild(dom.create('li').text(b))
+  })
+
+  ul.innerHTML = tempUL.innerHTML
 }
