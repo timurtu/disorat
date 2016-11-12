@@ -8,7 +8,12 @@ import co from 'co'
 
 import db from './db'
 import {onError} from './utils'
+import app from './app'
 
+
+app.get('/', (req, res) => {
+  res.sendFile('index.html')
+})
 
 co(function*() {
 
@@ -32,7 +37,18 @@ co(function*() {
   yield db.lremAsync('messages', -1, message)
 
   // Get all items from a list
-  const list = yield db.lrangeAsync('messages', 0, -1)
-  log('blue', list)
+  const posts = yield db.lrangeAsync('messages', 0, -1)
+  log('blue', posts)
+
+  app.get('/posts', (req, res) => {
+
+    if(req.query.limit >= 0) {
+      res.json(posts.slice(0, req.query.limit))
+    } else {
+      res.json(posts)
+    }
+  })
 
 }).catch(onError)
+
+
