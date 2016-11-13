@@ -10,8 +10,8 @@ import CreatePost from './CreatePost'
 const Disorat = () =>
   <div className="ui container">
     <h1>Disorat</h1>
-    <Posts/>
     <CreatePost/>
+    <Posts/>
   </div>
 
 export default Disorat
