@@ -4,12 +4,15 @@
 
 import express from 'express'
 import log from 'gutil-color-log'
+import bodyParser from 'body-parser'
 import logger from './logger'
 
 
 const app = express()
 const port = 3000
 
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use(express.json())
 app.use(express.static('public'))
 app.use(logger)

@@ -7,21 +7,21 @@ import React from 'react'
 import PieChart from 'react-simple-pie-chart'
 
 
-const ProgressBar = () =>
-<div style={{
-  maxWidth: '50%',
-  margin: '0 auto'
-}}>
-  <PieChart slices={
-    [{
-      color: '#00B5AD',
-      value: 70,
-    }, {
-      color: '#F2711C',
-      value: 30,
-    }]
-  }/>
-</div>
+const ProgressBar = ({opt1votes, opt2votes}) =>
+  <div style={{
+    maxWidth: '50%',
+    margin: '0 auto'
+  }}>
+    <PieChart slices={
+      [{
+        color: '#00B5AD',
+        value: opt1votes || 1,
+      }, {
+        color: '#F2711C',
+        value: opt2votes || 1,
+      }]
+    }/>
+  </div>
 
 class DetailedPost extends React.Component {
 
@@ -34,10 +34,15 @@ class DetailedPost extends React.Component {
     fetch(`/posts${location.pathname}`, { method: 'POST' })
       .then(res => res.json())
       .then(p => {
-        const post = JSON.parse(p)
+        const { id, title, option1, option2, option1votes, option2votes } = JSON.parse(p)
+
         this.setState({
-          id: post.id,
-          message: post.message
+          id,
+          title,
+          option1,
+          option2,
+          option1votes,
+          option2votes
         })
       })
   }
@@ -45,15 +50,14 @@ class DetailedPost extends React.Component {
   render() {
     return (
       <div>
-        <h1>{this.state.message}</h1>
+        <h1>{this.state.title}</h1>
 
         <div className="ui horizontal segments">
           <div className="ui segment">
-            <h3>T-Rex</h3>
-            <h5>7 votes</h5>
-            <h5>46%</h5>
+            <h3>{this.state.option1}</h3>
+            <h5>{this.state.option1votes} votes</h5>
             <button className="fluid ui button colored teal">
-              T-rex
+              {this.state.option1}
             </button>
 
             <div className="ui horizontal segments">
@@ -67,11 +71,10 @@ class DetailedPost extends React.Component {
           </div>
 
           <div className="ui segment">
-            <h3>Abraham Lincoln</h3>
-            <h5>8 votes</h5>
-            <h5>54%</h5>
+            <h3>{this.state.option2}</h3>
+            <h5>{this.state.option2votes} votes</h5>
             <button className="fluid ui button colored orange">
-              Abraham Lincoln
+              {this.state.option2}
             </button>
 
             <div className="ui horizontal segments">
@@ -84,7 +87,7 @@ class DetailedPost extends React.Component {
             </div>
           </div>
         </div>
-        <ProgressBar/>
+        <ProgressBar opt1votes={this.state.option1votes} opt2votes={this.state.option2votes}/>
       </div>
     )
   }

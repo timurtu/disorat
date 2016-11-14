@@ -10,57 +10,54 @@ $(function () {
   $('.dropdown').dropdown()
 })
 
-let title
+let title, option1, option2
 
 class CreatePost extends React.Component {
-
-  onComponentDidMount() {
-    this.setState({ title: '' })
-  }
 
   handleTitleChange(e) {
     title = e.target.value
   }
 
+  handleOption1Change(e) {
+    option1 = e.target.value
+  }
+
+  handleOption2Change(e) {
+    option2 = e.target.value
+  }
+
   createPost(e) {
     e.preventDefault()
-    if (title.length > 10) {
 
-      console.log('title', title)
+    if (title && option1 && option2) {
+      fetch(`/create?post=${JSON.stringify({ title, option1, option2 })}`, {
+        method: 'POST'
+      })
+        .then(res => res.json())
+        .then(p => {
+          location.href = p.id
+        })
+        .catch(e => console.error(e))
     } else {
-      alert('Title must be above 10 characters')
+      alert('All fields are required')
     }
   }
 
   render() {
     return (
       <form onSubmit={this.createPost} className="ui form">
-        <div className="field">
+        <div className="required field">
           <label>Title</label>
           <input onChange={this.handleTitleChange} name="title" type="text" placeholder="Short Explanation"/>
         </div>
         <div className="two fields">
           <div className="required field">
             <label>Option 1</label>
-            <input name="first" type="text" placeholder="First Option"/>
+            <input onChange={this.handleOption1Change} name="option1" type="text" placeholder="First Option"/>
           </div>
           <div className="required field">
             <label>Option 2</label>
-            <input type="text" placeholder="Second Option"/>
-          </div>
-        </div>
-        <div className="required field">
-          <label>How long will voting last until a winner is declared?</label>
-          <div className="ui selection dropdown">
-            <div className="default text">Select</div>
-            <i className="dropdown icon"></i>
-            <input type="hidden" name="gender"/>
-            <div className="menu">
-              <div className="item" value="forever">Forever</div>
-              <div className="item" value="month">1 Month</div>
-              <div className="item" value="week">1 Week</div>
-              <div className="item" value="day">1 Day</div>
-            </div>
+            <input onChange={this.handleOption2Change} name="option2" type="text" placeholder="Second Option"/>
           </div>
         </div>
         <Link to="/" className="ui button">

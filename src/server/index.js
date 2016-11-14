@@ -4,7 +4,6 @@
 
 import 'babel-polyfill'
 import log from 'gutil-color-log'
-import co from 'co'
 import db from './db'
 import { onError } from './utils'
 import app from './app'
@@ -16,41 +15,37 @@ const sendIndex = (req, res) => {
 
 app.get('*', sendIndex)
 
-co(function*() {
+app.post('/posts', (req, res) => {
+  db.lrangeAsync('posts', 0, -1)
+    .then(posts => {
+      if (req.query.limit >= 0) {
+        res.json(posts.slice(0, req.query.limit))
+      } else {
+        res.json(posts)
+      }
+    }).catch(onError)
+})
 
-  const message = 'Hello, this is doge'
+app.post('/posts/:id', (req, res) => {
+  const id = req.params.id
+  db.lrangeAsync('posts', 0, -1)
+    .then(posts => {
+      const post = posts.find(p => JSON.parse(p).id == id)
+      res.json(post)
+    }).catch(onError)
+})
+
+app.post('/create', (req, res) => {
+
   const id = Math.floor(Math.random() * Date.now())
+  const post = JSON.stringify(Object.assign({}, JSON.parse(req.query.post), {
+    id, option1votes: 0, option2votes: 0
+  }))
 
-  // const post = JSON.stringify({message, id})
-  // Push a message item to a list
-  // const length = yield db.lpushAsync('posts', post)
-  // log('green', length)
+  db.lpushAsync('posts', post)
+    .then(p => {
+      log('green', p)
+    })
 
-  // Get all items from a list
-  const posts = yield db.lrangeAsync('posts', 0, -1)
-  log('blue', posts)
-
-  app.post('/posts', (req, res) => {
-
-    if (req.query.limit >= 0) {
-      res.json(posts.slice(0, req.query.limit))
-    } else {
-      res.json(posts)
-    }
-  })
-
-  app.post('/posts/:id', (req, res) => {
-    const id = req.params.id
-    const post = posts.find(p => JSON.parse(p).id == id)
-    res.json(post)
-  })
-
-  app.post('/posts/:id/upvote1', (req, res) => {
-    const id = req.params.id
-    const ps = posts.find(p => JSON.parse(p).id == id)
-
-
-
-  })
-
-}).catch(onError)
+  res.json(JSON.parse(post))
+})

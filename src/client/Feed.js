@@ -35,15 +35,15 @@ class Feed extends React.Component {
   }
 }
 
-const ProgressBar = () =>
+const ProgressBar = ({opt1votes, opt2votes}) =>
   <div className="ui right floated" style={{ width: '3em' }}>
     <PieChart slices={
       [{
         color: '#00B5AD',
-        value: 70,
+        value: opt1votes || 1,
       }, {
         color: '#F2711C',
-        value: 30,
+        value: opt2votes || 1,
       }]
     }/>
   </div>
@@ -54,20 +54,16 @@ const Post = function ({ post }) {
     <div className="ui centered card">
       <Link to={`/${post.id}`} className="content">
         <div className="header">
-          {post.message}
+          {post.title}
         </div>
 
-        <ProgressBar/>
-
-        <div className="meta">
-          Ends in 9 days
-        </div>
+        <ProgressBar opt1votes={post.option1votes} opt2votes={post.option2votes}/>
       </Link>
 
       <div className="extra content">
         <div className="ui two buttons">
-          <div className="ui teal button">T-Rex</div>
-          <div className="ui orange button">Abraham Lincoln</div>
+          <div className="ui teal button">{post.option1}</div>
+          <div className="ui orange button">{post.option2}</div>
         </div>
       </div>
     </div>
