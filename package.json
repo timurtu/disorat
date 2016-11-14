@@ -10,6 +10,9 @@
     "serve": "nodemon dist/server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": "4.6.1"
+  },
   "dependencies": {
     "body-parser": "^1.15.2"
   },
