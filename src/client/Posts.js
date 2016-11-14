@@ -4,6 +4,7 @@
 
 import 'whatwg-fetch'
 import React from 'react'
+import PieChart from 'react-simple-pie-chart'
 
 
 class Posts extends React.Component {
@@ -30,32 +31,29 @@ class Posts extends React.Component {
   }
 }
 
-const ProgressBar = () =>
-  <div>
-    <div className="ui progress">
-      <div className="bar">
-        <div className="progress"></div>
-      </div>
-      <div className="label">Uploading Files</div>
-    </div>
-  </div>
+const ProgressBar = () => <PieChart slices={
+  [{
+    color: '#00B5AD',
+    value: 70,
+  }, {
+    color: '#F2711C',
+    value: 30,
+  }]
+}/>
 
 const Post = ({ title, id }) =>
   <div className="ui centered card">
-
-
     <div className="content">
       <div className="header">
         {title}
       </div>
 
+      <ProgressBar/>
+
       <div className="meta">
         Ends in 9 days
       </div>
     </div>
-
-    <ProgressBar/>
-
 
     <div className="extra content">
       <div className="ui two buttons">
