@@ -18,9 +18,7 @@ class Feed extends React.Component {
     fetch('/posts', { method: 'POST' })
       .then(res => res.json())
       .then(ps => {
-
         const posts = ps.map(p => JSON.parse(p))
-
         this.setState({ posts })
       })
       .catch(e => console.error(e))
@@ -62,8 +60,14 @@ const Post = function ({ post }) {
 
       <div className="extra content">
         <div className="ui two buttons">
-          <div className="ui teal button">{post.option1}</div>
-          <div className="ui orange button">{post.option2}</div>
+          <button onClick={() => {
+            fetch(`/posts/${post.id}/upvote1`, { method: 'POST'})
+              .catch(e => console.error(e))
+          }} className="ui teal button">{post.option1}</button>
+          <button  onClick={() => {
+            fetch(`/posts/${post.id}/upvote2`, { method: 'POST'})
+              .catch(e => console.error(e))
+          }} className="ui orange button">{post.option2}</button>
         </div>
       </div>
     </div>

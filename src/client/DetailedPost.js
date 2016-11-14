@@ -56,37 +56,32 @@ class DetailedPost extends React.Component {
           <div className="ui segment">
             <h3>{this.state.option1}</h3>
             <h5>{this.state.option1votes} votes</h5>
-            <button className="fluid ui button colored teal">
+            <button onClick={() => {
+              fetch(`/posts/${this.state.id}/upvote1`, { method: 'POST'})
+                .then(res => res.json())
+                .then(post => {
+                  this.setState({option1votes: post.option1votes})
+                })
+            }} className="fluid ui button colored teal">
               {this.state.option1}
             </button>
-
-            <div className="ui horizontal segments">
-              <div className="ui segment">
-                <h3>Pros</h3>
-              </div>
-              <div className="ui segment">
-                <h3>Cons</h3>
-              </div>
-            </div>
           </div>
 
           <div className="ui segment">
             <h3>{this.state.option2}</h3>
             <h5>{this.state.option2votes} votes</h5>
-            <button className="fluid ui button colored orange">
+            <button onClick={() => {
+              fetch(`/posts/${this.state.id}/upvote2`, { method: 'POST'})
+                .then(res => res.json())
+                .then(post => {
+                  this.setState({option2votes: post.option2votes})
+                })
+            }} className="fluid ui button colored orange">
               {this.state.option2}
             </button>
-
-            <div className="ui horizontal segments">
-              <div className="ui segment">
-                <h3>Pros</h3>
-              </div>
-              <div className="ui segment">
-                <h3>Cons</h3>
-              </div>
-            </div>
           </div>
         </div>
+
         <ProgressBar opt1votes={this.state.option1votes} opt2votes={this.state.option2votes}/>
       </div>
     )

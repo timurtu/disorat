@@ -4,7 +4,7 @@
 
 import redis from 'redis'
 import Promise from 'bluebird'
-import {onError} from './utils'
+import { onError } from './utils'
 
 
 Promise.promisifyAll(redis.RedisClient.prototype)
