@@ -6,22 +6,17 @@ import 'whatwg-fetch'
 import React from 'react'
 
 
-$(function () {
-  $('.progress-bar').progress('increment')
-})
-
-
 class Posts extends React.Component {
 
   componentWillMount() {
-    this.setState({posts: []})
+    this.setState({ posts: [] })
   }
 
   componentDidMount() {
-    fetch('/posts')
+    fetch('/posts', { method: 'POST' })
       .then(res => res.json())
       .then(posts => {
-        this.setState({posts})
+        this.setState({ posts })
       })
       .catch(e => console.error(e))
   }
@@ -35,16 +30,19 @@ class Posts extends React.Component {
   }
 }
 
-const Post = ({title, id}) =>
+const ProgressBar = () =>
+  <div>
+    <div className="ui progress">
+      <div className="bar">
+        <div className="progress"></div>
+      </div>
+      <div className="label">Uploading Files</div>
+    </div>
+  </div>
+
+const Post = ({ title, id }) =>
   <div className="ui centered card">
 
-    <div className="ui teal top attached progress">
-      <div className="bar"></div>
-    </div>
-
-    <div className="ui tiny orange bottom attached progress">
-      <div className="bar"></div>
-    </div>
 
     <div className="content">
       <div className="header">
@@ -56,6 +54,9 @@ const Post = ({title, id}) =>
       </div>
     </div>
 
+    <ProgressBar/>
+
+
     <div className="extra content">
       <div className="ui two buttons">
         <div className="ui teal button">T-Rex</div>
@@ -63,6 +64,5 @@ const Post = ({title, id}) =>
       </div>
     </div>
   </div>
-
 
 export default Posts

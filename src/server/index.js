@@ -5,14 +5,13 @@
 import 'babel-polyfill'
 import log from 'gutil-color-log'
 import co from 'co'
-
 import db from './db'
-import {onError} from './utils'
+import { onError } from './utils'
 import app from './app'
 
 
-app.get('/', (req, res) => {
-  res.sendFile('index.html')
+app.get('*', (req, res) => {
+  res.sendfile('public/index.html')
 })
 
 co(function*() {
@@ -40,9 +39,9 @@ co(function*() {
   const posts = yield db.lrangeAsync('messages', 0, -1)
   log('blue', posts)
 
-  app.get('/posts', (req, res) => {
+  app.post('/posts', (req, res) => {
 
-    if(req.query.limit >= 0) {
+    if (req.query.limit >= 0) {
       res.json(posts.slice(0, req.query.limit))
     } else {
       res.json(posts)
@@ -50,5 +49,3 @@ co(function*() {
   })
 
 }).catch(onError)
-
-
