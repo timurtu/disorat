@@ -55,6 +55,15 @@ class DetailedPost extends React.Component {
             <button className="fluid ui button colored teal">
               T-rex
             </button>
+
+            <div className="ui horizontal segments">
+              <div className="ui segment">
+                <h3>Pros</h3>
+              </div>
+              <div className="ui segment">
+                <h3>Cons</h3>
+              </div>
+            </div>
           </div>
 
           <div className="ui segment">
@@ -64,9 +73,17 @@ class DetailedPost extends React.Component {
             <button className="fluid ui button colored orange">
               Abraham Lincoln
             </button>
+
+            <div className="ui horizontal segments">
+              <div className="ui segment">
+                <h3>Pros</h3>
+              </div>
+              <div className="ui segment">
+                <h3>Cons</h3>
+              </div>
+            </div>
           </div>
         </div>
-
         <ProgressBar/>
       </div>
     )
