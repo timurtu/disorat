@@ -10,33 +10,24 @@ import { onError } from './utils'
 import app from './app'
 
 
-app.get('*', (req, res) => {
+const sendIndex = (req, res) => {
   res.sendfile('public/index.html')
-})
+}
+
+app.get('*', sendIndex)
 
 co(function*() {
 
-  // Set key-value pairs
-  db.set('message1', 'hello, this is doge')
-  db.set('message2', 'hello, no this is spider')
+  // const message = 'Hello, this is doge'
+  // const id = Math.floor(Math.random() * Date.now())
 
-  // Get key-value pairs
-  const msg1 = yield db.getAsync('message1')
-  const msg2 = yield db.getAsync('message2')
-
-  log('cyan', msg1)
-  log('cyan', msg2)
-
-  const message = 'Hello, this is dog'
+  // const post = JSON.stringify({message, id})
   // Push a message item to a list
-  const length = yield db.lpushAsync('messages', message)
-  log('green', length)
-
-  // Remove a message item from the list
-  yield db.lremAsync('messages', -1, message)
+  // const length = yield db.lpushAsync('posts', post)
+  // log('green', length)
 
   // Get all items from a list
-  const posts = yield db.lrangeAsync('messages', 0, -1)
+  const posts = yield db.lrangeAsync('posts', 0, -1)
   log('blue', posts)
 
   app.post('/posts', (req, res) => {
@@ -46,6 +37,11 @@ co(function*() {
     } else {
       res.json(posts)
     }
+  })
+
+  app.post('/posts/:id', (req, res) => {
+
+    console.log(req.params.id)
   })
 
 }).catch(onError)
