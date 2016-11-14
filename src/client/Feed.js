@@ -18,7 +18,9 @@ class Feed extends React.Component {
     fetch('/posts', { method: 'POST' })
       .then(res => res.json())
       .then(ps => {
-        const posts = ps.map(p => p.startsWith('{') ? JSON.parse(p) : p)
+
+        const posts = ps.map(p => JSON.parse(p))
+
         this.setState({ posts })
       })
       .catch(e => console.error(e))
@@ -27,7 +29,7 @@ class Feed extends React.Component {
   render() {
     return (
       <div className="ui cards">
-        {this.state.posts.map((p, i) => <Post title={p} key={i}/>)}
+        {this.state.posts.map(p => <Post post={p} key={p.id}/>)}
       </div>
     )
   }
@@ -50,9 +52,9 @@ const Post = function ({ post }) {
 
   return (
     <div className="ui centered card">
-      <Link to={`/${post}`} className="content">
+      <Link to={`/${post.id}`} className="content">
         <div className="header">
-          {post.title}
+          {post.message}
         </div>
 
         <ProgressBar/>

@@ -18,8 +18,8 @@ app.get('*', sendIndex)
 
 co(function*() {
 
-  // const message = 'Hello, this is doge'
-  // const id = Math.floor(Math.random() * Date.now())
+  const message = 'Hello, this is doge'
+  const id = Math.floor(Math.random() * Date.now())
 
   // const post = JSON.stringify({message, id})
   // Push a message item to a list
@@ -40,8 +40,17 @@ co(function*() {
   })
 
   app.post('/posts/:id', (req, res) => {
+    const id = req.params.id
+    const post = posts.find(p => JSON.parse(p).id == id)
+    res.json(post)
+  })
 
-    console.log(req.params.id)
+  app.post('/posts/:id/upvote1', (req, res) => {
+    const id = req.params.id
+    const ps = posts.find(p => JSON.parse(p).id == id)
+
+
+
   })
 
 }).catch(onError)

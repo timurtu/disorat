@@ -4,26 +4,70 @@
 
 import 'whatwg-fetch'
 import React from 'react'
+import PieChart from 'react-simple-pie-chart'
+
+
+const ProgressBar = () =>
+<div style={{
+  maxWidth: '50%',
+  margin: '0 auto'
+}}>
+  <PieChart slices={
+    [{
+      color: '#00B5AD',
+      value: 70,
+    }, {
+      color: '#F2711C',
+      value: 30,
+    }]
+  }/>
+</div>
 
 class DetailedPost extends React.Component {
 
   componentWillMount() {
+    this.setState({ message: '404: Page not found!' })
+  }
 
-    const title = this.props.params.title
+  componentDidMount() {
 
-    fetch(`/posts/${title}`, {method: 'POST'})
+    fetch(`/posts${location.pathname}`, { method: 'POST' })
       .then(res => res.json())
-      .then(post => {
-        this.setState({ title })
+      .then(p => {
+        const post = JSON.parse(p)
+        this.setState({
+          id: post.id,
+          message: post.message
+        })
       })
-      .catch(e => this.setState({title: '404: Page not found!'}))
-
   }
 
   render() {
-    return(
+    return (
       <div>
-        <h1>{this.state.title}</h1>
+        <h1>{this.state.message}</h1>
+
+        <div className="ui horizontal segments">
+          <div className="ui segment">
+            <h3>T-Rex</h3>
+            <h5>7 votes</h5>
+            <h5>46%</h5>
+            <button className="fluid ui button colored teal">
+              T-rex
+            </button>
+          </div>
+
+          <div className="ui segment">
+            <h3>Abraham Lincoln</h3>
+            <h5>8 votes</h5>
+            <h5>54%</h5>
+            <button className="fluid ui button colored orange">
+              Abraham Lincoln
+            </button>
+          </div>
+        </div>
+
+        <ProgressBar/>
       </div>
     )
   }
