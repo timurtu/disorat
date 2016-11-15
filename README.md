@@ -2,4 +2,6 @@
 
 - `npm install -g webpack`
 - `npm install`
+- `npm run dev`
+
 - `npm start`

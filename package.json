@@ -4,7 +4,8 @@
   "description": "Vote on anything",
   "main": "dist/server/index.js",
   "scripts": {
-    "start": "npm-run-all build --parallel watch serve",
+    "start": "node dist/server/index.js",
+    "dev": "npm-run-all build --parallel watch serve",
     "build": "gulp build",
     "watch": "gulp watch",
     "serve": "nodemon dist/server/index.js",
