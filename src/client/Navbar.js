@@ -23,9 +23,9 @@ class Navbar extends React.Component {
           <Link to="/feed" className="item" activeClassName="active">
             Feed
           </Link>
-          <Link to="/profile" className="item" activeClassName="active">
-            Profile
-          </Link>
+          {/*<Link to="/profile" className="item" activeClassName="active">*/}
+            {/*Profile*/}
+          {/*</Link>*/}
           <div className="right menu">
             <Link to="/create" className="ui item" activeClassName="active">
               Create
