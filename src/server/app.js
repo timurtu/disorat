@@ -9,7 +9,7 @@ import logger from './logger'
 
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
