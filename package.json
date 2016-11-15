@@ -2,7 +2,7 @@
   "name": "disorat",
   "version": "1.0.0",
   "description": "Vote on anything",
-  "main": "dist/index.js",
+  "main": "dist/server/index.js",
   "scripts": {
     "start": "npm-run-all build --parallel watch serve",
     "build": "gulp build",
