@@ -1,0 +1,8 @@
+{
+  "name": "disorat.com",
+  "description": "Vote on anything",
+  "repository": "https://git.heroku.com/disorat.git",
+  "logo": "https://cdn3.iconfinder.com/data/icons/shopping-solid-icons-vol-3/64/125-512.png",
+  "keywords": ["vote", "on", "anything"],
+  "image": "heroku/nodejs"
+}
