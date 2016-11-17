@@ -45,6 +45,9 @@ var ProgressBar = function ProgressBar(_ref) {
   );
 };
 
+var reason1 = void 0,
+    reason2 = void 0;
+
 var DetailedPost = function (_React$Component) {
   _inherits(DetailedPost, _React$Component);
 
@@ -86,6 +89,16 @@ var DetailedPost = function (_React$Component) {
       });
     }
   }, {
+    key: 'handleReason1Change',
+    value: function handleReason1Change(e) {
+      reason1 = e.target.value;
+    }
+  }, {
+    key: 'handleReason2Change',
+    value: function handleReason2Change(e) {
+      reason2 = e.target.value;
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this3 = this;
@@ -125,6 +138,78 @@ var DetailedPost = function (_React$Component) {
                   });
                 }, className: 'fluid ui button colored teal' },
               this.state.option1
+            ),
+            _react2.default.createElement('hr', null),
+            _react2.default.createElement(
+              'form',
+              { onSubmit: function onSubmit(e) {
+                  e.preventDefault();
+                  if (reason1) {
+                    console.log(reason1);
+                  }
+                }, className: 'ui mini form' },
+              _react2.default.createElement(
+                'div',
+                { className: 'field' },
+                _react2.default.createElement(
+                  'label',
+                  null,
+                  'Add a new reason'
+                ),
+                _react2.default.createElement('input', { onChange: this.handleReason1Change, placeholder: 'Reason to vote for ' + this.state.option1, type: 'text' })
+              ),
+              _react2.default.createElement(
+                'button',
+                { className: 'ui tiny right floated submit button' },
+                'Add reason'
+              )
+            ),
+            _react2.default.createElement(
+              'h5',
+              null,
+              'Reasons'
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'ui list' },
+              _react2.default.createElement(
+                'a',
+                { className: 'item' },
+                _react2.default.createElement('i', { className: 'plus icon' }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'content' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'header' },
+                    '23'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'description' },
+                    'This text will always have a left margin to make sure it sits alongside your icon'
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'a',
+                { className: 'item' },
+                _react2.default.createElement('i', { className: 'plus icon' }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'content' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'header' },
+                    '21'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'description' },
+                    'Floated icons are by default top aligned. To have an icon top aligned try this example.'
+                  )
+                )
+              )
             )
           ),
           _react2.default.createElement(
@@ -151,6 +236,78 @@ var DetailedPost = function (_React$Component) {
                   });
                 }, className: 'fluid ui button colored orange' },
               this.state.option2
+            ),
+            _react2.default.createElement('hr', null),
+            _react2.default.createElement(
+              'form',
+              { onSubmit: function onSubmit(e) {
+                  e.preventDefault();
+                  if (reason2) {
+                    console.log(reason2);
+                  }
+                }, className: 'ui mini form' },
+              _react2.default.createElement(
+                'div',
+                { className: 'field' },
+                _react2.default.createElement(
+                  'label',
+                  null,
+                  'Add a new reason'
+                ),
+                _react2.default.createElement('input', { onChange: this.handleReason2Change, placeholder: 'Reason to vote for ' + this.state.option2, type: 'text' })
+              ),
+              _react2.default.createElement(
+                'button',
+                { className: 'ui tiny right floated submit button' },
+                'Add reason'
+              )
+            ),
+            _react2.default.createElement(
+              'h5',
+              null,
+              'Reasons'
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'ui list' },
+              _react2.default.createElement(
+                'a',
+                { className: 'item' },
+                _react2.default.createElement('i', { className: 'plus icon' }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'content' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'header' },
+                    '23'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'description' },
+                    'This text will always have a left margin to make sure it sits alongside your icon'
+                  )
+                )
+              ),
+              _react2.default.createElement(
+                'a',
+                { className: 'item' },
+                _react2.default.createElement('i', { className: 'plus icon' }),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'content' },
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'header' },
+                    '21'
+                  ),
+                  _react2.default.createElement(
+                    'div',
+                    { className: 'description' },
+                    'Floated icons are by default top aligned. To have an icon top aligned try this example.'
+                  )
+                )
+              )
             )
           )
         ),

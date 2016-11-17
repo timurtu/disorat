@@ -94,7 +94,9 @@ _app2.default.post('/create', function (req, res) {
 
   var id = Math.floor(Math.random() * Date.now());
   var post = JSON.stringify(Object.assign({}, JSON.parse(req.query.post), {
-    id: id, option1votes: 0, option2votes: 0
+    id: id,
+    option1votes: 0,
+    option2votes: 0
   }));
 
   _db2.default.lpushAsync('posts', post).then(function (p) {
@@ -102,4 +104,27 @@ _app2.default.post('/create', function (req, res) {
   });
 
   res.json(JSON.parse(post));
+});
+
+_app2.default.post('/reason/:id/:reason/reason1', function (req, res) {
+
+  var id = req.params.id;
+  var reason = req.params.reason;
+
+  _db2.default.lrangeAsync('posts', 0, -1).then(function (posts) {
+
+    var index = void 0;
+
+    var post = JSON.parse(posts.find(function (p, i) {
+      index = i;
+      return JSON.parse(p).id == id;
+    }));
+
+    var inc = post.option2votes += 1;
+    var incPost = Object.assign({}, post, { option2votes: inc });
+
+    _db2.default.lsetAsync('posts', index, JSON.stringify(incPost)).then(function (p) {
+      res.json(incPost);
+    }).catch(_utils.onError);
+  }).catch(_utils.onError);
 });
