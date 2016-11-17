@@ -28,7 +28,11 @@ let reason1, reason2
 class DetailedPost extends React.Component {
 
   componentWillMount() {
-    this.setState({ message: '404: Page not found!' })
+    this.setState({
+      message: '404: Page not found!',
+      reasons1: [],
+      reasons2: []
+    })
   }
 
   componentDidMount() {
@@ -36,7 +40,7 @@ class DetailedPost extends React.Component {
     fetch(`/posts${location.pathname}`, { method: 'POST' })
       .then(res => res.json())
       .then(p => {
-        const { id, title, option1, option2, option1votes, option2votes } = JSON.parse(p)
+        const { id, title, option1, option2, option1votes, option2votes, reasons1, reasons2 } = JSON.parse(p)
 
         this.setState({
           id,
@@ -44,9 +48,15 @@ class DetailedPost extends React.Component {
           option1,
           option2,
           option1votes,
-          option2votes
+          option2votes,
+          reasons1: this.sortReasons(reasons1),
+          reasons2: this.sortReasons(reasons2)
         })
       })
+  }
+
+  sortReasons(reasons) {
+    return reasons.sort((a, b) => b.count - a.count)
   }
 
   handleReason1Change(e) {
@@ -58,120 +68,119 @@ class DetailedPost extends React.Component {
   }
 
   render() {
+
     return (
       <div>
         <h1>{this.state.title}</h1>
-
-        <div className="ui horizontal segments">
-          <div className="ui segment">
-            <h3>{this.state.option1}</h3>
-            <h5>{this.state.option1votes} votes</h5>
-            <button onClick={() => {
-              fetch(`/posts/${this.state.id}/upvote1`, { method: 'POST' })
-                .then(res => res.json())
-                .then(post => {
-                  this.setState({ option1votes: post.option1votes })
-                })
-            }} className="fluid ui button colored teal">
-              {this.state.option1}
-            </button>
-
-            <hr/>
-
-            <form onSubmit={e => {
-              e.preventDefault()
-              if (reason1) {
-                console.log(reason1)
-                fetch(`/reason/${this.state.id}/${reason1}/reason1`, { method: 'POST' })
+        <div className="ui grid">
+          <div className="eight wide column">
+            <div className="ui segment">
+              <h3>{this.state.option1}</h3>
+              <h5>{this.state.option1votes} votes</h5>
+              <button onClick={() => {
+                fetch(`/posts/${this.state.id}/upvote1`, { method: 'POST' })
                   .then(res => res.json())
-                  .then(p => console.log(p))
-              }
-            }} className="ui mini form">
-              <div className="field">
-                <label>Add a new reason</label>
-                <input onChange={this.handleReason1Change} placeholder={`Reason to vote for ${this.state.option1}`}
-                       type="text"/>
+                  .then(post => {
+                    this.setState({ option1votes: post.option1votes })
+                  })
+              }} className="fluid ui button colored teal">
+                {this.state.option1}
+              </button>
+
+              <hr/>
+
+              <form onSubmit={e => {
+
+                e.preventDefault()
+
+                if (reason1) {
+                  fetch(`/reason/${this.state.id}/${reason1}/reason1`, { method: 'POST' })
+                    .then(res => res.json())
+                    .then(p => this.setState({ reasons1: this.sortReasons(p.reasons1) }))
+
+                }
+              }} className="ui mini form">
+                <div className="field">
+                  <label>Add a new reason</label>
+                  <input onChange={this.handleReason1Change} placeholder={`Reason to vote for ${this.state.option1}`}
+                         type="text"/>
+                </div>
+                <button className="ui tiny right floated submit button">Add reason</button>
+              </form>
+
+              <h5>Reasons</h5>
+
+              <div className="ui list">
+                {this.state.reasons1.map((r, i) =>
+                  <a onClick={() => {
+                    fetch(`/reason/${this.state.id}/${r.reason}/reason1`, { method: 'POST' })
+                      .then(res => res.json())
+                      .then(p => this.setState({ reasons1: this.sortReasons(p.reasons1) }))
+                  }} className="item" key={i}>
+                    <i className="plus icon"></i>
+                    <div className="content">
+                      <div className="header">{r.count}</div>
+                      <div className="description">{r.reason}</div>
+                    </div>
+                  </a>)}
               </div>
-              <button className="ui tiny right floated submit button">Add reason</button>
-            </form>
-
-            <h5>Reasons</h5>
-
-            <div className="ui list">
-              <a className="item">
-                <i className="plus icon"></i>
-                <div className="content">
-                  <div className="header">23</div>
-                  <div className="description">This text will always have a left margin to make sure it sits alongside
-                    your icon
-                  </div>
-                </div>
-              </a>
-              <a className="item">
-                <i className="plus icon"></i>
-                <div className="content">
-                  <div className="header">21</div>
-                  <div className="description">Floated icons are by default top aligned. To have an icon top aligned try
-                    this example.
-                  </div>
-                </div>
-              </a>
             </div>
-
           </div>
 
-          <div className="ui segment">
-            <h3>{this.state.option2}</h3>
-            <h5>{this.state.option2votes} votes</h5>
-            <button onClick={() => {
-              fetch(`/posts/${this.state.id}/upvote2`, { method: 'POST' })
-                .then(res => res.json())
-                .then(post => {
-                  this.setState({ option2votes: post.option2votes })
-                })
-            }} className="fluid ui button colored orange">
-              {this.state.option2}
-            </button>
-            <hr/>
-            <form onSubmit={e => {
-              e.preventDefault()
-              if (reason2) {
-                console.log(reason2)
-              }
-            }} className="ui mini form">
-              <div className="field">
-                <label>Add a new reason</label>
-                <input onChange={this.handleReason2Change} placeholder={`Reason to vote for ${this.state.option2}`}
-                       type="text"/>
+          <div className="eight wide column">
+            <div className="ui segment">
+              <h3>{this.state.option2}</h3>
+              <h5>{this.state.option2votes} votes</h5>
+              <button onClick={() => {
+                fetch(`/posts/${this.state.id}/upvote2`, { method: 'POST' })
+                  .then(res => res.json())
+                  .then(post => {
+                    this.setState({ option2votes: post.option2votes })
+                  })
+              }} className="fluid ui button colored orange">
+                {this.state.option2}
+              </button>
+
+              <hr/>
+
+              <form onSubmit={e => {
+                e.preventDefault()
+                if (reason2) {
+                  fetch(`/reason/${this.state.id}/${reason2}/reason2`, { method: 'POST' })
+                    .then(res => res.json())
+                    .then(p => this.setState({ reasons2: this.sortReasons(p.reasons2) }))
+                }
+              }} className="ui mini form">
+                <div className="field">
+                  <label>Add a new reason</label>
+                  <input onChange={this.handleReason2Change} placeholder={`Reason to vote for ${this.state.option2}`}
+                         type="text"/>
+                </div>
+                <button className="ui tiny right floated submit button">Add reason</button>
+              </form>
+
+              <h5>Reasons</h5>
+
+              <div className="ui list">
+                {this.state.reasons2.map((r, i) =>
+                  <a onClick={() => {
+                    fetch(`/reason/${this.state.id}/${r.reason}/reason2`, { method: 'POST' })
+                      .then(res => res.json())
+                      .then(p => this.setState({ reasons2: this.sortReasons(p.reasons2) }))
+                  }} className="item" key={i}>
+                    <i className="plus icon"></i>
+                    <div className="content">
+                      <div className="header">{r.count}</div>
+                      <div className="description">{r.reason}</div>
+                    </div>
+                  </a>)}
               </div>
-              <button className="ui tiny right floated submit button">Add reason</button>
-            </form>
 
-            <h5>Reasons</h5>
-
-            <div className="ui list">
-              <a className="item">
-                <i className="plus icon"></i>
-                <div className="content">
-                  <div className="header">23</div>
-                  <div className="description">This text will always have a left margin to make sure it sits alongside
-                    your icon
-                  </div>
-                </div>
-              </a>
-              <a className="item">
-                <i className="plus icon"></i>
-                <div className="content">
-                  <div className="header">21</div>
-                  <div className="description">Floated icons are by default top aligned. To have an icon top aligned try
-                    this example.
-                  </div>
-                </div>
-              </a>
             </div>
-
           </div>
         </div>
+
+        <hr/>
 
         <ProgressBar opt1votes={this.state.option1votes} opt2votes={this.state.option2votes}/>
       </div>

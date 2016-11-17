@@ -60,7 +60,11 @@ var DetailedPost = function (_React$Component) {
   _createClass(DetailedPost, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      this.setState({ message: '404: Page not found!' });
+      this.setState({
+        message: '404: Page not found!',
+        reasons1: [],
+        reasons2: []
+      });
     }
   }, {
     key: 'componentDidMount',
@@ -76,7 +80,9 @@ var DetailedPost = function (_React$Component) {
             option1 = _JSON$parse.option1,
             option2 = _JSON$parse.option2,
             option1votes = _JSON$parse.option1votes,
-            option2votes = _JSON$parse.option2votes;
+            option2votes = _JSON$parse.option2votes,
+            reasons1 = _JSON$parse.reasons1,
+            reasons2 = _JSON$parse.reasons2;
 
         _this2.setState({
           id: id,
@@ -84,8 +90,17 @@ var DetailedPost = function (_React$Component) {
           option1: option1,
           option2: option2,
           option1votes: option1votes,
-          option2votes: option2votes
+          option2votes: option2votes,
+          reasons1: _this2.sortReasons(reasons1),
+          reasons2: _this2.sortReasons(reasons2)
         });
+      });
+    }
+  }, {
+    key: 'sortReasons',
+    value: function sortReasons(reasons) {
+      return reasons.sort(function (a, b) {
+        return b.count - a.count;
       });
     }
   }, {
@@ -113,211 +128,203 @@ var DetailedPost = function (_React$Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'ui horizontal segments' },
+          { className: 'ui grid' },
           _react2.default.createElement(
             'div',
-            { className: 'ui segment' },
+            { className: 'eight wide column' },
             _react2.default.createElement(
-              'h3',
-              null,
-              this.state.option1
-            ),
-            _react2.default.createElement(
-              'h5',
-              null,
-              this.state.option1votes,
-              ' votes'
-            ),
-            _react2.default.createElement(
-              'button',
-              { onClick: function onClick() {
-                  fetch('/posts/' + _this3.state.id + '/upvote1', { method: 'POST' }).then(function (res) {
-                    return res.json();
-                  }).then(function (post) {
-                    _this3.setState({ option1votes: post.option1votes });
-                  });
-                }, className: 'fluid ui button colored teal' },
-              this.state.option1
-            ),
-            _react2.default.createElement('hr', null),
-            _react2.default.createElement(
-              'form',
-              { onSubmit: function onSubmit(e) {
-                  e.preventDefault();
-                  if (reason1) {
-                    console.log(reason1);
-                    fetch('/reason/' + _this3.state.id + '/' + reason1 + '/reason1', { method: 'POST' }).then(function (res) {
-                      return res.json();
-                    }).then(function (p) {
-                      return console.log(p);
-                    });
-                  }
-                }, className: 'ui mini form' },
+              'div',
+              { className: 'ui segment' },
               _react2.default.createElement(
-                'div',
-                { className: 'field' },
-                _react2.default.createElement(
-                  'label',
-                  null,
-                  'Add a new reason'
-                ),
-                _react2.default.createElement('input', { onChange: this.handleReason1Change, placeholder: 'Reason to vote for ' + this.state.option1,
-                  type: 'text' })
+                'h3',
+                null,
+                this.state.option1
+              ),
+              _react2.default.createElement(
+                'h5',
+                null,
+                this.state.option1votes,
+                ' votes'
               ),
               _react2.default.createElement(
                 'button',
-                { className: 'ui tiny right floated submit button' },
-                'Add reason'
-              )
-            ),
-            _react2.default.createElement(
-              'h5',
-              null,
-              'Reasons'
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'ui list' },
+                { onClick: function onClick() {
+                    fetch('/posts/' + _this3.state.id + '/upvote1', { method: 'POST' }).then(function (res) {
+                      return res.json();
+                    }).then(function (post) {
+                      _this3.setState({ option1votes: post.option1votes });
+                    });
+                  }, className: 'fluid ui button colored teal' },
+                this.state.option1
+              ),
+              _react2.default.createElement('hr', null),
               _react2.default.createElement(
-                'a',
-                { className: 'item' },
-                _react2.default.createElement('i', { className: 'plus icon' }),
+                'form',
+                { onSubmit: function onSubmit(e) {
+
+                    e.preventDefault();
+
+                    if (reason1) {
+                      fetch('/reason/' + _this3.state.id + '/' + reason1 + '/reason1', { method: 'POST' }).then(function (res) {
+                        return res.json();
+                      }).then(function (p) {
+                        return _this3.setState({ reasons1: _this3.sortReasons(p.reasons1) });
+                      });
+                    }
+                  }, className: 'ui mini form' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'content' },
+                  { className: 'field' },
                   _react2.default.createElement(
-                    'div',
-                    { className: 'header' },
-                    '23'
+                    'label',
+                    null,
+                    'Add a new reason'
                   ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'description' },
-                    'This text will always have a left margin to make sure it sits alongside your icon'
-                  )
+                  _react2.default.createElement('input', { onChange: this.handleReason1Change, placeholder: 'Reason to vote for ' + this.state.option1,
+                    type: 'text' })
+                ),
+                _react2.default.createElement(
+                  'button',
+                  { className: 'ui tiny right floated submit button' },
+                  'Add reason'
                 )
               ),
               _react2.default.createElement(
-                'a',
-                { className: 'item' },
-                _react2.default.createElement('i', { className: 'plus icon' }),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'content' },
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'header' },
-                    '21'
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'description' },
-                    'Floated icons are by default top aligned. To have an icon top aligned try this example.'
-                  )
-                )
+                'h5',
+                null,
+                'Reasons'
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'ui list' },
+                this.state.reasons1.map(function (r, i) {
+                  return _react2.default.createElement(
+                    'a',
+                    { onClick: function onClick() {
+                        fetch('/reason/' + _this3.state.id + '/' + r.reason + '/reason1', { method: 'POST' }).then(function (res) {
+                          return res.json();
+                        }).then(function (p) {
+                          return _this3.setState({ reasons1: _this3.sortReasons(p.reasons1) });
+                        });
+                      }, className: 'item', key: i },
+                    _react2.default.createElement('i', { className: 'plus icon' }),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'content' },
+                      _react2.default.createElement(
+                        'div',
+                        { className: 'header' },
+                        r.count
+                      ),
+                      _react2.default.createElement(
+                        'div',
+                        { className: 'description' },
+                        r.reason
+                      )
+                    )
+                  );
+                })
               )
             )
           ),
           _react2.default.createElement(
             'div',
-            { className: 'ui segment' },
+            { className: 'eight wide column' },
             _react2.default.createElement(
-              'h3',
-              null,
-              this.state.option2
-            ),
-            _react2.default.createElement(
-              'h5',
-              null,
-              this.state.option2votes,
-              ' votes'
-            ),
-            _react2.default.createElement(
-              'button',
-              { onClick: function onClick() {
-                  fetch('/posts/' + _this3.state.id + '/upvote2', { method: 'POST' }).then(function (res) {
-                    return res.json();
-                  }).then(function (post) {
-                    _this3.setState({ option2votes: post.option2votes });
-                  });
-                }, className: 'fluid ui button colored orange' },
-              this.state.option2
-            ),
-            _react2.default.createElement('hr', null),
-            _react2.default.createElement(
-              'form',
-              { onSubmit: function onSubmit(e) {
-                  e.preventDefault();
-                  if (reason2) {
-                    console.log(reason2);
-                  }
-                }, className: 'ui mini form' },
+              'div',
+              { className: 'ui segment' },
               _react2.default.createElement(
-                'div',
-                { className: 'field' },
-                _react2.default.createElement(
-                  'label',
-                  null,
-                  'Add a new reason'
-                ),
-                _react2.default.createElement('input', { onChange: this.handleReason2Change, placeholder: 'Reason to vote for ' + this.state.option2,
-                  type: 'text' })
+                'h3',
+                null,
+                this.state.option2
+              ),
+              _react2.default.createElement(
+                'h5',
+                null,
+                this.state.option2votes,
+                ' votes'
               ),
               _react2.default.createElement(
                 'button',
-                { className: 'ui tiny right floated submit button' },
-                'Add reason'
-              )
-            ),
-            _react2.default.createElement(
-              'h5',
-              null,
-              'Reasons'
-            ),
-            _react2.default.createElement(
-              'div',
-              { className: 'ui list' },
+                { onClick: function onClick() {
+                    fetch('/posts/' + _this3.state.id + '/upvote2', { method: 'POST' }).then(function (res) {
+                      return res.json();
+                    }).then(function (post) {
+                      _this3.setState({ option2votes: post.option2votes });
+                    });
+                  }, className: 'fluid ui button colored orange' },
+                this.state.option2
+              ),
+              _react2.default.createElement('hr', null),
               _react2.default.createElement(
-                'a',
-                { className: 'item' },
-                _react2.default.createElement('i', { className: 'plus icon' }),
+                'form',
+                { onSubmit: function onSubmit(e) {
+                    e.preventDefault();
+                    if (reason2) {
+                      fetch('/reason/' + _this3.state.id + '/' + reason2 + '/reason2', { method: 'POST' }).then(function (res) {
+                        return res.json();
+                      }).then(function (p) {
+                        return _this3.setState({ reasons2: _this3.sortReasons(p.reasons2) });
+                      });
+                    }
+                  }, className: 'ui mini form' },
                 _react2.default.createElement(
                   'div',
-                  { className: 'content' },
+                  { className: 'field' },
                   _react2.default.createElement(
-                    'div',
-                    { className: 'header' },
-                    '23'
+                    'label',
+                    null,
+                    'Add a new reason'
                   ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'description' },
-                    'This text will always have a left margin to make sure it sits alongside your icon'
-                  )
+                  _react2.default.createElement('input', { onChange: this.handleReason2Change, placeholder: 'Reason to vote for ' + this.state.option2,
+                    type: 'text' })
+                ),
+                _react2.default.createElement(
+                  'button',
+                  { className: 'ui tiny right floated submit button' },
+                  'Add reason'
                 )
               ),
               _react2.default.createElement(
-                'a',
-                { className: 'item' },
-                _react2.default.createElement('i', { className: 'plus icon' }),
-                _react2.default.createElement(
-                  'div',
-                  { className: 'content' },
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'header' },
-                    '21'
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'description' },
-                    'Floated icons are by default top aligned. To have an icon top aligned try this example.'
-                  )
-                )
+                'h5',
+                null,
+                'Reasons'
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'ui list' },
+                this.state.reasons2.map(function (r, i) {
+                  return _react2.default.createElement(
+                    'a',
+                    { onClick: function onClick() {
+                        fetch('/reason/' + _this3.state.id + '/' + r.reason + '/reason2', { method: 'POST' }).then(function (res) {
+                          return res.json();
+                        }).then(function (p) {
+                          return _this3.setState({ reasons2: _this3.sortReasons(p.reasons2) });
+                        });
+                      }, className: 'item', key: i },
+                    _react2.default.createElement('i', { className: 'plus icon' }),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'content' },
+                      _react2.default.createElement(
+                        'div',
+                        { className: 'header' },
+                        r.count
+                      ),
+                      _react2.default.createElement(
+                        'div',
+                        { className: 'description' },
+                        r.reason
+                      )
+                    )
+                  );
+                })
               )
             )
           )
         ),
+        _react2.default.createElement('hr', null),
         _react2.default.createElement(ProgressBar, { opt1votes: this.state.option1votes, opt2votes: this.state.option2votes })
       );
     }
