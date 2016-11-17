@@ -22,10 +22,11 @@ _bluebird2.default.promisifyAll(_redis2.default.RedisClient.prototype); /**
 
 _bluebird2.default.promisifyAll(_redis2.default.Multi.prototype);
 
-var db = _redis2.default.createClient({
-  host: 'redis-10757.c10.us-east-1-3.ec2.cloud.redislabs.com',
-  port: '10757'
-});
+// prod
+var db = _redis2.default.createClient({ host: 'redis-10757.c10.us-east-1-3.ec2.cloud.redislabs.com', port: '10757' });
+
+// dev
+// const db = redis.createClient()
 
 db.on('error', _utils.onError);
 

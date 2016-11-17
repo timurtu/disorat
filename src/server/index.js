@@ -118,6 +118,9 @@ app.post('/reason/:id/:reason/reason1', (req, res) => {
   const id = req.params.id
   const reason = req.params.reason
 
+  console.log('id', id)
+  console.log('reason', reason)
+
   db.lrangeAsync('posts', 0, -1)
     .then(posts => {
 
@@ -128,12 +131,12 @@ app.post('/reason/:id/:reason/reason1', (req, res) => {
         return JSON.parse(p).id == id
       }))
 
-      const inc = post.option2votes += 1
-      const incPost = Object.assign({}, post, { option2votes: inc })
+      const reasons = post.reasons || []
+      const postWithReason = Object.assign({}, post, { reasons })
 
       db.lsetAsync('posts', index, JSON.stringify(incPost))
         .then(p => {
-          res.json(incPost)
+          res.json(postWithReason)
         }).catch(onError)
 
     }).catch(onError)

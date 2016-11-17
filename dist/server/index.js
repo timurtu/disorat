@@ -122,6 +122,9 @@ _app2.default.post('/reason/:id/:reason/reason1', function (req, res) {
   var id = req.params.id;
   var reason = req.params.reason;
 
+  console.log('id', id);
+  console.log('reason', reason);
+
   _db2.default.lrangeAsync('posts', 0, -1).then(function (posts) {
 
     var index = void 0;
@@ -131,11 +134,11 @@ _app2.default.post('/reason/:id/:reason/reason1', function (req, res) {
       return JSON.parse(p).id == id;
     }));
 
-    var inc = post.option2votes += 1;
-    var incPost = Object.assign({}, post, { option2votes: inc });
+    var reasons = post.reasons || [];
+    var postWithReason = Object.assign({}, post, { reasons: reasons });
 
     _db2.default.lsetAsync('posts', index, JSON.stringify(incPost)).then(function (p) {
-      res.json(incPost);
+      res.json(postWithReason);
     }).catch(_utils.onError);
   }).catch(_utils.onError);
 });

@@ -26898,57 +26898,91 @@
 	  );
 	};
 
-	var Post = function Post(_ref2) {
-	  var post = _ref2.post;
+	var Post = function (_React$Component2) {
+	  _inherits(Post, _React$Component2);
 
+	  function Post() {
+	    _classCallCheck(this, Post);
 
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'ui centered card' },
-	    _react2.default.createElement(
-	      _reactRouter.Link,
-	      { to: '/' + post.id, className: 'content' },
-	      _react2.default.createElement(
+	    return _possibleConstructorReturn(this, (Post.__proto__ || Object.getPrototypeOf(Post)).apply(this, arguments));
+	  }
+
+	  _createClass(Post, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+
+	      var post = this.props.post;
+	      var totalVotes = post.option1votes + post.option2votes;
+
+	      this.setState({ post: post, totalVotes: totalVotes });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this4 = this;
+
+	      return _react2.default.createElement(
 	        'div',
-	        { className: 'header' },
-	        post.title
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'meta' },
-	        post.option1votes + post.option2votes,
-	        ' votes'
-	      ),
-	      _react2.default.createElement(ProgressBar, { opt1votes: post.option1votes, opt2votes: post.option2votes })
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'extra content' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'ui two buttons' },
+	        { className: 'ui centered card' },
 	        _react2.default.createElement(
-	          'button',
-	          { onClick: function onClick() {
-	              fetch('/posts/' + post.id + '/upvote1', { method: 'POST' }).catch(function (e) {
-	                return console.error(e);
-	              });
-	            }, className: 'ui teal button' },
-	          post.option1
+	          _reactRouter.Link,
+	          { to: '/' + this.state.post.id, className: 'content' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'header' },
+	            this.state.post.title
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'meta' },
+	            this.state.totalVotes,
+	            ' votes'
+	          ),
+	          _react2.default.createElement(ProgressBar, { opt1votes: this.state.post.option1votes, opt2votes: this.state.post.option2votes })
 	        ),
 	        _react2.default.createElement(
-	          'button',
-	          { onClick: function onClick() {
-	              fetch('/posts/' + post.id + '/upvote2', { method: 'POST' }).catch(function (e) {
-	                return console.error(e);
-	              });
-	            }, className: 'ui orange button' },
-	          post.option2
+	          'div',
+	          { className: 'extra content' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'ui two buttons' },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: function onClick() {
+	                  fetch('/posts/' + _this4.state.post.id + '/upvote1', { method: 'POST' }).then(function (res) {
+	                    return res.json();
+	                  }).then(function (post) {
+	                    var totalVotes = _this4.state.totalVotes + 1;
+	                    _this4.setState({ post: post, totalVotes: totalVotes });
+	                  }).catch(function (e) {
+	                    return console.error(e);
+	                  });
+	                }, className: 'ui teal button' },
+	              this.state.post.option1
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: function onClick() {
+	                  fetch('/posts/' + _this4.state.post.id + '/upvote2', { method: 'POST' }).then(function (res) {
+	                    return res.json();
+	                  }).then(function (post) {
+	                    var totalVotes = _this4.state.totalVotes + 1;
+	                    _this4.setState({ post: post, totalVotes: totalVotes });
+	                  }).catch(function (e) {
+	                    return console.error(e);
+	                  });
+	                }, className: 'ui orange button' },
+	              this.state.post.option2
+	            )
+	          )
 	        )
-	      )
-	    )
-	  );
-	};
+	      );
+	    }
+	  }]);
+
+	  return Post;
+	}(_react2.default.Component);
+
 	exports.default = Feed;
 
 /***/ },
@@ -28393,6 +28427,11 @@
 	                  e.preventDefault();
 	                  if (reason1) {
 	                    console.log(reason1);
+	                    fetch('/reason/' + _this3.state.id + '/' + reason1 + '/reason1', { method: 'POST' }).then(function (res) {
+	                      return res.json();
+	                    }).then(function (p) {
+	                      return console.log(p);
+	                    });
 	                  }
 	                }, className: 'ui mini form' },
 	              _react2.default.createElement(
@@ -28403,7 +28442,8 @@
 	                  null,
 	                  'Add a new reason'
 	                ),
-	                _react2.default.createElement('input', { onChange: this.handleReason1Change, placeholder: 'Reason to vote for ' + this.state.option1, type: 'text' })
+	                _react2.default.createElement('input', { onChange: this.handleReason1Change, placeholder: 'Reason to vote for ' + this.state.option1,
+	                  type: 'text' })
 	              ),
 	              _react2.default.createElement(
 	                'button',
@@ -28501,7 +28541,8 @@
 	                  null,
 	                  'Add a new reason'
 	                ),
-	                _react2.default.createElement('input', { onChange: this.handleReason2Change, placeholder: 'Reason to vote for ' + this.state.option2, type: 'text' })
+	                _react2.default.createElement('input', { onChange: this.handleReason2Change, placeholder: 'Reason to vote for ' + this.state.option2,
+	                  type: 'text' })
 	              ),
 	              _react2.default.createElement(
 	                'button',

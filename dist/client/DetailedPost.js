@@ -146,6 +146,11 @@ var DetailedPost = function (_React$Component) {
                   e.preventDefault();
                   if (reason1) {
                     console.log(reason1);
+                    fetch('/reason/' + _this3.state.id + '/' + reason1 + '/reason1', { method: 'POST' }).then(function (res) {
+                      return res.json();
+                    }).then(function (p) {
+                      return console.log(p);
+                    });
                   }
                 }, className: 'ui mini form' },
               _react2.default.createElement(
@@ -156,7 +161,8 @@ var DetailedPost = function (_React$Component) {
                   null,
                   'Add a new reason'
                 ),
-                _react2.default.createElement('input', { onChange: this.handleReason1Change, placeholder: 'Reason to vote for ' + this.state.option1, type: 'text' })
+                _react2.default.createElement('input', { onChange: this.handleReason1Change, placeholder: 'Reason to vote for ' + this.state.option1,
+                  type: 'text' })
               ),
               _react2.default.createElement(
                 'button',
@@ -254,7 +260,8 @@ var DetailedPost = function (_React$Component) {
                   null,
                   'Add a new reason'
                 ),
-                _react2.default.createElement('input', { onChange: this.handleReason2Change, placeholder: 'Reason to vote for ' + this.state.option2, type: 'text' })
+                _react2.default.createElement('input', { onChange: this.handleReason2Change, placeholder: 'Reason to vote for ' + this.state.option2,
+                  type: 'text' })
               ),
               _react2.default.createElement(
                 'button',

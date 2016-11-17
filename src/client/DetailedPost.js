@@ -77,15 +77,20 @@ class DetailedPost extends React.Component {
             </button>
 
             <hr/>
+
             <form onSubmit={e => {
               e.preventDefault()
               if (reason1) {
                 console.log(reason1)
+                fetch(`/reason/${this.state.id}/${reason1}/reason1`, { method: 'POST' })
+                  .then(res => res.json())
+                  .then(p => console.log(p))
               }
             }} className="ui mini form">
               <div className="field">
                 <label>Add a new reason</label>
-                <input onChange={this.handleReason1Change} placeholder={`Reason to vote for ${this.state.option1}`} type="text"/>
+                <input onChange={this.handleReason1Change} placeholder={`Reason to vote for ${this.state.option1}`}
+                       type="text"/>
               </div>
               <button className="ui tiny right floated submit button">Add reason</button>
             </form>
@@ -97,14 +102,18 @@ class DetailedPost extends React.Component {
                 <i className="plus icon"></i>
                 <div className="content">
                   <div className="header">23</div>
-                  <div className="description">This text will always have a left margin to make sure it sits alongside your icon</div>
+                  <div className="description">This text will always have a left margin to make sure it sits alongside
+                    your icon
+                  </div>
                 </div>
               </a>
               <a className="item">
                 <i className="plus icon"></i>
                 <div className="content">
                   <div className="header">21</div>
-                  <div className="description">Floated icons are by default top aligned. To have an icon top aligned try this example.</div>
+                  <div className="description">Floated icons are by default top aligned. To have an icon top aligned try
+                    this example.
+                  </div>
                 </div>
               </a>
             </div>
@@ -132,11 +141,12 @@ class DetailedPost extends React.Component {
             }} className="ui mini form">
               <div className="field">
                 <label>Add a new reason</label>
-                <input onChange={this.handleReason2Change} placeholder={`Reason to vote for ${this.state.option2}`} type="text"/>
+                <input onChange={this.handleReason2Change} placeholder={`Reason to vote for ${this.state.option2}`}
+                       type="text"/>
               </div>
               <button className="ui tiny right floated submit button">Add reason</button>
             </form>
-            
+
             <h5>Reasons</h5>
 
             <div className="ui list">
@@ -144,14 +154,18 @@ class DetailedPost extends React.Component {
                 <i className="plus icon"></i>
                 <div className="content">
                   <div className="header">23</div>
-                  <div className="description">This text will always have a left margin to make sure it sits alongside your icon</div>
+                  <div className="description">This text will always have a left margin to make sure it sits alongside
+                    your icon
+                  </div>
                 </div>
               </a>
               <a className="item">
                 <i className="plus icon"></i>
                 <div className="content">
                   <div className="header">21</div>
-                  <div className="description">Floated icons are by default top aligned. To have an icon top aligned try this example.</div>
+                  <div className="description">Floated icons are by default top aligned. To have an icon top aligned try
+                    this example.
+                  </div>
                 </div>
               </a>
             </div>

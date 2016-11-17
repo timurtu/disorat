@@ -50,35 +50,58 @@ const ProgressBar = ({ opt1votes, opt2votes }) =>
     }/>
   </div>
 
-const Post = function ({ post }) {
+class Post extends React.Component {
 
-  return (
-    <div className="ui centered card">
-      <Link to={`/${post.id}`} className="content">
-        <div className="header">
-          {post.title}
-        </div>
+  componentWillMount() {
 
-        <div className="meta">
-          {post.option1votes + post.option2votes} votes
-        </div>
+    const post = this.props.post
+    const totalVotes = post.option1votes + post.option2votes
 
-        <ProgressBar opt1votes={post.option1votes} opt2votes={post.option2votes}/>
-      </Link>
+    this.setState({ post, totalVotes })
+  }
 
-      <div className="extra content">
-        <div className="ui two buttons">
-          <button onClick={() => {
-            fetch(`/posts/${post.id}/upvote1`, { method: 'POST' })
-              .catch(e => console.error(e))
-          }} className="ui teal button">{post.option1}</button>
-          <button onClick={() => {
-            fetch(`/posts/${post.id}/upvote2`, { method: 'POST' })
-              .catch(e => console.error(e))
-          }} className="ui orange button">{post.option2}</button>
+
+  render() {
+
+    return (
+      <div className="ui centered card">
+        <Link to={`/${this.state.post.id}`} className="content">
+          <div className="header">
+            {this.state.post.title}
+          </div>
+
+          <div className="meta">
+            {this.state.totalVotes} votes
+          </div>
+
+          <ProgressBar opt1votes={this.state.post.option1votes} opt2votes={this.state.post.option2votes}/>
+        </Link>
+
+        <div className="extra content">
+          <div className="ui two buttons">
+            <button onClick={() => {
+              fetch(`/posts/${this.state.post.id}/upvote1`, { method: 'POST' })
+                .then(res => res.json())
+                .then(post => {
+                  const totalVotes = this.state.totalVotes + 1
+                  this.setState({ post, totalVotes })
+                })
+                .catch(e => console.error(e))
+            }} className="ui teal button">{this.state.post.option1}</button>
+            <button onClick={() => {
+              fetch(`/posts/${this.state.post.id}/upvote2`, { method: 'POST' })
+                .then(res => res.json())
+                .then(post => {
+                  const totalVotes = this.state.totalVotes + 1
+                  this.setState({ post, totalVotes })
+                })
+                .catch(e => console.error(e))
+            }} className="ui orange button">{this.state.post.option2}</button>
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
+
 export default Feed
