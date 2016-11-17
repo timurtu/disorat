@@ -55,6 +55,10 @@ const Post = function ({ post }) {
           {post.title}
         </div>
 
+        <div className="meta">
+          {post.option1votes + post.option2votes} votes
+        </div>
+
         <ProgressBar opt1votes={post.option1votes} opt2votes={post.option2votes}/>
       </Link>
 

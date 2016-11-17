@@ -26905,6 +26905,12 @@
 	        { className: 'header' },
 	        post.title
 	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'meta' },
+	        post.option1votes + post.option2votes,
+	        ' votes'
+	      ),
 	      _react2.default.createElement(ProgressBar, { opt1votes: post.option1votes, opt2votes: post.option2votes })
 	    ),
 	    _react2.default.createElement(
