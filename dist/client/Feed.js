@@ -18,6 +18,10 @@ var _reactSimplePieChart = require('react-simple-pie-chart');
 
 var _reactSimplePieChart2 = _interopRequireDefault(_reactSimplePieChart);
 
+var _reactLazyload = require('react-lazyload');
+
+var _reactLazyload2 = _interopRequireDefault(_reactLazyload);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -65,7 +69,11 @@ var Feed = function (_React$Component) {
         'div',
         { className: 'ui cards' },
         this.state.posts.map(function (p) {
-          return _react2.default.createElement(Post, { post: p, key: p.id });
+          return _react2.default.createElement(
+            _reactLazyload2.default,
+            { key: p.id, height: 170 },
+            _react2.default.createElement(Post, { post: p })
+          );
         })
       );
     }

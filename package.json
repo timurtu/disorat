@@ -68,5 +68,8 @@
   "bugs": {
     "url": "https://github.com/timurtu/disorat/issues"
   },
-  "homepage": "https://github.com/timurtu/disorat#readme"
+  "homepage": "https://github.com/timurtu/disorat#readme",
+  "devDependencies": {
+    "react-lazyload": "^2.2.0"
+  }
 }

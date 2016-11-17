@@ -6,6 +6,7 @@ import 'whatwg-fetch'
 import React from 'react'
 import { Link } from 'react-router'
 import PieChart from 'react-simple-pie-chart'
+import LazyLoad from 'react-lazyload'
 
 
 class Feed extends React.Component {
@@ -27,13 +28,16 @@ class Feed extends React.Component {
   render() {
     return (
       <div className="ui cards">
-        {this.state.posts.map(p => <Post post={p} key={p.id}/>)}
+        {this.state.posts.map(p =>
+          <LazyLoad key={p.id} height={170}>
+            <Post post={p}/>
+          </LazyLoad>)}
       </div>
     )
   }
 }
 
-const ProgressBar = ({opt1votes, opt2votes}) =>
+const ProgressBar = ({ opt1votes, opt2votes }) =>
   <div className="ui right floated" style={{ width: '3em' }}>
     <PieChart slices={
       [{
@@ -65,11 +69,11 @@ const Post = function ({ post }) {
       <div className="extra content">
         <div className="ui two buttons">
           <button onClick={() => {
-            fetch(`/posts/${post.id}/upvote1`, { method: 'POST'})
+            fetch(`/posts/${post.id}/upvote1`, { method: 'POST' })
               .catch(e => console.error(e))
           }} className="ui teal button">{post.option1}</button>
-          <button  onClick={() => {
-            fetch(`/posts/${post.id}/upvote2`, { method: 'POST'})
+          <button onClick={() => {
+            fetch(`/posts/${post.id}/upvote2`, { method: 'POST' })
               .catch(e => console.error(e))
           }} className="ui orange button">{post.option2}</button>
         </div>

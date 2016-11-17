@@ -77,51 +77,55 @@ var CreatePost = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'form',
-        { onSubmit: this.createPost, className: 'ui form' },
+        'div',
+        { className: 'ui segment' },
         _react2.default.createElement(
-          'div',
-          { className: 'required field' },
-          _react2.default.createElement(
-            'label',
-            null,
-            'Title'
-          ),
-          _react2.default.createElement('input', { onChange: this.handleTitleChange, name: 'title', type: 'text', placeholder: 'Short Explanation' })
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'two fields' },
+          'form',
+          { onSubmit: this.createPost, className: 'ui form' },
           _react2.default.createElement(
             'div',
             { className: 'required field' },
             _react2.default.createElement(
               'label',
               null,
-              'Option 1'
+              'Title'
             ),
-            _react2.default.createElement('input', { onChange: this.handleOption1Change, name: 'option1', type: 'text', placeholder: 'First Option' })
+            _react2.default.createElement('input', { onChange: this.handleTitleChange, name: 'title', type: 'text', placeholder: 'Short Explanation' })
           ),
           _react2.default.createElement(
             'div',
-            { className: 'required field' },
+            { className: 'two fields' },
             _react2.default.createElement(
-              'label',
-              null,
-              'Option 2'
+              'div',
+              { className: 'required field' },
+              _react2.default.createElement(
+                'label',
+                null,
+                'Option 1'
+              ),
+              _react2.default.createElement('input', { onChange: this.handleOption1Change, name: 'option1', type: 'text', placeholder: 'First Option' })
             ),
-            _react2.default.createElement('input', { onChange: this.handleOption2Change, name: 'option2', type: 'text', placeholder: 'Second Option' })
+            _react2.default.createElement(
+              'div',
+              { className: 'required field' },
+              _react2.default.createElement(
+                'label',
+                null,
+                'Option 2'
+              ),
+              _react2.default.createElement('input', { onChange: this.handleOption2Change, name: 'option2', type: 'text', placeholder: 'Second Option' })
+            )
+          ),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/', className: 'ui button' },
+            'Cancel'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'ui right floated color blue submit button' },
+            'Create'
           )
-        ),
-        _react2.default.createElement(
-          _reactRouter.Link,
-          { to: '/', className: 'ui button' },
-          'Cancel'
-        ),
-        _react2.default.createElement(
-          'button',
-          { className: 'ui right floated color blue submit button' },
-          'Create'
         )
       );
     }

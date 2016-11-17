@@ -68,11 +68,11 @@
 
 	var _Feed2 = _interopRequireDefault(_Feed);
 
-	var _CreatePost = __webpack_require__(239);
+	var _CreatePost = __webpack_require__(245);
 
 	var _CreatePost2 = _interopRequireDefault(_CreatePost);
 
-	var _DetailedPost = __webpack_require__(240);
+	var _DetailedPost = __webpack_require__(246);
 
 	var _DetailedPost2 = _interopRequireDefault(_DetailedPost);
 
@@ -26818,6 +26818,10 @@
 
 	var _reactSimplePieChart2 = _interopRequireDefault(_reactSimplePieChart);
 
+	var _reactLazyload = __webpack_require__(239);
+
+	var _reactLazyload2 = _interopRequireDefault(_reactLazyload);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26865,7 +26869,11 @@
 	        'div',
 	        { className: 'ui cards' },
 	        this.state.posts.map(function (p) {
-	          return _react2.default.createElement(Post, { post: p, key: p.id });
+	          return _react2.default.createElement(
+	            _reactLazyload2.default,
+	            { key: p.id, height: 170 },
+	            _react2.default.createElement(Post, { post: p })
+	          );
 	        })
 	      );
 	    }
@@ -27546,6 +27554,555 @@
 /* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.forceCheck = exports.lazyload = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(8);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(41);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _event = __webpack_require__(240);
+
+	var _scrollParent = __webpack_require__(241);
+
+	var _scrollParent2 = _interopRequireDefault(_scrollParent);
+
+	var _debounce = __webpack_require__(242);
+
+	var _debounce2 = _interopRequireDefault(_debounce);
+
+	var _throttle = __webpack_require__(243);
+
+	var _throttle2 = _interopRequireDefault(_throttle);
+
+	var _decorator = __webpack_require__(244);
+
+	var _decorator2 = _interopRequireDefault(_decorator);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * react-lazyload
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+	var LISTEN_FLAG = 'data-lazyload-listened';
+	var listeners = [];
+	var pending = [];
+
+	/**
+	 * Check if `component` is visible in overflow container `parent`
+	 * @param  {node} component React component
+	 * @param  {node} parent    component's scroll parent
+	 * @return {bool}
+	 */
+	var checkOverflowVisible = function checkOverflowVisible(component, parent) {
+	  var node = _reactDom2.default.findDOMNode(component);
+
+	  var _parent$getBoundingCl = parent.getBoundingClientRect();
+
+	  var parentTop = _parent$getBoundingCl.top;
+	  var parentHeight = _parent$getBoundingCl.height;
+
+	  var windowInnerHeight = window.innerHeight || document.documentElement.clientHeight;
+
+	  // calculate top and height of the intersection of the element's scrollParent and viewport
+	  var intersectionTop = Math.max(parentTop, 0); // intersection's top relative to viewport
+	  var intersectionHeight = Math.min(windowInnerHeight, parentTop + parentHeight) - intersectionTop; // height
+
+	  // check whether the element is visible in the intersection
+
+	  var _node$getBoundingClie = node.getBoundingClientRect();
+
+	  var top = _node$getBoundingClie.top;
+	  var height = _node$getBoundingClie.height;
+
+	  var offsetTop = top - intersectionTop; // element's top relative to intersection
+
+	  var offsets = Array.isArray(component.props.offset) ? component.props.offset : [component.props.offset, component.props.offset]; // Be compatible with previous API
+
+	  return offsetTop - offsets[0] <= intersectionHeight && offsetTop + height + offsets[1] >= 0;
+	};
+
+	/**
+	 * Check if `component` is visible in document
+	 * @param  {node} component React component
+	 * @return {bool}
+	 */
+	var checkNormalVisible = function checkNormalVisible(component) {
+	  var node = _reactDom2.default.findDOMNode(component);
+
+	  var _node$getBoundingClie2 = node.getBoundingClientRect();
+
+	  var top = _node$getBoundingClie2.top;
+	  var elementHeight = _node$getBoundingClie2.height;
+
+
+	  var windowInnerHeight = window.innerHeight || document.documentElement.clientHeight;
+
+	  var offsets = Array.isArray(component.props.offset) ? component.props.offset : [component.props.offset, component.props.offset]; // Be compatible with previous API
+
+	  return top - offsets[0] <= windowInnerHeight && top + elementHeight + offsets[1] >= 0;
+	};
+
+	/**
+	 * Detect if element is visible in viewport, if so, set `visible` state to true.
+	 * If `once` prop is provided true, remove component as listener after checkVisible
+	 *
+	 * @param  {React} component   React component that respond to scroll and resize
+	 */
+	var checkVisible = function checkVisible(component) {
+	  var node = _reactDom2.default.findDOMNode(component);
+	  if (!node) {
+	    return;
+	  }
+
+	  var parent = (0, _scrollParent2.default)(node);
+	  var isOverflow = parent !== node.ownerDocument && parent !== document && parent !== document.documentElement;
+
+	  var visible = isOverflow ? checkOverflowVisible(component, parent) : checkNormalVisible(component);
+
+	  if (visible) {
+	    // Avoid extra render if previously is visible, yeah I mean `render` call,
+	    // not actual DOM render
+	    if (!component.visible) {
+	      if (component.props.once) {
+	        pending.push(component);
+	      }
+
+	      component.visible = true;
+	      component.forceUpdate();
+	    }
+	  } else if (!(component.props.once && component.visible)) {
+	    component.visible = false;
+	    if (component.props.unmountIfInvisible) {
+	      component.forceUpdate();
+	    }
+	  }
+	};
+
+	var purgePending = function purgePending() {
+	  pending.forEach(function (component) {
+	    var index = listeners.indexOf(component);
+	    if (index !== -1) {
+	      listeners.splice(index, 1);
+	    }
+	  });
+
+	  pending = [];
+	};
+
+	var lazyLoadHandler = function lazyLoadHandler() {
+	  for (var i = 0; i < listeners.length; ++i) {
+	    var listener = listeners[i];
+	    checkVisible(listener);
+	  }
+
+	  // Remove `once` component in listeners
+	  purgePending();
+	};
+
+	// Depending on component's props
+	var delayType = void 0;
+	var finalLazyLoadHandler = null;
+
+	var LazyLoad = function (_Component) {
+	  _inherits(LazyLoad, _Component);
+
+	  function LazyLoad(props) {
+	    _classCallCheck(this, LazyLoad);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LazyLoad).call(this, props));
+
+	    _this.visible = false;
+
+	    return _this;
+	  }
+
+	  _createClass(LazyLoad, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      if (typeof process !== 'undefined' && process.env.NODE_ENV !== 'production') {
+	        if (_react2.default.Children.count(this.props.children) > 1) {
+	          console.warn('[react-lazyload] Only one child is allowed to be passed to `LazyLoad`.');
+	        }
+
+	        if (this.props.wheel) {
+	          // eslint-disable-line
+	          console.warn('[react-lazyload] Props `wheel` is not supported anymore, try set `overflow` for lazy loading in overflow containers.');
+	        }
+
+	        // Warn the user if placeholder and height is not specified and the rendered height is 0
+	        if (!this.props.placeholder && this.props.height === undefined && _reactDom2.default.findDOMNode(this).offsetHeight === 0) {
+	          console.warn('[react-lazyload] Please add `height` props to <LazyLoad> for better performance.');
+	        }
+	      }
+
+	      // It's unlikely to change delay type on the fly, this is mainly
+	      // designed for tests
+	      var needResetFinalLazyLoadHandler = false;
+	      if (this.props.debounce !== undefined && delayType === 'throttle') {
+	        console.warn('[react-lazyload] Previous delay function is `throttle`, now switching to `debounce`, try setting them unanimously');
+	        needResetFinalLazyLoadHandler = true;
+	      } else if (delayType === 'debounce' && this.props.debounce === undefined) {
+	        console.warn('[react-lazyload] Previous delay function is `debounce`, now switching to `throttle`, try setting them unanimously');
+	        needResetFinalLazyLoadHandler = true;
+	      }
+
+	      if (needResetFinalLazyLoadHandler) {
+	        (0, _event.off)(window, 'scroll', finalLazyLoadHandler);
+	        (0, _event.off)(window, 'resize', finalLazyLoadHandler);
+	        finalLazyLoadHandler = null;
+	      }
+
+	      if (!finalLazyLoadHandler) {
+	        if (this.props.debounce !== undefined) {
+	          finalLazyLoadHandler = (0, _debounce2.default)(lazyLoadHandler, typeof this.props.debounce === 'number' ? this.props.debounce : 300);
+	          delayType = 'debounce';
+	        } else {
+	          finalLazyLoadHandler = (0, _throttle2.default)(lazyLoadHandler, typeof this.props.throttle === 'number' ? this.props.throttle : 300);
+	          delayType = 'throttle';
+	        }
+	      }
+
+	      if (this.props.overflow) {
+	        var parent = (0, _scrollParent2.default)(_reactDom2.default.findDOMNode(this));
+	        if (parent) {
+	          var listenerCount = 1 + +parent.getAttribute(LISTEN_FLAG);
+	          if (listenerCount === 1) {
+	            parent.addEventListener('scroll', finalLazyLoadHandler);
+	          }
+	          parent.setAttribute(LISTEN_FLAG, listenerCount);
+	        }
+	      } else if (listeners.length === 0 || needResetFinalLazyLoadHandler) {
+	        var _props = this.props;
+	        var scroll = _props.scroll;
+	        var resize = _props.resize;
+
+
+	        if (scroll) {
+	          (0, _event.on)(window, 'scroll', finalLazyLoadHandler);
+	        }
+
+	        if (resize) {
+	          (0, _event.on)(window, 'resize', finalLazyLoadHandler);
+	        }
+	      }
+
+	      listeners.push(this);
+	      checkVisible(this);
+	    }
+	  }, {
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate() {
+	      return this.visible;
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      if (this.props.overflow) {
+	        var parent = (0, _scrollParent2.default)(_reactDom2.default.findDOMNode(this));
+	        if (parent) {
+	          var listenerCount = +parent.getAttribute(LISTEN_FLAG) - 1;
+	          if (listenerCount === 0) {
+	            parent.removeEventListener('scroll', finalLazyLoadHandler);
+	            parent.removeAttribute(LISTEN_FLAG);
+	          } else {
+	            parent.setAttribute(LISTEN_FLAG, listenerCount);
+	          }
+	        }
+	      }
+
+	      var index = listeners.indexOf(this);
+	      if (index !== -1) {
+	        listeners.splice(index, 1);
+	      }
+
+	      if (listeners.length === 0) {
+	        (0, _event.off)(window, 'resize', finalLazyLoadHandler);
+	        (0, _event.off)(window, 'scroll', finalLazyLoadHandler);
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return this.visible ? this.props.children : this.props.placeholder ? this.props.placeholder : _react2.default.createElement('div', { style: { height: this.props.height }, className: 'lazyload-placeholder' });
+	    }
+	  }]);
+
+	  return LazyLoad;
+	}(_react.Component);
+
+	LazyLoad.propTypes = {
+	  once: _react.PropTypes.bool,
+	  height: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string]),
+	  offset: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.arrayOf(_react.PropTypes.number)]),
+	  overflow: _react.PropTypes.bool,
+	  resize: _react.PropTypes.bool,
+	  scroll: _react.PropTypes.bool,
+	  children: _react.PropTypes.node,
+	  throttle: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.bool]),
+	  debounce: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.bool]),
+	  placeholder: _react.PropTypes.node,
+	  unmountIfInvisible: _react.PropTypes.bool
+	};
+
+	LazyLoad.defaultProps = {
+	  once: false,
+	  offset: 0,
+	  overflow: false,
+	  resize: false,
+	  scroll: true,
+	  unmountIfInvisible: false
+	};
+
+	var lazyload = exports.lazyload = _decorator2.default;
+	exports.default = LazyLoad;
+	exports.forceCheck = lazyLoadHandler;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+
+/***/ },
+/* 240 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.on = on;
+	exports.off = off;
+	function on(el, eventName, callback) {
+	  if (el.addEventListener) {
+	    el.addEventListener(eventName, callback, false);
+	  } else if (el.attachEvent) {
+	    el.attachEvent("on" + eventName, function (e) {
+	      callback.call(el, e || window.event);
+	    });
+	  }
+	}
+
+	function off(el, eventName, callback) {
+	  if (el.removeEventListener) {
+	    el.removeEventListener(eventName, callback);
+	  } else if (el.detachEvent) {
+	    el.detachEvent("on" + eventName, callback);
+	  }
+	}
+
+/***/ },
+/* 241 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * @fileOverview Find scroll parent
+	 */
+
+	exports.default = function (node) {
+	  if (!node) {
+	    return document;
+	  }
+
+	  var excludeStaticParent = node.style.position === 'absolute';
+	  var overflowRegex = /(scroll|auto)/;
+	  var parent = node;
+
+	  while (parent) {
+	    if (!parent.parentNode) {
+	      return node.ownerDocument || document;
+	    }
+
+	    var style = window.getComputedStyle(parent);
+	    var position = style.position;
+	    var overflow = style.overflow;
+	    var overflowX = style['overflow-x'];
+	    var overflowY = style['overflow-y'];
+
+	    if (position === 'static' && excludeStaticParent) {
+	      continue;
+	    }
+
+	    if (overflowRegex.test(overflow + overflowX + overflowY)) {
+	      return parent;
+	    }
+
+	    parent = parent.parentNode;
+	  }
+
+	  return node.ownerDocument || node.documentElement || document;
+	};
+
+/***/ },
+/* 242 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = debounce;
+	function debounce(func, wait, immediate) {
+	  var timeout = void 0;
+	  var args = void 0;
+	  var context = void 0;
+	  var timestamp = void 0;
+	  var result = void 0;
+
+	  var later = function later() {
+	    var last = +new Date() - timestamp;
+
+	    if (last < wait && last >= 0) {
+	      timeout = setTimeout(later, wait - last);
+	    } else {
+	      timeout = null;
+	      if (!immediate) {
+	        result = func.apply(context, args);
+	        if (!timeout) {
+	          context = args = null;
+	        }
+	      }
+	    }
+	  };
+
+	  return function debounced() {
+	    context = this;
+	    args = arguments;
+	    timestamp = +new Date();
+
+	    var callNow = immediate && !timeout;
+	    if (!timeout) {
+	      timeout = setTimeout(later, wait);
+	    }
+
+	    if (callNow) {
+	      result = func.apply(context, args);
+	      context = args = null;
+	    }
+
+	    return result;
+	  };
+	}
+
+/***/ },
+/* 243 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = throttle;
+	/*eslint-disable */
+	function throttle(fn, threshhold, scope) {
+	  threshhold || (threshhold = 250);
+	  var last, deferTimer;
+	  return function () {
+	    var context = scope || this;
+
+	    var now = +new Date(),
+	        args = arguments;
+	    if (last && now < last + threshhold) {
+	      // hold on to it
+	      clearTimeout(deferTimer);
+	      deferTimer = setTimeout(function () {
+	        last = now;
+	        fn.apply(context, args);
+	      }, threshhold);
+	    } else {
+	      last = now;
+	      fn.apply(context, args);
+	    }
+	  };
+	}
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _index = __webpack_require__(239);
+
+	var _index2 = _interopRequireDefault(_index);
+
+	var _react = __webpack_require__(8);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var getDisplayName = function getDisplayName(WrappedComponent) {
+	  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+	};
+
+	exports.default = function () {
+	  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	  return function lazyload(WrappedComponent) {
+	    return function (_Component) {
+	      _inherits(LazyLoadDecorated, _Component);
+
+	      function LazyLoadDecorated() {
+	        _classCallCheck(this, LazyLoadDecorated);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LazyLoadDecorated).call(this));
+
+	        _this.displayName = 'LazyLoad' + getDisplayName(WrappedComponent);
+	        return _this;
+	      }
+
+	      _createClass(LazyLoadDecorated, [{
+	        key: 'render',
+	        value: function render() {
+	          return _react2.default.createElement(
+	            _index2.default,
+	            options,
+	            _react2.default.createElement(WrappedComponent, this.props)
+	          );
+	        }
+	      }]);
+
+	      return LazyLoadDecorated;
+	    }(_react.Component);
+	  };
+	};
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -27625,51 +28182,55 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'form',
-	        { onSubmit: this.createPost, className: 'ui form' },
+	        'div',
+	        { className: 'ui segment' },
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'required field' },
-	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Title'
-	          ),
-	          _react2.default.createElement('input', { onChange: this.handleTitleChange, name: 'title', type: 'text', placeholder: 'Short Explanation' })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'two fields' },
+	          'form',
+	          { onSubmit: this.createPost, className: 'ui form' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'required field' },
 	            _react2.default.createElement(
 	              'label',
 	              null,
-	              'Option 1'
+	              'Title'
 	            ),
-	            _react2.default.createElement('input', { onChange: this.handleOption1Change, name: 'option1', type: 'text', placeholder: 'First Option' })
+	            _react2.default.createElement('input', { onChange: this.handleTitleChange, name: 'title', type: 'text', placeholder: 'Short Explanation' })
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'required field' },
+	            { className: 'two fields' },
 	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Option 2'
+	              'div',
+	              { className: 'required field' },
+	              _react2.default.createElement(
+	                'label',
+	                null,
+	                'Option 1'
+	              ),
+	              _react2.default.createElement('input', { onChange: this.handleOption1Change, name: 'option1', type: 'text', placeholder: 'First Option' })
 	            ),
-	            _react2.default.createElement('input', { onChange: this.handleOption2Change, name: 'option2', type: 'text', placeholder: 'Second Option' })
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'required field' },
+	              _react2.default.createElement(
+	                'label',
+	                null,
+	                'Option 2'
+	              ),
+	              _react2.default.createElement('input', { onChange: this.handleOption2Change, name: 'option2', type: 'text', placeholder: 'Second Option' })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactRouter.Link,
+	            { to: '/', className: 'ui button' },
+	            'Cancel'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'ui right floated color blue submit button' },
+	            'Create'
 	          )
-	        ),
-	        _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/', className: 'ui button' },
-	          'Cancel'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { className: 'ui right floated color blue submit button' },
-	          'Create'
 	        )
 	      );
 	    }
@@ -27681,7 +28242,7 @@
 	exports.default = CreatePost;
 
 /***/ },
-/* 240 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';

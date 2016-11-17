@@ -45,28 +45,30 @@ class CreatePost extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.createPost} className="ui form">
-        <div className="required field">
-          <label>Title</label>
-          <input onChange={this.handleTitleChange} name="title" type="text" placeholder="Short Explanation"/>
-        </div>
-        <div className="two fields">
+      <div className="ui segment">
+        <form onSubmit={this.createPost} className="ui form">
           <div className="required field">
-            <label>Option 1</label>
-            <input onChange={this.handleOption1Change} name="option1" type="text" placeholder="First Option"/>
+            <label>Title</label>
+            <input onChange={this.handleTitleChange} name="title" type="text" placeholder="Short Explanation"/>
           </div>
-          <div className="required field">
-            <label>Option 2</label>
-            <input onChange={this.handleOption2Change} name="option2" type="text" placeholder="Second Option"/>
+          <div className="two fields">
+            <div className="required field">
+              <label>Option 1</label>
+              <input onChange={this.handleOption1Change} name="option1" type="text" placeholder="First Option"/>
+            </div>
+            <div className="required field">
+              <label>Option 2</label>
+              <input onChange={this.handleOption2Change} name="option2" type="text" placeholder="Second Option"/>
+            </div>
           </div>
-        </div>
-        <Link to="/" className="ui button">
-          Cancel
-        </Link>
-        <button className="ui right floated color blue submit button">
-          Create
-        </button>
-      </form>
+          <Link to="/" className="ui button">
+            Cancel
+          </Link>
+          <button className="ui right floated color blue submit button">
+            Create
+          </button>
+        </form>
+      </div>
     )
   }
 }
