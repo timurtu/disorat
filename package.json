@@ -42,6 +42,7 @@
     "react": "^15.3.2",
     "react-chartjs": "^0.8.0",
     "react-dom": "^15.3.2",
+    "react-lazyload": "^2.2.0",
     "react-router": "^3.0.0",
     "react-simple-pie-chart": "^0.4.0",
     "rimraf": "^2.5.4",
@@ -68,8 +69,5 @@
   "bugs": {
     "url": "https://github.com/timurtu/disorat/issues"
   },
-  "homepage": "https://github.com/timurtu/disorat#readme",
-  "devDependencies": {
-    "react-lazyload": "^2.2.0"
-  }
+  "homepage": "https://github.com/timurtu/disorat#readme"
 }
