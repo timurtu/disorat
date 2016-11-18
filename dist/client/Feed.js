@@ -58,6 +58,9 @@ var Feed = function (_React$Component) {
           return JSON.parse(p);
         });
         _this2.setState({ posts: posts });
+
+        var docTitle = document.querySelector('title');
+        docTitle.textContent = 'disorat | Vote on Anything';
       }).catch(function (e) {
         return console.error(e);
       });

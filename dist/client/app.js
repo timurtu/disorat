@@ -22,10 +22,6 @@ var _Feed = require('./Feed');
 
 var _Feed2 = _interopRequireDefault(_Feed);
 
-var _Profile = require('./Profile');
-
-var _Profile2 = _interopRequireDefault(_Profile);
-
 var _CreatePost = require('./CreatePost');
 
 var _CreatePost2 = _interopRequireDefault(_CreatePost);
@@ -35,6 +31,11 @@ var _DetailedPost = require('./DetailedPost');
 var _DetailedPost2 = _interopRequireDefault(_DetailedPost);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import Profile from './Profile'
+/**
+ * Created by timur on 11/11/16.
+ */
 
 var App = function App(_ref) {
   var children = _ref.children;
@@ -50,9 +51,7 @@ var App = function App(_ref) {
       children
     )
   );
-}; /**
-    * Created by timur on 11/11/16.
-    */
+};
 
 var scrollTop = function scrollTop() {
   return window.scrollTo(0, 0);
@@ -66,7 +65,6 @@ _reactDom2.default.render(_react2.default.createElement(
     { path: '/', component: App },
     _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/feed' }),
     _react2.default.createElement(_reactRouter.Route, { path: '/feed', component: _Feed2.default }),
-    _react2.default.createElement(_reactRouter.Route, { path: '/profile', component: _Profile2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: '/create', component: _CreatePost2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: '/:title', component: _DetailedPost2.default })
   )

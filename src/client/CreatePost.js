@@ -14,6 +14,11 @@ let title, option1, option2
 
 class CreatePost extends React.Component {
 
+  componentDidMount() {
+    const docTitle = document.querySelector('title')
+    docTitle.textContent = 'disorat | Create a Vote'
+  }
+
   handleTitleChange(e) {
     title = e.target.value
   }

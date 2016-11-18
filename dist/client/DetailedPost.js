@@ -94,6 +94,9 @@ var DetailedPost = function (_React$Component) {
           reasons1: _this2.sortReasons(reasons1),
           reasons2: _this2.sortReasons(reasons2)
         });
+
+        var docTitle = document.querySelector('title');
+        docTitle.textContent = 'disorat | ' + title + ' | ' + option1 + ' vs ' + option2;
       });
     }
   }, {

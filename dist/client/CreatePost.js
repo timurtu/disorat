@@ -40,6 +40,12 @@ var CreatePost = function (_React$Component) {
   }
 
   _createClass(CreatePost, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var docTitle = document.querySelector('title');
+      docTitle.textContent = 'disorat | Create a Vote';
+    }
+  }, {
     key: 'handleTitleChange',
     value: function handleTitleChange(e) {
       title = e.target.value;

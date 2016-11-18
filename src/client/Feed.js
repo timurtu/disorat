@@ -21,6 +21,9 @@ class Feed extends React.Component {
       .then(ps => {
         const posts = ps.map(p => JSON.parse(p))
         this.setState({ posts })
+
+        const docTitle = document.querySelector('title')
+        docTitle.textContent = 'disorat | Vote on Anything'
       })
       .catch(e => console.error(e))
   }

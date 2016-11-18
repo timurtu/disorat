@@ -52,6 +52,9 @@ class DetailedPost extends React.Component {
           reasons1: this.sortReasons(reasons1),
           reasons2: this.sortReasons(reasons2)
         })
+
+        const docTitle = document.querySelector('title')
+        docTitle.textContent = `disorat | ${title} | ${option1} vs ${option2}`
       })
   }
 
