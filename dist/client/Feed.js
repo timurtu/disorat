@@ -71,7 +71,7 @@ var Feed = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'ui cards' },
-        this.state.posts.map(function (p) {
+        this.state.posts.map(function (p, i) {
           return _react2.default.createElement(
             _reactLazyload2.default,
             { key: p.id, height: 170 },

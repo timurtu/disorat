@@ -14,6 +14,10 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRouter = require('react-router');
 
+var _reactGa = require('react-ga');
+
+var _reactGa2 = _interopRequireDefault(_reactGa);
+
 var _Navbar = require('./Navbar');
 
 var _Navbar2 = _interopRequireDefault(_Navbar);
@@ -33,9 +37,9 @@ var _DetailedPost2 = _interopRequireDefault(_DetailedPost);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import Profile from './Profile'
-/**
- * Created by timur on 11/11/16.
- */
+_reactGa2.default.initialize('UA-87619352-1'); /**
+                                                * Created by timur on 11/11/16.
+                                                */
 
 var App = function App(_ref) {
   var children = _ref.children;
@@ -53,19 +57,21 @@ var App = function App(_ref) {
   );
 };
 
-var scrollTop = function scrollTop() {
-  return window.scrollTo(0, 0);
-};
+function logPageView() {
+  window.scrollTo(0, 0);
+  _reactGa2.default.set({ page: window.location.pathname });
+  _reactGa2.default.pageview(window.location.pathname);
+}
 
 _reactDom2.default.render(_react2.default.createElement(
   _reactRouter.Router,
-  { onUpdate: scrollTop, history: _reactRouter.browserHistory },
+  { onUpdate: logPageView, history: _reactRouter.browserHistory },
   _react2.default.createElement(
     _reactRouter.Route,
     { path: '/', component: App },
     _react2.default.createElement(_reactRouter.IndexRedirect, { to: '/feed' }),
     _react2.default.createElement(_reactRouter.Route, { path: '/feed', component: _Feed2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: '/create', component: _CreatePost2.default }),
-    _react2.default.createElement(_reactRouter.Route, { path: '/:title', component: _DetailedPost2.default })
+    _react2.default.createElement(_reactRouter.Route, { path: '/:id', component: _DetailedPost2.default })
   )
 ), _domali2.default.getId('root'));

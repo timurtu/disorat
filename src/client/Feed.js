@@ -31,7 +31,7 @@ class Feed extends React.Component {
   render() {
     return (
       <div className="ui cards">
-        {this.state.posts.map(p =>
+        {this.state.posts.map((p, i) =>
           <LazyLoad key={p.id} height={170}>
             <Post post={p}/>
           </LazyLoad>)}
