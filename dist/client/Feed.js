@@ -70,14 +70,29 @@ var Feed = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'ui cards' },
-        this.state.posts.map(function (p, i) {
-          return _react2.default.createElement(
-            _reactLazyload2.default,
-            { key: p.id, height: 170 },
-            _react2.default.createElement(Post, { post: p })
-          );
-        })
+        null,
+        _react2.default.createElement(
+          'div',
+          { className: 'ui cards' },
+          this.state.posts.map(function (p, i) {
+            return _react2.default.createElement(
+              _reactLazyload2.default,
+              { key: p.id, height: 170 },
+              _react2.default.createElement(Post, { post: p })
+            );
+          })
+        ),
+        _react2.default.createElement(
+          _reactRouter.Link,
+          { to: '/create', style: {
+              position: 'fixed',
+              right: '1em',
+              bottom: '2em',
+              zIndex: '4',
+              boxShadow: '0 3px 5px rgba(0, 0, 0, .25)'
+            }, className: 'massive circular ui color blue icon button' },
+          _react2.default.createElement('i', { className: 'plus icon' })
+        )
       );
     }
   }]);

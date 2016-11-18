@@ -37,30 +37,34 @@ var Navbar = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { style: {
-            width: '100%',
-            height: '3em',
-            position: 'fixed',
-            zIndex: 3,
-            top: '0',
-            left: '0',
-            background: '#f7f7f7'
-          } },
+        null,
         _react2.default.createElement(
-          'nav',
-          { className: 'ui secondary pointing menu' },
+          'div',
+          { style: {
+              width: '100%',
+              height: '3em',
+              position: 'fixed',
+              zIndex: 3,
+              top: '0',
+              left: '0',
+              background: '#f7f7f7'
+            } },
           _react2.default.createElement(
-            _reactRouter.Link,
-            { to: '/feed', className: 'item', activeClassName: 'active' },
-            'Feed'
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'right menu' },
+            'nav',
+            { className: 'ui secondary pointing menu' },
             _react2.default.createElement(
               _reactRouter.Link,
-              { to: '/create', className: 'ui item', activeClassName: 'active' },
-              'Create'
+              { to: '/feed', className: 'item', activeClassName: 'active' },
+              'Feed'
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'right menu' },
+              _react2.default.createElement(
+                _reactRouter.Link,
+                { to: '/create', className: 'ui item', activeClassName: 'active' },
+                'Create'
+              )
             )
           )
         )

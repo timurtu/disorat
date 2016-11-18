@@ -30,12 +30,25 @@ class Feed extends React.Component {
 
   render() {
     return (
-      <div className="ui cards">
-        {this.state.posts.map((p, i) =>
-          <LazyLoad key={p.id} height={170}>
-            <Post post={p}/>
-          </LazyLoad>)}
+      <div>
+        <div className="ui cards">
+          {this.state.posts.map((p, i) =>
+            <LazyLoad key={p.id} height={170}>
+              <Post post={p}/>
+            </LazyLoad>)}
+        </div>
+
+        <Link to="/create" style={{
+          position: 'fixed',
+          right: '1em',
+          bottom: '2em',
+          zIndex: '4',
+          boxShadow: '0 3px 5px rgba(0, 0, 0, .25)'
+        }} className="massive circular ui color blue icon button">
+          <i className="plus icon"></i>
+        </Link>
       </div>
+
     )
   }
 }

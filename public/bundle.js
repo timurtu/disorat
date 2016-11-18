@@ -27531,30 +27531,34 @@
 
 	      return _react2.default.createElement(
 	        'div',
-	        { style: {
-	            width: '100%',
-	            height: '3em',
-	            position: 'fixed',
-	            zIndex: 3,
-	            top: '0',
-	            left: '0',
-	            background: '#f7f7f7'
-	          } },
+	        null,
 	        _react2.default.createElement(
-	          'nav',
-	          { className: 'ui secondary pointing menu' },
+	          'div',
+	          { style: {
+	              width: '100%',
+	              height: '3em',
+	              position: 'fixed',
+	              zIndex: 3,
+	              top: '0',
+	              left: '0',
+	              background: '#f7f7f7'
+	            } },
 	          _react2.default.createElement(
-	            _reactRouter.Link,
-	            { to: '/feed', className: 'item', activeClassName: 'active' },
-	            'Feed'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'right menu' },
+	            'nav',
+	            { className: 'ui secondary pointing menu' },
 	            _react2.default.createElement(
 	              _reactRouter.Link,
-	              { to: '/create', className: 'ui item', activeClassName: 'active' },
-	              'Create'
+	              { to: '/feed', className: 'item', activeClassName: 'active' },
+	              'Feed'
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'right menu' },
+	              _react2.default.createElement(
+	                _reactRouter.Link,
+	                { to: '/create', className: 'ui item', activeClassName: 'active' },
+	                'Create'
+	              )
 	            )
 	          )
 	        )
@@ -27643,14 +27647,29 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'ui cards' },
-	        this.state.posts.map(function (p, i) {
-	          return _react2.default.createElement(
-	            _reactLazyload2.default,
-	            { key: p.id, height: 170 },
-	            _react2.default.createElement(Post, { post: p })
-	          );
-	        })
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'ui cards' },
+	          this.state.posts.map(function (p, i) {
+	            return _react2.default.createElement(
+	              _reactLazyload2.default,
+	              { key: p.id, height: 170 },
+	              _react2.default.createElement(Post, { post: p })
+	            );
+	          })
+	        ),
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/create', style: {
+	              position: 'fixed',
+	              right: '1em',
+	              bottom: '2em',
+	              zIndex: '4',
+	              boxShadow: '0 3px 5px rgba(0, 0, 0, .25)'
+	            }, className: 'massive circular ui color blue icon button' },
+	          _react2.default.createElement('i', { className: 'plus icon' })
+	        )
 	      );
 	    }
 	  }]);
