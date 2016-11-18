@@ -34,31 +34,60 @@ var Profile = function (_React$Component) {
   _createClass(Profile, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      this.setState({ route: 'profile' });
+      this.setState({
+        route: 'profile',
+        loggedIn: false
+      });
+    }
+  }, {
+    key: 'loggedInDescriber',
+    value: function loggedInDescriber() {
+      var _this2 = this;
+
+      var page = void 0;
+      if (this.state.loggedIn) {
+        page = _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h1',
+            null,
+            this.state.user.name
+          )
+        );
+      } else {
+        page = _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h1',
+            null,
+            'Login with Facebook'
+          ),
+          _react2.default.createElement(
+            _reactRouter.Link,
+            { to: '/', className: 'ui button' },
+            'Cancel'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: function onClick() {
+                fetch('/login', { method: 'POST' }).then(function (res) {
+                  return res.json();
+                }).then(function (user) {
+                  return _this2.setState({ user: user, loggedIn: true });
+                });
+              }, className: 'ui button right floated color blue' },
+            'Login'
+          )
+        );
+      }
+      return page;
     }
   }, {
     key: 'render',
     value: function render() {
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'h1',
-          null,
-          'Login with Facebook'
-        ),
-        _react2.default.createElement(
-          _reactRouter.Link,
-          { to: '/', className: 'ui button' },
-          'Cancel'
-        ),
-        _react2.default.createElement(
-          'button',
-          { className: 'ui button right floated color blue' },
-          'Login'
-        )
-      );
+      return this.loggedInDescriber();
     }
   }]);
 

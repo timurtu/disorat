@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom'
 import { Router, IndexRedirect, Route, browserHistory } from 'react-router'
 import Navbar from './Navbar'
 import Posts from './Feed'
-// import Profile from './Profile'
+import Profile from './Profile'
 import CreatePost from './CreatePost'
 import DetailedPost from './DetailedPost'
 
@@ -30,7 +30,7 @@ ReactDOM.render((
     <Route path="/" component={App}>
       <IndexRedirect to="/feed"/>
       <Route path="/feed" component={Posts}/>
-      {/*<Route path="/profile" component={Profile}/>*/}
+      <Route path="/profile" component={Profile}/>
       <Route path="/create" component={CreatePost}/>
       <Route path="/:title" component={DetailedPost}/>
     </Route>
