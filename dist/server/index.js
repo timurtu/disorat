@@ -39,8 +39,6 @@ _app2.default.post('/posts', function (req, res) {
       return post2Total - post1Total;
     });
 
-    (0, _gutilColorLog2.default)('cyan', sortedPosts);
-
     if (req.query.limit >= 0) {
       res.json(sortedPosts.slice(0, req.query.limit));
     } else {

@@ -86,6 +86,11 @@ var CreatePost = function (_React$Component) {
         'div',
         { className: 'ui segment' },
         _react2.default.createElement(
+          'h1',
+          null,
+          'Create a New Vote'
+        ),
+        _react2.default.createElement(
           'form',
           { onSubmit: this.createPost, className: 'ui form' },
           _react2.default.createElement(
@@ -96,7 +101,7 @@ var CreatePost = function (_React$Component) {
               null,
               'Title'
             ),
-            _react2.default.createElement('input', { onChange: this.handleTitleChange, name: 'title', type: 'text', placeholder: 'Short Explanation' })
+            _react2.default.createElement('input', { onChange: this.handleTitleChange, name: 'title', type: 'text', placeholder: 'What are we voting on?' })
           ),
           _react2.default.createElement(
             'div',
@@ -106,20 +111,20 @@ var CreatePost = function (_React$Component) {
               { className: 'required field' },
               _react2.default.createElement(
                 'label',
-                null,
+                { style: { color: '#00B5AD' } },
                 'Option 1'
               ),
-              _react2.default.createElement('input', { onChange: this.handleOption1Change, name: 'option1', type: 'text', placeholder: 'First Option' })
+              _react2.default.createElement('input', { onChange: this.handleOption1Change, name: 'option1', type: 'text', placeholder: 'First option' })
             ),
             _react2.default.createElement(
               'div',
               { className: 'required field' },
               _react2.default.createElement(
                 'label',
-                null,
+                { style: { color: '#F2711C' } },
                 'Option 2'
               ),
-              _react2.default.createElement('input', { onChange: this.handleOption2Change, name: 'option2', type: 'text', placeholder: 'Second Option' })
+              _react2.default.createElement('input', { onChange: this.handleOption2Change, name: 'option2', type: 'text', placeholder: 'Second option' })
             )
           ),
           _react2.default.createElement(

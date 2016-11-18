@@ -51,24 +51,29 @@ class CreatePost extends React.Component {
   render() {
     return (
       <div className="ui segment">
+        <h1>Create a New Vote</h1>
         <form onSubmit={this.createPost} className="ui form">
           <div className="required field">
             <label>Title</label>
-            <input onChange={this.handleTitleChange} name="title" type="text" placeholder="Short Explanation"/>
+            <input onChange={this.handleTitleChange} name="title" type="text" placeholder="What are we voting on?"/>
           </div>
+
           <div className="two fields">
             <div className="required field">
-              <label>Option 1</label>
-              <input onChange={this.handleOption1Change} name="option1" type="text" placeholder="First Option"/>
+              <label style={{ color: '#00B5AD' }}>Option 1</label>
+              <input onChange={this.handleOption1Change} name="option1" type="text" placeholder="First option"/>
             </div>
+
             <div className="required field">
-              <label>Option 2</label>
-              <input onChange={this.handleOption2Change} name="option2" type="text" placeholder="Second Option"/>
+              <label style={{ color: '#F2711C' }}>Option 2</label>
+              <input onChange={this.handleOption2Change} name="option2" type="text" placeholder="Second option"/>
             </div>
           </div>
+
           <Link to="/" className="ui button">
             Cancel
           </Link>
+
           <button className="ui right floated color blue submit button">
             Create
           </button>

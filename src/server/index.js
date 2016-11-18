@@ -29,8 +29,6 @@ app.post('/posts', (req, res) => {
         return post2Total - post1Total
       })
 
-      log('cyan', sortedPosts)
-
       if (req.query.limit >= 0) {
         res.json(sortedPosts.slice(0, req.query.limit))
       } else {
