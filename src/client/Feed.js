@@ -7,6 +7,7 @@ import React from 'react'
 import { Link } from 'react-router'
 import PieChart from 'react-simple-pie-chart'
 import LazyLoad from 'react-lazyload'
+import ReactGA from 'react-ga'
 
 
 class Feed extends React.Component {
@@ -33,7 +34,7 @@ class Feed extends React.Component {
       <div>
         <div className="ui cards">
           {this.state.posts.map((p, i) =>
-            <LazyLoad key={p.id} height={170}>
+            <LazyLoad key={i} height={170}>
               <Post post={p}/>
             </LazyLoad>)}
         </div>
@@ -100,6 +101,11 @@ class Post extends React.Component {
                 .then(res => res.json())
                 .then(post => {
                   const totalVotes = this.state.totalVotes + 1
+                  ReactGA.event({
+                    category: 'Vote',
+                    action: `Voted for ${this.state.post.option1}`,
+                    label: 'Homepage Thing'
+                  })
                   this.setState({ post, totalVotes })
                 })
                 .catch(e => console.error(e))

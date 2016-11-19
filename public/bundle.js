@@ -27599,6 +27599,10 @@
 
 	var _reactLazyload2 = _interopRequireDefault(_reactLazyload);
 
+	var _reactGa = __webpack_require__(235);
+
+	var _reactGa2 = _interopRequireDefault(_reactGa);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27654,7 +27658,7 @@
 	          this.state.posts.map(function (p, i) {
 	            return _react2.default.createElement(
 	              _reactLazyload2.default,
-	              { key: p.id, height: 170 },
+	              { key: i, height: 170 },
 	              _react2.default.createElement(Post, { post: p })
 	            );
 	          })
@@ -27748,6 +27752,11 @@
 	                    return res.json();
 	                  }).then(function (post) {
 	                    var totalVotes = _this4.state.totalVotes + 1;
+	                    _reactGa2.default.event({
+	                      category: 'Vote',
+	                      action: 'Voted for ' + _this4.state.post.option1,
+	                      label: 'Homepage Thing'
+	                    });
 	                    _this4.setState({ post: post, totalVotes: totalVotes });
 	                  }).catch(function (e) {
 	                    return console.error(e);
