@@ -18,8 +18,7 @@ class Feed extends React.Component {
   componentDidMount() {
     fetch('/posts', { method: 'POST' })
       .then(res => res.json())
-      .then(ps => {
-        const posts = ps.map(p => JSON.parse(p))
+      .then(posts => {
         this.setState({ posts })
 
         const docTitle = document.querySelector('title')

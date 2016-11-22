@@ -16,20 +16,14 @@ _app2.default.post('/posts/:id/upvote1', function (req, res) {
 
   var id = req.params.id;
 
-  _db2.default.lrangeAsync('posts', 0, -1).then(function (posts) {
+  _db2.default.hgetAsync('feed', id).then(function (p) {
+    return JSON.parse(p);
+  }).then(function (p) {
+    var inc = { option1votes: p.option1votes += 1 };
+    var post = Object.assign({}, p, inc);
 
-    var index = void 0;
-
-    var post = JSON.parse(posts.find(function (p, i) {
-      index = i;
-      return JSON.parse(p).id == id;
-    }));
-
-    var inc = post.option1votes += 1;
-    var incPost = Object.assign({}, post, { option1votes: inc });
-
-    _db2.default.lsetAsync('posts', index, JSON.stringify(incPost)).then(function (p) {
-      res.json(incPost);
+    _db2.default.hsetAsync('feed', id, JSON.stringify(post)).then(function (x) {
+      return res.json(post);
     }).catch(_utils.onError);
   }).catch(_utils.onError);
 }); /**
@@ -40,20 +34,14 @@ _app2.default.post('/posts/:id/upvote2', function (req, res) {
 
   var id = req.params.id;
 
-  _db2.default.lrangeAsync('posts', 0, -1).then(function (posts) {
+  _db2.default.hgetAsync('feed', id).then(function (p) {
+    return JSON.parse(p);
+  }).then(function (p) {
+    var inc = { option2votes: p.option2votes += 1 };
+    var post = Object.assign({}, p, inc);
 
-    var index = void 0;
-
-    var post = JSON.parse(posts.find(function (p, i) {
-      index = i;
-      return JSON.parse(p).id == id;
-    }));
-
-    var inc = post.option2votes += 1;
-    var incPost = Object.assign({}, post, { option2votes: inc });
-
-    _db2.default.lsetAsync('posts', index, JSON.stringify(incPost)).then(function (p) {
-      res.json(incPost);
+    _db2.default.hsetAsync('feed', id, JSON.stringify(post)).then(function (x) {
+      return res.json(post);
     }).catch(_utils.onError);
   }).catch(_utils.onError);
 });

@@ -53,10 +53,7 @@ var Feed = function (_React$Component) {
 
       fetch('/posts', { method: 'POST' }).then(function (res) {
         return res.json();
-      }).then(function (ps) {
-        var posts = ps.map(function (p) {
-          return JSON.parse(p);
-        });
+      }).then(function (posts) {
         _this2.setState({ posts: posts });
 
         var docTitle = document.querySelector('title');

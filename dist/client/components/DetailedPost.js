@@ -78,15 +78,15 @@ var DetailedPost = function (_React$Component) {
       fetch('/posts' + location.pathname, { method: 'POST' }).then(function (res) {
         return res.json();
       }).then(function (p) {
-        var _JSON$parse = JSON.parse(p),
-            id = _JSON$parse.id,
-            title = _JSON$parse.title,
-            option1 = _JSON$parse.option1,
-            option2 = _JSON$parse.option2,
-            option1votes = _JSON$parse.option1votes,
-            option2votes = _JSON$parse.option2votes,
-            reasons1 = _JSON$parse.reasons1,
-            reasons2 = _JSON$parse.reasons2;
+        var id = p.id,
+            title = p.title,
+            option1 = p.option1,
+            option2 = p.option2,
+            option1votes = p.option1votes,
+            option2votes = p.option2votes,
+            reasons1 = p.reasons1,
+            reasons2 = p.reasons2;
+
 
         _this2.setState({
           id: id,

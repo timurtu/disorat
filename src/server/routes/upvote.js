@@ -11,48 +11,32 @@ app.post('/posts/:id/upvote1', (req, res) => {
 
   const id = req.params.id
 
-  db.lrangeAsync('posts', 0, -1)
-    .then(posts => {
+  db.hgetAsync('feed', id)
+    .then(p => JSON.parse(p))
+    .then(p => {
+      const inc = { option1votes: p.option1votes += 1 }
+      const post = Object.assign({}, p, inc)
 
-      let index
-
-      const post = JSON.parse(posts.find((p, i) => {
-        index = i
-        return JSON.parse(p).id == id
-      }))
-
-      const inc = post.option1votes += 1
-      const incPost = Object.assign({}, post, { option1votes: inc })
-
-      db.lsetAsync('posts', index, JSON.stringify(incPost))
-        .then(p => {
-          res.json(incPost)
-        }).catch(onError)
-
-    }).catch(onError)
+      db.hsetAsync('feed', id, JSON.stringify(post))
+        .then(x => res.json(post))
+        .catch(onError)
+    })
+    .catch(onError)
 })
 
 app.post('/posts/:id/upvote2', (req, res) => {
 
   const id = req.params.id
 
-  db.lrangeAsync('posts', 0, -1)
-    .then(posts => {
+  db.hgetAsync('feed', id)
+    .then(p => JSON.parse(p))
+    .then(p => {
+      const inc = { option2votes: p.option2votes += 1 }
+      const post = Object.assign({}, p, inc)
 
-      let index
-
-      const post = JSON.parse(posts.find((p, i) => {
-        index = i
-        return JSON.parse(p).id == id
-      }))
-
-      const inc = post.option2votes += 1
-      const incPost = Object.assign({}, post, { option2votes: inc })
-
-      db.lsetAsync('posts', index, JSON.stringify(incPost))
-        .then(p => {
-          res.json(incPost)
-        }).catch(onError)
-
-    }).catch(onError)
+      db.hsetAsync('feed', id, JSON.stringify(post))
+        .then(x => res.json(post))
+        .catch(onError)
+    })
+    .catch(onError)
 })

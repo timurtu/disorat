@@ -12,15 +12,9 @@ app.post('/reason/:id/:reason/reason1', (req, res) => {
   const id = req.params.id
   const reason = req.params.reason
 
-  db.lrangeAsync('posts', 0, -1)
-    .then(posts => {
-
-      let index
-
-      const post = JSON.parse(posts.find((p, i) => {
-        index = i
-        return JSON.parse(p).id == id
-      }))
+  db.hgetAsync('feed', id)
+    .then(p => {
+      const post = JSON.parse(p)
 
       const matches = post.reasons1.find(r => r.reason === reason)
 
@@ -31,12 +25,11 @@ app.post('/reason/:id/:reason/reason1', (req, res) => {
         post.reasons1.unshift({ reason, count: 1 })
       }
 
-      db.lsetAsync('posts', index, JSON.stringify(post))
-        .then(p => {
-          res.json(post)
-        }).catch(onError)
-
-    }).catch(onError)
+      db.hsetAsync('feed', id, JSON.stringify(post))
+        .then(x => res.json(post))
+        .catch(onError)
+    })
+    .catch(onError)
 })
 
 app.post('/reason/:id/:reason/reason2', (req, res) => {
@@ -44,15 +37,9 @@ app.post('/reason/:id/:reason/reason2', (req, res) => {
   const id = req.params.id
   const reason = req.params.reason
 
-  db.lrangeAsync('posts', 0, -1)
-    .then(posts => {
-
-      let index
-
-      const post = JSON.parse(posts.find((p, i) => {
-        index = i
-        return JSON.parse(p).id == id
-      }))
+  db.hgetAsync('feed', id)
+    .then(p => {
+      const post = JSON.parse(p)
 
       const matches = post.reasons2.find(r => r.reason === reason)
 
@@ -63,10 +50,9 @@ app.post('/reason/:id/:reason/reason2', (req, res) => {
         post.reasons2.unshift({ reason, count: 1 })
       }
 
-      db.lsetAsync('posts', index, JSON.stringify(post))
-        .then(p => {
-          res.json(post)
-        }).catch(onError)
-
-    }).catch(onError)
+      db.hsetAsync('feed', id, JSON.stringify(post))
+        .then(x => res.json(post))
+        .catch(onError)
+    })
+    .catch(onError)
 })

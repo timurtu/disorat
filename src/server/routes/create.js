@@ -11,19 +11,19 @@ import { onError } from '../tools/utils'
 app.post('/create', (req, res) => {
 
   const id = Math.floor(Math.random() * Date.now())
-  const post = JSON.stringify(Object.assign({}, JSON.parse(req.query.post), {
+  const post = Object.assign({}, JSON.parse(req.query.post), {
     id,
     option1votes: 0,
     option2votes: 0,
     reasons1: [],
     reasons2: []
-  }))
+  })
 
-  db.lpushAsync('posts', post)
+  db.hsetAsync('feed', id, JSON.stringify(post))
     .then(p => {
       log('green', p)
     })
     .catch(onError)
 
-  res.json(JSON.parse(post))
+  res.json(post)
 })

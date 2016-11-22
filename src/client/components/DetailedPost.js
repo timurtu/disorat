@@ -41,7 +41,7 @@ class DetailedPost extends React.Component {
     fetch(`/posts${location.pathname}`, { method: 'POST' })
       .then(res => res.json())
       .then(p => {
-        const { id, title, option1, option2, option1votes, option2votes, reasons1, reasons2 } = JSON.parse(p)
+        const { id, title, option1, option2, option1votes, option2votes, reasons1, reasons2 } = p
 
         this.setState({
           id,

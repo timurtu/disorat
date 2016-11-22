@@ -17,14 +17,8 @@ _app2.default.post('/reason/:id/:reason/reason1', function (req, res) {
   var id = req.params.id;
   var reason = req.params.reason;
 
-  _db2.default.lrangeAsync('posts', 0, -1).then(function (posts) {
-
-    var index = void 0;
-
-    var post = JSON.parse(posts.find(function (p, i) {
-      index = i;
-      return JSON.parse(p).id == id;
-    }));
+  _db2.default.hgetAsync('feed', id).then(function (p) {
+    var post = JSON.parse(p);
 
     var matches = post.reasons1.find(function (r) {
       return r.reason === reason;
@@ -37,8 +31,8 @@ _app2.default.post('/reason/:id/:reason/reason1', function (req, res) {
       post.reasons1.unshift({ reason: reason, count: 1 });
     }
 
-    _db2.default.lsetAsync('posts', index, JSON.stringify(post)).then(function (p) {
-      res.json(post);
+    _db2.default.hsetAsync('feed', id, JSON.stringify(post)).then(function (x) {
+      return res.json(post);
     }).catch(_utils.onError);
   }).catch(_utils.onError);
 }); /**
@@ -50,14 +44,8 @@ _app2.default.post('/reason/:id/:reason/reason2', function (req, res) {
   var id = req.params.id;
   var reason = req.params.reason;
 
-  _db2.default.lrangeAsync('posts', 0, -1).then(function (posts) {
-
-    var index = void 0;
-
-    var post = JSON.parse(posts.find(function (p, i) {
-      index = i;
-      return JSON.parse(p).id == id;
-    }));
+  _db2.default.hgetAsync('feed', id).then(function (p) {
+    var post = JSON.parse(p);
 
     var matches = post.reasons2.find(function (r) {
       return r.reason === reason;
@@ -70,8 +58,8 @@ _app2.default.post('/reason/:id/:reason/reason2', function (req, res) {
       post.reasons2.unshift({ reason: reason, count: 1 });
     }
 
-    _db2.default.lsetAsync('posts', index, JSON.stringify(post)).then(function (p) {
-      res.json(post);
+    _db2.default.hsetAsync('feed', id, JSON.stringify(post)).then(function (x) {
+      return res.json(post);
     }).catch(_utils.onError);
   }).catch(_utils.onError);
 });

@@ -23,17 +23,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _app2.default.post('/create', function (req, res) {
 
   var id = Math.floor(Math.random() * Date.now());
-  var post = JSON.stringify(Object.assign({}, JSON.parse(req.query.post), {
+  var post = Object.assign({}, JSON.parse(req.query.post), {
     id: id,
     option1votes: 0,
     option2votes: 0,
     reasons1: [],
     reasons2: []
-  }));
+  });
 
-  _db2.default.lpushAsync('posts', post).then(function (p) {
+  _db2.default.hsetAsync('feed', id, JSON.stringify(post)).then(function (p) {
     (0, _gutilColorLog2.default)('green', p);
   }).catch(_utils.onError);
 
-  res.json(JSON.parse(post));
+  res.json(post);
 });

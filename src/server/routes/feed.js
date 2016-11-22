@@ -7,25 +7,27 @@ import db from '../tools/db'
 import { onError } from '../tools/utils'
 
 
+const sortByVotes = (x, y) => {
+  const total1 = x.option1votes + x.option2votes
+  const total2 = y.option1votes + y.option2votes
+
+  return total2 - total1
+}
+
 app.post('/posts', (req, res) => {
-  db.lrangeAsync('posts', 0, -1)
-    .then(posts => {
 
-      const sortedPosts = posts.sort(function (x, y) {
+  db.hgetallAsync('feed')
+    .then(postsMap => {
 
-        const post1 = JSON.parse(x)
-        const post2 = JSON.parse(y)
+      const posts = []
 
-        const post1Total = post1.option1votes + post1.option2votes
-        const post2Total = post2.option1votes + post2.option2votes
-
-        return post2Total - post1Total
-      })
-
-      if (req.query.limit >= 0) {
-        res.json(sortedPosts.slice(0, req.query.limit))
-      } else {
-        res.json(sortedPosts)
+      for (let id in postsMap) {
+        posts.push(JSON.parse(postsMap[id]))
       }
-    }).catch(onError)
+
+      const sortedPosts = posts.sort(sortByVotes)
+
+      res.json(sortedPosts)
+    })
+    .catch(onError)
 })

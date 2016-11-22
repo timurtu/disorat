@@ -8,16 +8,17 @@ import { onError } from '../tools/utils'
 
 
 app.post('/posts/:id', (req, res) => {
-  const id = req.params.id
-  db.lrangeAsync('posts', 0, -1)
-    .then(posts => {
-      const post = JSON.parse(posts.find(p => JSON.parse(p).id == id))
 
+  const id = req.params.id
+
+  db.hgetAsync('feed', id)
+    .then(p => JSON.parse(p))
+    .then(post => {
       const postWithReasons = Object.assign({}, post, {
         reasons1: post.reasons1 || [],
         reasons2: post.reasons2 || []
       })
-
-      res.json(JSON.stringify(postWithReasons))
-    }).catch(onError)
+      res.json(postWithReasons)
+    })
+    .catch(onError)
 })
