@@ -4,6 +4,7 @@
 
 import log from 'gutil-color-log'
 
+
 export default function(req, res, next) {
 
   const start = +new Date()
@@ -14,5 +15,4 @@ export default function(req, res, next) {
   })
 
   next()
-
 }

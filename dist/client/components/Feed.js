@@ -14,21 +14,13 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
-var _reactSimplePieChart = require('react-simple-pie-chart');
-
-var _reactSimplePieChart2 = _interopRequireDefault(_reactSimplePieChart);
-
 var _reactLazyload = require('react-lazyload');
 
 var _reactLazyload2 = _interopRequireDefault(_reactLazyload);
 
-var _reactGa = require('react-ga');
+var _Post = require('./Post');
 
-var _reactGa2 = _interopRequireDefault(_reactGa);
-
-var _Ad = require('./Ad');
-
-var _Ad2 = _interopRequireDefault(_Ad);
+var _Post2 = _interopRequireDefault(_Post);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -81,13 +73,13 @@ var Feed = function (_React$Component) {
           return _react2.default.createElement(
             _reactLazyload2.default,
             { key: i, height: 170 },
-            _react2.default.createElement(Post, { ad: true, post: p })
+            _react2.default.createElement(_Post2.default, { ad: true, post: p })
           );
         } else {
           return _react2.default.createElement(
             _reactLazyload2.default,
             { key: i, height: 170 },
-            _react2.default.createElement(Post, { ad: false, post: p })
+            _react2.default.createElement(_Post2.default, { ad: false, post: p })
           );
         }
       });
@@ -119,124 +111,6 @@ var Feed = function (_React$Component) {
   }]);
 
   return Feed;
-}(_react2.default.Component);
-
-var ProgressBar = function ProgressBar(_ref) {
-  var opt1votes = _ref.opt1votes,
-      opt2votes = _ref.opt2votes;
-  return _react2.default.createElement(
-    'div',
-    { className: 'ui right floated', style: { width: '5em' } },
-    _react2.default.createElement(_reactSimplePieChart2.default, { slices: [{
-        color: '#00B5AD',
-        value: opt1votes || 1
-      }, {
-        color: '#F2711C',
-        value: opt2votes || 1
-      }] })
-  );
-};
-
-var Post = function (_React$Component2) {
-  _inherits(Post, _React$Component2);
-
-  function Post() {
-    _classCallCheck(this, Post);
-
-    return _possibleConstructorReturn(this, (Post.__proto__ || Object.getPrototypeOf(Post)).apply(this, arguments));
-  }
-
-  _createClass(Post, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-
-      var post = this.props.post;
-      var totalVotes = post.option1votes + post.option2votes;
-
-      this.setState({ post: post, totalVotes: totalVotes });
-    }
-  }, {
-    key: 'inverted',
-    value: function inverted() {
-      return {
-        color: 'rgba(255,255,261,.9)'
-      };
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this4 = this;
-
-      return _react2.default.createElement(
-        'div',
-        { className: 'card', style: {
-            backgroundColor: '#1B1C1D',
-            border: '1px solid #1B1C1D',
-            boxShadow: '0 1px 3px rgba(0,0,0, 0.25)'
-          } },
-        _react2.default.createElement(
-          _reactRouter.Link,
-          { to: '/' + this.state.post.id, className: 'content' },
-          _react2.default.createElement(
-            'div',
-            { style: this.inverted(), className: 'header' },
-            this.state.post.title
-          ),
-          _react2.default.createElement(
-            'div',
-            { style: this.inverted(), className: 'meta' },
-            this.state.totalVotes,
-            ' votes'
-          ),
-          _react2.default.createElement(ProgressBar, { opt1votes: this.state.post.option1votes, opt2votes: this.state.post.option2votes })
-        ),
-        this.props.ad ? _react2.default.createElement(_Ad2.default, null) : null,
-        _react2.default.createElement(
-          'div',
-          { className: 'extra content' },
-          _react2.default.createElement(
-            'div',
-            { className: 'ui two buttons' },
-            _react2.default.createElement(
-              'button',
-              { onClick: function onClick() {
-                  fetch('/posts/' + _this4.state.post.id + '/upvote1', { method: 'POST' }).then(function (res) {
-                    return res.json();
-                  }).then(function (post) {
-                    var totalVotes = _this4.state.totalVotes + 1;
-                    _reactGa2.default.event({
-                      category: 'Vote',
-                      action: 'Voted for ' + _this4.state.post.option1,
-                      label: 'Homepage Thing'
-                    });
-                    _this4.setState({ post: post, totalVotes: totalVotes });
-                  }).catch(function (e) {
-                    return console.error(e);
-                  });
-                }, className: 'ui inverted teal button' },
-              this.state.post.option1
-            ),
-            _react2.default.createElement(
-              'button',
-              { onClick: function onClick() {
-                  fetch('/posts/' + _this4.state.post.id + '/upvote2', { method: 'POST' }).then(function (res) {
-                    return res.json();
-                  }).then(function (post) {
-                    var totalVotes = _this4.state.totalVotes + 1;
-                    _this4.setState({ post: post, totalVotes: totalVotes });
-                  }).catch(function (e) {
-                    return console.error(e);
-                  });
-                }, className: 'ui inverted orange button' },
-              this.state.post.option2
-            )
-          )
-        )
-      );
-    }
-  }]);
-
-  return Post;
 }(_react2.default.Component);
 
 exports.default = Feed;

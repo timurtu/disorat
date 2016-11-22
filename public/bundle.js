@@ -72,11 +72,11 @@
 
 	var _Feed2 = _interopRequireDefault(_Feed);
 
-	var _CreatePost = __webpack_require__(256);
+	var _CreatePost = __webpack_require__(257);
 
 	var _CreatePost2 = _interopRequireDefault(_CreatePost);
 
-	var _DetailedPost = __webpack_require__(257);
+	var _DetailedPost = __webpack_require__(258);
 
 	var _DetailedPost2 = _interopRequireDefault(_DetailedPost);
 
@@ -27593,21 +27593,13 @@
 
 	var _reactRouter = __webpack_require__(179);
 
-	var _reactSimplePieChart = __webpack_require__(248);
-
-	var _reactSimplePieChart2 = _interopRequireDefault(_reactSimplePieChart);
-
-	var _reactLazyload = __webpack_require__(249);
+	var _reactLazyload = __webpack_require__(248);
 
 	var _reactLazyload2 = _interopRequireDefault(_reactLazyload);
 
-	var _reactGa = __webpack_require__(235);
+	var _Post = __webpack_require__(254);
 
-	var _reactGa2 = _interopRequireDefault(_reactGa);
-
-	var _Ad = __webpack_require__(255);
-
-	var _Ad2 = _interopRequireDefault(_Ad);
+	var _Post2 = _interopRequireDefault(_Post);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27660,13 +27652,13 @@
 	          return _react2.default.createElement(
 	            _reactLazyload2.default,
 	            { key: i, height: 170 },
-	            _react2.default.createElement(Post, { ad: true, post: p })
+	            _react2.default.createElement(_Post2.default, { ad: true, post: p })
 	          );
 	        } else {
 	          return _react2.default.createElement(
 	            _reactLazyload2.default,
 	            { key: i, height: 170 },
-	            _react2.default.createElement(Post, { ad: false, post: p })
+	            _react2.default.createElement(_Post2.default, { ad: false, post: p })
 	          );
 	        }
 	      });
@@ -27698,124 +27690,6 @@
 	  }]);
 
 	  return Feed;
-	}(_react2.default.Component);
-
-	var ProgressBar = function ProgressBar(_ref) {
-	  var opt1votes = _ref.opt1votes,
-	      opt2votes = _ref.opt2votes;
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'ui right floated', style: { width: '5em' } },
-	    _react2.default.createElement(_reactSimplePieChart2.default, { slices: [{
-	        color: '#00B5AD',
-	        value: opt1votes || 1
-	      }, {
-	        color: '#F2711C',
-	        value: opt2votes || 1
-	      }] })
-	  );
-	};
-
-	var Post = function (_React$Component2) {
-	  _inherits(Post, _React$Component2);
-
-	  function Post() {
-	    _classCallCheck(this, Post);
-
-	    return _possibleConstructorReturn(this, (Post.__proto__ || Object.getPrototypeOf(Post)).apply(this, arguments));
-	  }
-
-	  _createClass(Post, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-
-	      var post = this.props.post;
-	      var totalVotes = post.option1votes + post.option2votes;
-
-	      this.setState({ post: post, totalVotes: totalVotes });
-	    }
-	  }, {
-	    key: 'inverted',
-	    value: function inverted() {
-	      return {
-	        color: 'rgba(255,255,261,.9)'
-	      };
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this4 = this;
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'card', style: {
-	            backgroundColor: '#1B1C1D',
-	            border: '1px solid #1B1C1D',
-	            boxShadow: '0 1px 3px rgba(0,0,0, 0.25)'
-	          } },
-	        _react2.default.createElement(
-	          _reactRouter.Link,
-	          { to: '/' + this.state.post.id, className: 'content' },
-	          _react2.default.createElement(
-	            'div',
-	            { style: this.inverted(), className: 'header' },
-	            this.state.post.title
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { style: this.inverted(), className: 'meta' },
-	            this.state.totalVotes,
-	            ' votes'
-	          ),
-	          _react2.default.createElement(ProgressBar, { opt1votes: this.state.post.option1votes, opt2votes: this.state.post.option2votes })
-	        ),
-	        this.props.ad ? _react2.default.createElement(_Ad2.default, null) : null,
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'extra content' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'ui two buttons' },
-	            _react2.default.createElement(
-	              'button',
-	              { onClick: function onClick() {
-	                  fetch('/posts/' + _this4.state.post.id + '/upvote1', { method: 'POST' }).then(function (res) {
-	                    return res.json();
-	                  }).then(function (post) {
-	                    var totalVotes = _this4.state.totalVotes + 1;
-	                    _reactGa2.default.event({
-	                      category: 'Vote',
-	                      action: 'Voted for ' + _this4.state.post.option1,
-	                      label: 'Homepage Thing'
-	                    });
-	                    _this4.setState({ post: post, totalVotes: totalVotes });
-	                  }).catch(function (e) {
-	                    return console.error(e);
-	                  });
-	                }, className: 'ui inverted teal button' },
-	              this.state.post.option1
-	            ),
-	            _react2.default.createElement(
-	              'button',
-	              { onClick: function onClick() {
-	                  fetch('/posts/' + _this4.state.post.id + '/upvote2', { method: 'POST' }).then(function (res) {
-	                    return res.json();
-	                  }).then(function (post) {
-	                    var totalVotes = _this4.state.totalVotes + 1;
-	                    _this4.setState({ post: post, totalVotes: totalVotes });
-	                  }).catch(function (e) {
-	                    return console.error(e);
-	                  });
-	                }, className: 'ui inverted orange button' },
-	              this.state.post.option2
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return Post;
 	}(_react2.default.Component);
 
 	exports.default = Feed;
@@ -28290,139 +28164,6 @@
 /* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(8);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var PropTypes = _react2.default.PropTypes;
-
-	var size = 100;
-	var radCircumference = Math.PI * 2;
-	var center = size / 2;
-	var radius = center - 1; // padding to prevent clipping
-
-	/**
-	 * @param {Object[]} slices
-	 * @return {Object[]}
-	 */
-	function renderPaths(slices) {
-	  var total = slices.reduce(function (totalValue, _ref) {
-	    var value = _ref.value;
-	    return totalValue + value;
-	  }, 0);
-
-	  var radSegment = 0;
-	  var lastX = radius;
-	  var lastY = 0;
-
-	  return slices.map(function (_ref2, index) {
-	    var color = _ref2.color;
-	    var value = _ref2.value;
-
-	    // Should we just draw a circle?
-	    if (value === total) {
-	      return _react2.default.createElement('circle', {
-	        r: radius,
-	        cx: center,
-	        cy: center,
-	        fill: color,
-	        key: index
-	      });
-	    }
-
-	    if (value === 0) {
-	      return;
-	    }
-
-	    var valuePercentage = value / total;
-
-	    // Should the arc go the long way round?
-	    var longArc = valuePercentage <= 0.5 ? 0 : 1;
-
-	    radSegment += valuePercentage * radCircumference;
-	    var nextX = Math.cos(radSegment) * radius;
-	    var nextY = Math.sin(radSegment) * radius;
-
-	    // d is a string that describes the path of the slice.
-	    // The weirdly placed minus signs [eg, (-(lastY))] are due to the fact
-	    // that our calculations are for a graph with positive Y values going up,
-	    // but on the screen positive Y values go down.
-	    var d = ['M ' + center + ',' + center, 'l ' + lastX + ',' + -lastY, 'a' + radius + ',' + radius, '0', longArc + ',0', nextX - lastX + ',' + -(nextY - lastY), 'z'].join(' ');
-
-	    lastX = nextX;
-	    lastY = nextY;
-
-	    return _react2.default.createElement('path', { d: d, fill: color, key: index });
-	  });
-	}
-
-	/**
-	 * Generates an SVG pie chart.
-	 * @see {http://wiki.scribus.net/canvas/Making_a_Pie_Chart}
-	 */
-
-	var PieChart = (function (_React$Component) {
-	  _inherits(PieChart, _React$Component);
-
-	  function PieChart() {
-	    _classCallCheck(this, PieChart);
-
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PieChart).apply(this, arguments));
-	  }
-
-	  _createClass(PieChart, [{
-	    key: 'render',
-
-	    /**
-	     * @return {Object}
-	     */
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'svg',
-	        { viewBox: '0 0 ' + size + ' ' + size },
-	        _react2.default.createElement(
-	          'g',
-	          { transform: 'rotate(-90 ' + center + ' ' + center + ')' },
-	          renderPaths(this.props.slices)
-	        )
-	      );
-	    }
-	  }]);
-
-	  return PieChart;
-	})(_react2.default.Component);
-
-	exports.default = PieChart;
-
-	PieChart.propTypes = {
-	  slices: PropTypes.arrayOf(PropTypes.shape({
-	    color: PropTypes.string.isRequired, // hex color
-	    value: PropTypes.number.isRequired
-	  })).isRequired
-	};
-	module.exports = exports['default'];
-
-
-/***/ },
-/* 249 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -28440,21 +28181,21 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _event = __webpack_require__(250);
+	var _event = __webpack_require__(249);
 
-	var _scrollParent = __webpack_require__(251);
+	var _scrollParent = __webpack_require__(250);
 
 	var _scrollParent2 = _interopRequireDefault(_scrollParent);
 
-	var _debounce = __webpack_require__(252);
+	var _debounce = __webpack_require__(251);
 
 	var _debounce2 = _interopRequireDefault(_debounce);
 
-	var _throttle = __webpack_require__(253);
+	var _throttle = __webpack_require__(252);
 
 	var _throttle2 = _interopRequireDefault(_throttle);
 
-	var _decorator = __webpack_require__(254);
+	var _decorator = __webpack_require__(253);
 
 	var _decorator2 = _interopRequireDefault(_decorator);
 
@@ -28745,7 +28486,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
 
 /***/ },
-/* 250 */
+/* 249 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -28774,7 +28515,7 @@
 	}
 
 /***/ },
-/* 251 */
+/* 250 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -28821,7 +28562,7 @@
 	};
 
 /***/ },
-/* 252 */
+/* 251 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -28873,7 +28614,7 @@
 	}
 
 /***/ },
-/* 253 */
+/* 252 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -28906,7 +28647,7 @@
 	}
 
 /***/ },
-/* 254 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28917,7 +28658,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _index = __webpack_require__(249);
+	var _index = __webpack_require__(248);
 
 	var _index2 = _interopRequireDefault(_index);
 
@@ -28969,7 +28710,300 @@
 	};
 
 /***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(8);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(179);
+
+	var _reactSimplePieChart = __webpack_require__(255);
+
+	var _reactSimplePieChart2 = _interopRequireDefault(_reactSimplePieChart);
+
+	var _reactGa = __webpack_require__(235);
+
+	var _reactGa2 = _interopRequireDefault(_reactGa);
+
+	var _Ad = __webpack_require__(256);
+
+	var _Ad2 = _interopRequireDefault(_Ad);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by timur on 11/21/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+	var ProgressBar = function ProgressBar(_ref) {
+	  var opt1votes = _ref.opt1votes,
+	      opt2votes = _ref.opt2votes;
+	  return _react2.default.createElement(
+	    'div',
+	    { className: 'ui right floated', style: { width: '5em' } },
+	    _react2.default.createElement(_reactSimplePieChart2.default, { slices: [{
+	        color: '#00B5AD',
+	        value: opt1votes || 1
+	      }, {
+	        color: '#F2711C',
+	        value: opt2votes || 1
+	      }] })
+	  );
+	};
+
+	var Post = function (_React$Component) {
+	  _inherits(Post, _React$Component);
+
+	  function Post() {
+	    _classCallCheck(this, Post);
+
+	    return _possibleConstructorReturn(this, (Post.__proto__ || Object.getPrototypeOf(Post)).apply(this, arguments));
+	  }
+
+	  _createClass(Post, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+
+	      var post = this.props.post;
+	      var totalVotes = post.option1votes + post.option2votes;
+
+	      this.setState({ post: post, totalVotes: totalVotes });
+	    }
+	  }, {
+	    key: 'inverted',
+	    value: function inverted() {
+	      return {
+	        color: 'rgba(255,255,261,.9)'
+	      };
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'card', style: {
+	            backgroundColor: '#1B1C1D',
+	            border: '1px solid #1B1C1D',
+	            boxShadow: '0 1px 3px rgba(0,0,0, 0.25)'
+	          } },
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/' + this.state.post.id, className: 'content' },
+	          _react2.default.createElement(
+	            'div',
+	            { style: this.inverted(), className: 'header' },
+	            this.state.post.title
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { style: this.inverted(), className: 'meta' },
+	            this.state.totalVotes,
+	            ' votes'
+	          ),
+	          _react2.default.createElement(ProgressBar, { opt1votes: this.state.post.option1votes, opt2votes: this.state.post.option2votes })
+	        ),
+	        this.props.ad ? _react2.default.createElement(_Ad2.default, null) : null,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'extra content' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'ui two buttons' },
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: function onClick() {
+	                  fetch('/posts/' + _this2.state.post.id + '/upvote1', { method: 'POST' }).then(function (res) {
+	                    return res.json();
+	                  }).then(function (post) {
+	                    var totalVotes = _this2.state.totalVotes + 1;
+	                    _reactGa2.default.event({
+	                      category: 'Vote',
+	                      action: 'Voted for ' + _this2.state.post.option1,
+	                      label: 'Homepage Thing'
+	                    });
+	                    _this2.setState({ post: post, totalVotes: totalVotes });
+	                  }).catch(function (e) {
+	                    return console.error(e);
+	                  });
+	                }, className: 'ui inverted teal button' },
+	              this.state.post.option1
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: function onClick() {
+	                  fetch('/posts/' + _this2.state.post.id + '/upvote2', { method: 'POST' }).then(function (res) {
+	                    return res.json();
+	                  }).then(function (post) {
+	                    var totalVotes = _this2.state.totalVotes + 1;
+	                    _this2.setState({ post: post, totalVotes: totalVotes });
+	                  }).catch(function (e) {
+	                    return console.error(e);
+	                  });
+	                }, className: 'ui inverted orange button' },
+	              this.state.post.option2
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Post;
+	}(_react2.default.Component);
+
+	exports.default = Post;
+
+/***/ },
 /* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(8);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var PropTypes = _react2.default.PropTypes;
+
+	var size = 100;
+	var radCircumference = Math.PI * 2;
+	var center = size / 2;
+	var radius = center - 1; // padding to prevent clipping
+
+	/**
+	 * @param {Object[]} slices
+	 * @return {Object[]}
+	 */
+	function renderPaths(slices) {
+	  var total = slices.reduce(function (totalValue, _ref) {
+	    var value = _ref.value;
+	    return totalValue + value;
+	  }, 0);
+
+	  var radSegment = 0;
+	  var lastX = radius;
+	  var lastY = 0;
+
+	  return slices.map(function (_ref2, index) {
+	    var color = _ref2.color;
+	    var value = _ref2.value;
+
+	    // Should we just draw a circle?
+	    if (value === total) {
+	      return _react2.default.createElement('circle', {
+	        r: radius,
+	        cx: center,
+	        cy: center,
+	        fill: color,
+	        key: index
+	      });
+	    }
+
+	    if (value === 0) {
+	      return;
+	    }
+
+	    var valuePercentage = value / total;
+
+	    // Should the arc go the long way round?
+	    var longArc = valuePercentage <= 0.5 ? 0 : 1;
+
+	    radSegment += valuePercentage * radCircumference;
+	    var nextX = Math.cos(radSegment) * radius;
+	    var nextY = Math.sin(radSegment) * radius;
+
+	    // d is a string that describes the path of the slice.
+	    // The weirdly placed minus signs [eg, (-(lastY))] are due to the fact
+	    // that our calculations are for a graph with positive Y values going up,
+	    // but on the screen positive Y values go down.
+	    var d = ['M ' + center + ',' + center, 'l ' + lastX + ',' + -lastY, 'a' + radius + ',' + radius, '0', longArc + ',0', nextX - lastX + ',' + -(nextY - lastY), 'z'].join(' ');
+
+	    lastX = nextX;
+	    lastY = nextY;
+
+	    return _react2.default.createElement('path', { d: d, fill: color, key: index });
+	  });
+	}
+
+	/**
+	 * Generates an SVG pie chart.
+	 * @see {http://wiki.scribus.net/canvas/Making_a_Pie_Chart}
+	 */
+
+	var PieChart = (function (_React$Component) {
+	  _inherits(PieChart, _React$Component);
+
+	  function PieChart() {
+	    _classCallCheck(this, PieChart);
+
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PieChart).apply(this, arguments));
+	  }
+
+	  _createClass(PieChart, [{
+	    key: 'render',
+
+	    /**
+	     * @return {Object}
+	     */
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'svg',
+	        { viewBox: '0 0 ' + size + ' ' + size },
+	        _react2.default.createElement(
+	          'g',
+	          { transform: 'rotate(-90 ' + center + ' ' + center + ')' },
+	          renderPaths(this.props.slices)
+	        )
+	      );
+	    }
+	  }]);
+
+	  return PieChart;
+	})(_react2.default.Component);
+
+	exports.default = PieChart;
+
+	PieChart.propTypes = {
+	  slices: PropTypes.arrayOf(PropTypes.shape({
+	    color: PropTypes.string.isRequired, // hex color
+	    value: PropTypes.number.isRequired
+	  })).isRequired
+	};
+	module.exports = exports['default'];
+
+
+/***/ },
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29027,7 +29061,7 @@
 	exports.default = Ad;
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29044,7 +29078,7 @@
 
 	var _reactRouter = __webpack_require__(179);
 
-	var _Ad = __webpack_require__(255);
+	var _Ad = __webpack_require__(256);
 
 	var _Ad2 = _interopRequireDefault(_Ad);
 
@@ -29241,7 +29275,7 @@
 	exports.default = CreatePost;
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29258,11 +29292,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactSimplePieChart = __webpack_require__(248);
+	var _reactSimplePieChart = __webpack_require__(255);
 
 	var _reactSimplePieChart2 = _interopRequireDefault(_reactSimplePieChart);
 
-	var _Ad = __webpack_require__(255);
+	var _Ad = __webpack_require__(256);
 
 	var _Ad2 = _interopRequireDefault(_Ad);
 
@@ -29451,7 +29485,7 @@
 	              ),
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'ui list' },
+	                { className: 'ui inverted list' },
 	                this.state.reasons1.map(function (r, i) {
 	                  return _react2.default.createElement(
 	                    'a',

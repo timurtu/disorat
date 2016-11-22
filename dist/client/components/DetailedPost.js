@@ -205,7 +205,7 @@ var DetailedPost = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'ui list' },
+                { className: 'ui inverted list' },
                 this.state.reasons1.map(function (r, i) {
                   return _react2.default.createElement(
                     'a',
