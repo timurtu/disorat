@@ -116,7 +116,7 @@ class DetailedPost extends React.Component {
 
               <h5>Reasons</h5>
 
-              <div className="ui list">
+              <div className="ui inverted list">
                 {this.state.reasons1.map((r, i) =>
                   <a onClick={() => {
                     fetch(`/reason/${this.state.id}/${r.reason}/reason1`, { method: 'POST' })
