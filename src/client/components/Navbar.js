@@ -10,7 +10,7 @@ class Navbar extends React.Component {
   render() {
 
     return (
-      <div>
+      <nav>
         <div style={{
           width: '100%',
           height: '3em',
@@ -35,7 +35,7 @@ class Navbar extends React.Component {
             </div>
           </nav>
         </div>
-      </div>
+      </nav>
     )
   }
 }

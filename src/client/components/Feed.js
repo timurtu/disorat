@@ -8,6 +8,7 @@ import { Link } from 'react-router'
 import PieChart from 'react-simple-pie-chart'
 import LazyLoad from 'react-lazyload'
 import ReactGA from 'react-ga'
+import Ad from './Ad'
 
 
 class Feed extends React.Component {
@@ -29,14 +30,29 @@ class Feed extends React.Component {
       .catch(e => console.error(e))
   }
 
+  posts() {
+    return this.state.posts.map((p, i) => {
+      if (i % 3 === 0) {
+        return (
+          <LazyLoad key={i} height={170}>
+            <Post ad={true} post={p}/>
+          </LazyLoad>
+        )
+      } else {
+        return (
+          <LazyLoad key={i} height={170}>
+            <Post ad={false} post={p}/>
+          </LazyLoad>
+        )
+      }
+    })
+  }
+
   render() {
     return (
       <div>
         <div className="ui one cards">
-          {this.state.posts.map((p, i) =>
-            <LazyLoad key={i} height={170}>
-              <Post post={p}/>
-            </LazyLoad>)}
+          {this.posts()}
         </div>
 
         <Link to="/create" style={{
@@ -49,7 +65,6 @@ class Feed extends React.Component {
           <i className="plus icon"></i>
         </Link>
       </div>
-
     )
   }
 }
@@ -84,7 +99,6 @@ class Post extends React.Component {
   }
 
   render() {
-
     return (
       <div className="card" style={{
         backgroundColor: '#1B1C1D',
@@ -102,6 +116,8 @@ class Post extends React.Component {
 
           <ProgressBar opt1votes={this.state.post.option1votes} opt2votes={this.state.post.option2votes}/>
         </Link>
+
+        {this.props.ad ? <Ad/> : null}
 
         <div className="extra content">
           <div className="ui two buttons">

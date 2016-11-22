@@ -12,6 +12,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
+var _Ad = require('./Ad');
+
+var _Ad2 = _interopRequireDefault(_Ad);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -144,7 +148,8 @@ var CreatePost = function (_React$Component) {
             'button',
             { className: 'ui large right floated inverted color blue submit button' },
             'Create'
-          )
+          ),
+          _react2.default.createElement(_Ad2.default, null)
         ),
         _react2.default.createElement(
           'div',

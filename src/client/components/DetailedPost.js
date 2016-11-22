@@ -5,6 +5,7 @@
 import 'whatwg-fetch'
 import React from 'react'
 import PieChart from 'react-simple-pie-chart'
+import Ad from './Ad'
 
 
 const ProgressBar = ({ opt1votes, opt2votes }) =>
@@ -90,7 +91,7 @@ class DetailedPost extends React.Component {
                 {this.state.option1}
               </button>
 
-              <div className="ui hidden divider"></div>
+              <Ad/>
 
               <form onSubmit={e => {
 
@@ -146,7 +147,7 @@ class DetailedPost extends React.Component {
                 {this.state.option2}
               </button>
 
-              <div className="ui hidden divider"></div>
+              <Ad/>
 
               <form onSubmit={e => {
                 e.preventDefault()

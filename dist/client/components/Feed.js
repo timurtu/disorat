@@ -26,6 +26,10 @@ var _reactGa = require('react-ga');
 
 var _reactGa2 = _interopRequireDefault(_reactGa);
 
+var _Ad = require('./Ad');
+
+var _Ad2 = _interopRequireDefault(_Ad);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -70,6 +74,25 @@ var Feed = function (_React$Component) {
       });
     }
   }, {
+    key: 'posts',
+    value: function posts() {
+      return this.state.posts.map(function (p, i) {
+        if (i % 3 === 0) {
+          return _react2.default.createElement(
+            _reactLazyload2.default,
+            { key: i, height: 170 },
+            _react2.default.createElement(Post, { ad: true, post: p })
+          );
+        } else {
+          return _react2.default.createElement(
+            _reactLazyload2.default,
+            { key: i, height: 170 },
+            _react2.default.createElement(Post, { ad: false, post: p })
+          );
+        }
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -78,13 +101,7 @@ var Feed = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'ui one cards' },
-          this.state.posts.map(function (p, i) {
-            return _react2.default.createElement(
-              _reactLazyload2.default,
-              { key: i, height: 170 },
-              _react2.default.createElement(Post, { post: p })
-            );
-          })
+          this.posts()
         ),
         _react2.default.createElement(
           _reactRouter.Link,
@@ -173,6 +190,7 @@ var Post = function (_React$Component2) {
           ),
           _react2.default.createElement(ProgressBar, { opt1votes: this.state.post.option1votes, opt2votes: this.state.post.option2votes })
         ),
+        this.props.ad ? _react2.default.createElement(_Ad2.default, null) : null,
         _react2.default.createElement(
           'div',
           { className: 'extra content' },

@@ -4,6 +4,7 @@
 
 import React from 'react'
 import { Link } from 'react-router'
+import Ad from './Ad'
 
 
 $(function () {
@@ -84,6 +85,7 @@ class CreatePost extends React.Component {
           <button className="ui large right floated inverted color blue submit button">
             Create
           </button>
+          <Ad/>
         </form>
         <div className="ui basic modal">
           <i className="close icon"></i>

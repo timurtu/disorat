@@ -16,6 +16,10 @@ var _reactSimplePieChart = require('react-simple-pie-chart');
 
 var _reactSimplePieChart2 = _interopRequireDefault(_reactSimplePieChart);
 
+var _Ad = require('./Ad');
+
+var _Ad2 = _interopRequireDefault(_Ad);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -160,7 +164,7 @@ var DetailedPost = function (_React$Component) {
                   }, className: 'fluid ui inverted button colored teal' },
                 this.state.option1
               ),
-              _react2.default.createElement('div', { className: 'ui hidden divider' }),
+              _react2.default.createElement(_Ad2.default, null),
               _react2.default.createElement(
                 'form',
                 { onSubmit: function onSubmit(e) {
@@ -260,7 +264,7 @@ var DetailedPost = function (_React$Component) {
                   }, className: 'fluid ui inverted button colored orange' },
                 this.state.option2
               ),
-              _react2.default.createElement('div', { className: 'ui hidden divider' }),
+              _react2.default.createElement(_Ad2.default, null),
               _react2.default.createElement(
                 'form',
                 { onSubmit: function onSubmit(e) {

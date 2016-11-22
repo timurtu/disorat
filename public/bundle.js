@@ -72,11 +72,11 @@
 
 	var _Feed2 = _interopRequireDefault(_Feed);
 
-	var _CreatePost = __webpack_require__(255);
+	var _CreatePost = __webpack_require__(256);
 
 	var _CreatePost2 = _interopRequireDefault(_CreatePost);
 
-	var _DetailedPost = __webpack_require__(256);
+	var _DetailedPost = __webpack_require__(257);
 
 	var _DetailedPost2 = _interopRequireDefault(_DetailedPost);
 
@@ -27531,7 +27531,7 @@
 	    value: function render() {
 
 	      return _react2.default.createElement(
-	        'div',
+	        'nav',
 	        null,
 	        _react2.default.createElement(
 	          'div',
@@ -27605,6 +27605,10 @@
 
 	var _reactGa2 = _interopRequireDefault(_reactGa);
 
+	var _Ad = __webpack_require__(255);
+
+	var _Ad2 = _interopRequireDefault(_Ad);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27649,6 +27653,25 @@
 	      });
 	    }
 	  }, {
+	    key: 'posts',
+	    value: function posts() {
+	      return this.state.posts.map(function (p, i) {
+	        if (i % 3 === 0) {
+	          return _react2.default.createElement(
+	            _reactLazyload2.default,
+	            { key: i, height: 170 },
+	            _react2.default.createElement(Post, { ad: true, post: p })
+	          );
+	        } else {
+	          return _react2.default.createElement(
+	            _reactLazyload2.default,
+	            { key: i, height: 170 },
+	            _react2.default.createElement(Post, { ad: false, post: p })
+	          );
+	        }
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -27657,13 +27680,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'ui one cards' },
-	          this.state.posts.map(function (p, i) {
-	            return _react2.default.createElement(
-	              _reactLazyload2.default,
-	              { key: i, height: 170 },
-	              _react2.default.createElement(Post, { post: p })
-	            );
-	          })
+	          this.posts()
 	        ),
 	        _react2.default.createElement(
 	          _reactRouter.Link,
@@ -27752,6 +27769,7 @@
 	          ),
 	          _react2.default.createElement(ProgressBar, { opt1votes: this.state.post.option1votes, opt2votes: this.state.post.option2votes })
 	        ),
+	        this.props.ad ? _react2.default.createElement(_Ad2.default, null) : null,
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'extra content' },
@@ -28966,7 +28984,69 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by timur on 11/21/16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+	var Ad = function (_React$Component) {
+	  _inherits(Ad, _React$Component);
+
+	  function Ad() {
+	    _classCallCheck(this, Ad);
+
+	    return _possibleConstructorReturn(this, (Ad.__proto__ || Object.getPrototypeOf(Ad)).apply(this, arguments));
+	  }
+
+	  _createClass(Ad, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      (adsbygoogle = window.adsbygoogle || []).push({});
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement('ins', { className: 'adsbygoogle',
+	        style: {
+	          display: 'block'
+	        },
+	        'data-ad-client': 'ca-pub-1252778884078131',
+	        'data-ad-slot': '2677453370',
+	        'data-ad-format': 'auto' });
+	    }
+	  }]);
+
+	  return Ad;
+	}(_react2.default.Component);
+
+	exports.default = Ad;
+
+/***/ },
+/* 256 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(8);
+
+	var _react2 = _interopRequireDefault(_react);
+
 	var _reactRouter = __webpack_require__(179);
+
+	var _Ad = __webpack_require__(255);
+
+	var _Ad2 = _interopRequireDefault(_Ad);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29100,7 +29180,8 @@
 	            'button',
 	            { className: 'ui large right floated inverted color blue submit button' },
 	            'Create'
-	          )
+	          ),
+	          _react2.default.createElement(_Ad2.default, null)
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -29160,7 +29241,7 @@
 	exports.default = CreatePost;
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29180,6 +29261,10 @@
 	var _reactSimplePieChart = __webpack_require__(248);
 
 	var _reactSimplePieChart2 = _interopRequireDefault(_reactSimplePieChart);
+
+	var _Ad = __webpack_require__(255);
+
+	var _Ad2 = _interopRequireDefault(_Ad);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29325,7 +29410,7 @@
 	                  }, className: 'fluid ui inverted button colored teal' },
 	                this.state.option1
 	              ),
-	              _react2.default.createElement('div', { className: 'ui hidden divider' }),
+	              _react2.default.createElement(_Ad2.default, null),
 	              _react2.default.createElement(
 	                'form',
 	                { onSubmit: function onSubmit(e) {
@@ -29425,7 +29510,7 @@
 	                  }, className: 'fluid ui inverted button colored orange' },
 	                this.state.option2
 	              ),
-	              _react2.default.createElement('div', { className: 'ui hidden divider' }),
+	              _react2.default.createElement(_Ad2.default, null),
 	              _react2.default.createElement(
 	                'form',
 	                { onSubmit: function onSubmit(e) {
