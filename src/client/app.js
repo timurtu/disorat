@@ -7,11 +7,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, IndexRedirect, Route, browserHistory } from 'react-router'
 import ReactGA from 'react-ga'
-import Navbar from './Navbar'
-import Posts from './Feed'
-// import Profile from './Profile'
-import CreatePost from './CreatePost'
-import DetailedPost from './DetailedPost'
+import Navbar from './components/Navbar'
+import Posts from './components/Feed'
+// import Profile from './components/Profile'
+import CreatePost from './components/CreatePost'
+import DetailedPost from './components/DetailedPost'
 
 
 ReactGA.initialize('UA-87619352-1')
@@ -20,8 +20,9 @@ const App = ({ children }) =>
   <div>
     <Navbar/>
     <div style={{
-      marginTop: '3em'
-    }} className="ui segment">
+      marginTop: '3em',
+      backgroundColor: '#000'
+    }} className="ui inverted segment">
       {children}
     </div>
   </div>

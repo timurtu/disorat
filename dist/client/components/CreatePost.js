@@ -40,6 +40,11 @@ var CreatePost = function (_React$Component) {
   }
 
   _createClass(CreatePost, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.setState({ error: '' });
+    }
+  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       var docTitle = document.querySelector('title');
@@ -66,7 +71,10 @@ var CreatePost = function (_React$Component) {
       e.preventDefault();
 
       if (title && option1 && option2) {
-        fetch('/create?post=' + JSON.stringify({ title: title, option1: option1, option2: option2 }), {
+
+        var post = JSON.stringify({ title: title, option1: option1, option2: option2 });
+
+        fetch('/create?post=' + post, {
           method: 'POST'
         }).then(function (res) {
           return res.json();
@@ -76,7 +84,7 @@ var CreatePost = function (_React$Component) {
           return console.error(e);
         });
       } else {
-        alert('All fields are required');
+        $('.ui.basic.modal').modal('show');
       }
     }
   }, {
@@ -84,7 +92,7 @@ var CreatePost = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'ui segment' },
+        { className: 'ui inverted segment' },
         _react2.default.createElement(
           'h1',
           null,
@@ -92,7 +100,7 @@ var CreatePost = function (_React$Component) {
         ),
         _react2.default.createElement(
           'form',
-          { onSubmit: this.createPost, className: 'ui form' },
+          { onSubmit: this.createPost, className: 'ui inverted form' },
           _react2.default.createElement(
             'div',
             { className: 'required field' },
@@ -129,13 +137,61 @@ var CreatePost = function (_React$Component) {
           ),
           _react2.default.createElement(
             _reactRouter.Link,
-            { to: '/', className: 'ui button' },
+            { to: '/', className: 'ui large inverted button' },
             'Cancel'
           ),
           _react2.default.createElement(
             'button',
-            { className: 'ui right floated color blue submit button' },
+            { className: 'ui large right floated inverted color blue submit button' },
             'Create'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'ui basic modal' },
+          _react2.default.createElement('i', { className: 'close icon' }),
+          _react2.default.createElement(
+            'div',
+            { className: 'header' },
+            'All fields are required.'
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'image content' },
+            _react2.default.createElement(
+              'div',
+              { className: 'image' },
+              _react2.default.createElement('i', { className: 'archive icon' })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'description' },
+              _react2.default.createElement(
+                'p',
+                null,
+                'Fill out every field in order to create a new vote.'
+              )
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'actions' },
+            _react2.default.createElement(
+              'div',
+              { className: 'two fluid ui inverted buttons' },
+              _react2.default.createElement(
+                _reactRouter.Link,
+                { to: '/', className: 'ui cancel red basic inverted button' },
+                _react2.default.createElement('i', { className: 'remove icon' }),
+                'Cancel'
+              ),
+              _react2.default.createElement(
+                'div',
+                { className: 'ui cancel green basic inverted button' },
+                _react2.default.createElement('i', { className: 'checkmark icon' }),
+                'Okay'
+              )
+            )
           )
         )
       );

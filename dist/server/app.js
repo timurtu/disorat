@@ -16,7 +16,7 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _logger = require('./logger');
+var _logger = require('./tools/logger');
 
 var _logger2 = _interopRequireDefault(_logger);
 

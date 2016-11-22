@@ -137,7 +137,7 @@ var DetailedPost = function (_React$Component) {
             { className: 'eight wide column' },
             _react2.default.createElement(
               'div',
-              { className: 'ui segment' },
+              { className: 'ui inverted segment' },
               _react2.default.createElement(
                 'h3',
                 null,
@@ -157,10 +157,10 @@ var DetailedPost = function (_React$Component) {
                     }).then(function (post) {
                       _this3.setState({ option1votes: post.option1votes });
                     });
-                  }, className: 'fluid ui button colored teal' },
+                  }, className: 'fluid ui inverted button colored teal' },
                 this.state.option1
               ),
-              _react2.default.createElement('hr', null),
+              _react2.default.createElement('div', { className: 'ui hidden divider' }),
               _react2.default.createElement(
                 'form',
                 { onSubmit: function onSubmit(e) {
@@ -174,7 +174,7 @@ var DetailedPost = function (_React$Component) {
                         return _this3.setState({ reasons1: _this3.sortReasons(p.reasons1) });
                       });
                     }
-                  }, className: 'ui mini form' },
+                  }, className: 'ui inverted form' },
                 _react2.default.createElement(
                   'div',
                   { className: 'field' },
@@ -188,10 +188,12 @@ var DetailedPost = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                   'button',
-                  { className: 'ui tiny right floated submit button' },
+                  { className: 'ui inverted tiny right floated submit button' },
                   'Add reason'
                 )
               ),
+              _react2.default.createElement('div', { className: 'ui hidden divider' }),
+              _react2.default.createElement('div', { className: 'ui hidden divider' }),
               _react2.default.createElement(
                 'h5',
                 null,
@@ -235,7 +237,7 @@ var DetailedPost = function (_React$Component) {
             { className: 'eight wide column' },
             _react2.default.createElement(
               'div',
-              { className: 'ui segment' },
+              { className: 'ui inverted segment' },
               _react2.default.createElement(
                 'h3',
                 null,
@@ -255,10 +257,10 @@ var DetailedPost = function (_React$Component) {
                     }).then(function (post) {
                       _this3.setState({ option2votes: post.option2votes });
                     });
-                  }, className: 'fluid ui button colored orange' },
+                  }, className: 'fluid ui inverted button colored orange' },
                 this.state.option2
               ),
-              _react2.default.createElement('hr', null),
+              _react2.default.createElement('div', { className: 'ui hidden divider' }),
               _react2.default.createElement(
                 'form',
                 { onSubmit: function onSubmit(e) {
@@ -270,7 +272,7 @@ var DetailedPost = function (_React$Component) {
                         return _this3.setState({ reasons2: _this3.sortReasons(p.reasons2) });
                       });
                     }
-                  }, className: 'ui mini form' },
+                  }, className: 'ui inverted form' },
                 _react2.default.createElement(
                   'div',
                   { className: 'field' },
@@ -284,10 +286,12 @@ var DetailedPost = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                   'button',
-                  { className: 'ui tiny right floated submit button' },
+                  { className: 'ui inverted tiny right floated submit button' },
                   'Add reason'
                 )
               ),
+              _react2.default.createElement('div', { className: 'ui hidden divider' }),
+              _react2.default.createElement('div', { className: 'ui hidden divider' }),
               _react2.default.createElement(
                 'h5',
                 null,
@@ -295,7 +299,7 @@ var DetailedPost = function (_React$Component) {
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'ui list' },
+                { className: 'ui inverted list' },
                 this.state.reasons2.map(function (r, i) {
                   return _react2.default.createElement(
                     'a',
@@ -327,7 +331,7 @@ var DetailedPost = function (_React$Component) {
             )
           )
         ),
-        _react2.default.createElement('hr', null),
+        _react2.default.createElement('div', { className: 'ui hidden divider' }),
         _react2.default.createElement(ProgressBar, { opt1votes: this.state.option1votes, opt2votes: this.state.option2votes })
       );
     }

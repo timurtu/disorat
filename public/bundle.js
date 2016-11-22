@@ -82,7 +82,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// import Profile from './Profile'
+	// import Profile from './components/Profile'
 	_reactGa2.default.initialize('UA-87619352-1'); /**
 	                                                * Created by timur on 11/11/16.
 	                                                */
@@ -96,8 +96,9 @@
 	    _react2.default.createElement(
 	      'div',
 	      { style: {
-	          marginTop: '3em'
-	        }, className: 'ui segment' },
+	          marginTop: '3em',
+	          backgroundColor: '#000'
+	        }, className: 'ui inverted segment' },
 	      children
 	    )
 	  );
@@ -27541,11 +27542,12 @@
 	              zIndex: 3,
 	              top: '0',
 	              left: '0',
-	              background: '#f7f7f7'
+	              background: 'rgba(0,0,0,0.82)',
+	              opacity: '.9'
 	            } },
 	          _react2.default.createElement(
 	            'nav',
-	            { className: 'ui secondary pointing menu' },
+	            { className: 'ui inverted secondary pointing menu' },
 	            _react2.default.createElement(
 	              _reactRouter.Link,
 	              { to: '/feed', className: 'item', activeClassName: 'active' },
@@ -27654,7 +27656,7 @@
 	        null,
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'ui cards' },
+	          { className: 'ui one cards' },
 	          this.state.posts.map(function (p, i) {
 	            return _react2.default.createElement(
 	              _reactLazyload2.default,
@@ -27671,7 +27673,7 @@
 	              bottom: '2em',
 	              zIndex: '4',
 	              boxShadow: '0 3px 5px rgba(0, 0, 0, .25)'
-	            }, className: 'massive circular ui color blue icon button' },
+	            }, className: 'massive circular ui inverted color blue icon button' },
 	          _react2.default.createElement('i', { className: 'plus icon' })
 	        )
 	      );
@@ -27686,7 +27688,7 @@
 	      opt2votes = _ref.opt2votes;
 	  return _react2.default.createElement(
 	    'div',
-	    { className: 'ui right floated', style: { width: '3em' } },
+	    { className: 'ui right floated', style: { width: '5em' } },
 	    _react2.default.createElement(_reactSimplePieChart2.default, { slices: [{
 	        color: '#00B5AD',
 	        value: opt1votes || 1
@@ -27716,24 +27718,35 @@
 	      this.setState({ post: post, totalVotes: totalVotes });
 	    }
 	  }, {
+	    key: 'inverted',
+	    value: function inverted() {
+	      return {
+	        color: 'rgba(255,255,261,.9)'
+	      };
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this4 = this;
 
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'ui centered card' },
+	        { className: 'card', style: {
+	            backgroundColor: '#1B1C1D',
+	            border: '1px solid #1B1C1D',
+	            boxShadow: '0 1px 3px rgba(0,0,0, 0.25)'
+	          } },
 	        _react2.default.createElement(
 	          _reactRouter.Link,
 	          { to: '/' + this.state.post.id, className: 'content' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'header' },
+	            { style: this.inverted(), className: 'header' },
 	            this.state.post.title
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'meta' },
+	            { style: this.inverted(), className: 'meta' },
 	            this.state.totalVotes,
 	            ' votes'
 	          ),
@@ -27761,7 +27774,7 @@
 	                  }).catch(function (e) {
 	                    return console.error(e);
 	                  });
-	                }, className: 'ui teal button' },
+	                }, className: 'ui inverted teal button' },
 	              this.state.post.option1
 	            ),
 	            _react2.default.createElement(
@@ -27775,7 +27788,7 @@
 	                  }).catch(function (e) {
 	                    return console.error(e);
 	                  });
-	                }, className: 'ui orange button' },
+	                }, className: 'ui inverted orange button' },
 	              this.state.post.option2
 	            )
 	          )
@@ -28983,6 +28996,11 @@
 	  }
 
 	  _createClass(CreatePost, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.setState({ error: '' });
+	    }
+	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var docTitle = document.querySelector('title');
@@ -29009,7 +29027,10 @@
 	      e.preventDefault();
 
 	      if (title && option1 && option2) {
-	        fetch('/create?post=' + JSON.stringify({ title: title, option1: option1, option2: option2 }), {
+
+	        var post = JSON.stringify({ title: title, option1: option1, option2: option2 });
+
+	        fetch('/create?post=' + post, {
 	          method: 'POST'
 	        }).then(function (res) {
 	          return res.json();
@@ -29019,7 +29040,7 @@
 	          return console.error(e);
 	        });
 	      } else {
-	        alert('All fields are required');
+	        $('.ui.basic.modal').modal('show');
 	      }
 	    }
 	  }, {
@@ -29027,7 +29048,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'ui segment' },
+	        { className: 'ui inverted segment' },
 	        _react2.default.createElement(
 	          'h1',
 	          null,
@@ -29035,7 +29056,7 @@
 	        ),
 	        _react2.default.createElement(
 	          'form',
-	          { onSubmit: this.createPost, className: 'ui form' },
+	          { onSubmit: this.createPost, className: 'ui inverted form' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'required field' },
@@ -29072,13 +29093,61 @@
 	          ),
 	          _react2.default.createElement(
 	            _reactRouter.Link,
-	            { to: '/', className: 'ui button' },
+	            { to: '/', className: 'ui large inverted button' },
 	            'Cancel'
 	          ),
 	          _react2.default.createElement(
 	            'button',
-	            { className: 'ui right floated color blue submit button' },
+	            { className: 'ui large right floated inverted color blue submit button' },
 	            'Create'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'ui basic modal' },
+	          _react2.default.createElement('i', { className: 'close icon' }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'header' },
+	            'All fields are required.'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'image content' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'image' },
+	              _react2.default.createElement('i', { className: 'archive icon' })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'description' },
+	              _react2.default.createElement(
+	                'p',
+	                null,
+	                'Fill out every field in order to create a new vote.'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'actions' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'two fluid ui inverted buttons' },
+	              _react2.default.createElement(
+	                _reactRouter.Link,
+	                { to: '/', className: 'ui cancel red basic inverted button' },
+	                _react2.default.createElement('i', { className: 'remove icon' }),
+	                'Cancel'
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'ui cancel green basic inverted button' },
+	                _react2.default.createElement('i', { className: 'checkmark icon' }),
+	                'Okay'
+	              )
+	            )
 	          )
 	        )
 	      );
@@ -29233,7 +29302,7 @@
 	            { className: 'eight wide column' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'ui segment' },
+	              { className: 'ui inverted segment' },
 	              _react2.default.createElement(
 	                'h3',
 	                null,
@@ -29253,10 +29322,10 @@
 	                    }).then(function (post) {
 	                      _this3.setState({ option1votes: post.option1votes });
 	                    });
-	                  }, className: 'fluid ui button colored teal' },
+	                  }, className: 'fluid ui inverted button colored teal' },
 	                this.state.option1
 	              ),
-	              _react2.default.createElement('hr', null),
+	              _react2.default.createElement('div', { className: 'ui hidden divider' }),
 	              _react2.default.createElement(
 	                'form',
 	                { onSubmit: function onSubmit(e) {
@@ -29270,7 +29339,7 @@
 	                        return _this3.setState({ reasons1: _this3.sortReasons(p.reasons1) });
 	                      });
 	                    }
-	                  }, className: 'ui mini form' },
+	                  }, className: 'ui inverted form' },
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'field' },
@@ -29284,10 +29353,12 @@
 	                ),
 	                _react2.default.createElement(
 	                  'button',
-	                  { className: 'ui tiny right floated submit button' },
+	                  { className: 'ui inverted tiny right floated submit button' },
 	                  'Add reason'
 	                )
 	              ),
+	              _react2.default.createElement('div', { className: 'ui hidden divider' }),
+	              _react2.default.createElement('div', { className: 'ui hidden divider' }),
 	              _react2.default.createElement(
 	                'h5',
 	                null,
@@ -29331,7 +29402,7 @@
 	            { className: 'eight wide column' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'ui segment' },
+	              { className: 'ui inverted segment' },
 	              _react2.default.createElement(
 	                'h3',
 	                null,
@@ -29351,10 +29422,10 @@
 	                    }).then(function (post) {
 	                      _this3.setState({ option2votes: post.option2votes });
 	                    });
-	                  }, className: 'fluid ui button colored orange' },
+	                  }, className: 'fluid ui inverted button colored orange' },
 	                this.state.option2
 	              ),
-	              _react2.default.createElement('hr', null),
+	              _react2.default.createElement('div', { className: 'ui hidden divider' }),
 	              _react2.default.createElement(
 	                'form',
 	                { onSubmit: function onSubmit(e) {
@@ -29366,7 +29437,7 @@
 	                        return _this3.setState({ reasons2: _this3.sortReasons(p.reasons2) });
 	                      });
 	                    }
-	                  }, className: 'ui mini form' },
+	                  }, className: 'ui inverted form' },
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'field' },
@@ -29380,10 +29451,12 @@
 	                ),
 	                _react2.default.createElement(
 	                  'button',
-	                  { className: 'ui tiny right floated submit button' },
+	                  { className: 'ui inverted tiny right floated submit button' },
 	                  'Add reason'
 	                )
 	              ),
+	              _react2.default.createElement('div', { className: 'ui hidden divider' }),
+	              _react2.default.createElement('div', { className: 'ui hidden divider' }),
 	              _react2.default.createElement(
 	                'h5',
 	                null,
@@ -29391,7 +29464,7 @@
 	              ),
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'ui list' },
+	                { className: 'ui inverted list' },
 	                this.state.reasons2.map(function (r, i) {
 	                  return _react2.default.createElement(
 	                    'a',
@@ -29423,7 +29496,7 @@
 	            )
 	          )
 	        ),
-	        _react2.default.createElement('hr', null),
+	        _react2.default.createElement('div', { className: 'ui hidden divider' }),
 	        _react2.default.createElement(ProgressBar, { opt1votes: this.state.option1votes, opt2votes: this.state.option2votes })
 	      );
 	    }

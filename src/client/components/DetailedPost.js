@@ -77,7 +77,7 @@ class DetailedPost extends React.Component {
         <h1>{this.state.title}</h1>
         <div className="ui grid">
           <div className="eight wide column">
-            <div className="ui segment">
+            <div className="ui inverted segment">
               <h3>{this.state.option1}</h3>
               <h5>{this.state.option1votes} votes</h5>
               <button onClick={() => {
@@ -86,11 +86,11 @@ class DetailedPost extends React.Component {
                   .then(post => {
                     this.setState({ option1votes: post.option1votes })
                   })
-              }} className="fluid ui button colored teal">
+              }} className="fluid ui inverted button colored teal">
                 {this.state.option1}
               </button>
 
-              <hr/>
+              <div className="ui hidden divider"></div>
 
               <form onSubmit={e => {
 
@@ -100,16 +100,18 @@ class DetailedPost extends React.Component {
                   fetch(`/reason/${this.state.id}/${reason1}/reason1`, { method: 'POST' })
                     .then(res => res.json())
                     .then(p => this.setState({ reasons1: this.sortReasons(p.reasons1) }))
-
                 }
-              }} className="ui mini form">
+              }} className="ui inverted form">
                 <div className="field">
                   <label>Add a new reason</label>
                   <input onChange={this.handleReason1Change} placeholder={`Reason to vote for ${this.state.option1}`}
                          type="text"/>
                 </div>
-                <button className="ui tiny right floated submit button">Add reason</button>
+                <button className="ui inverted tiny right floated submit button">Add reason</button>
               </form>
+
+              <div className="ui hidden divider"></div>
+              <div className="ui hidden divider"></div>
 
               <h5>Reasons</h5>
 
@@ -131,7 +133,7 @@ class DetailedPost extends React.Component {
           </div>
 
           <div className="eight wide column">
-            <div className="ui segment">
+            <div className="ui inverted segment">
               <h3>{this.state.option2}</h3>
               <h5>{this.state.option2votes} votes</h5>
               <button onClick={() => {
@@ -140,11 +142,11 @@ class DetailedPost extends React.Component {
                   .then(post => {
                     this.setState({ option2votes: post.option2votes })
                   })
-              }} className="fluid ui button colored orange">
+              }} className="fluid ui inverted button colored orange">
                 {this.state.option2}
               </button>
 
-              <hr/>
+              <div className="ui hidden divider"></div>
 
               <form onSubmit={e => {
                 e.preventDefault()
@@ -153,18 +155,21 @@ class DetailedPost extends React.Component {
                     .then(res => res.json())
                     .then(p => this.setState({ reasons2: this.sortReasons(p.reasons2) }))
                 }
-              }} className="ui mini form">
+              }} className="ui inverted form">
                 <div className="field">
                   <label>Add a new reason</label>
                   <input onChange={this.handleReason2Change} placeholder={`Reason to vote for ${this.state.option2}`}
                          type="text"/>
                 </div>
-                <button className="ui tiny right floated submit button">Add reason</button>
+                <button className="ui inverted tiny right floated submit button">Add reason</button>
               </form>
+
+              <div className="ui hidden divider"></div>
+              <div className="ui hidden divider"></div>
 
               <h5>Reasons</h5>
 
-              <div className="ui list">
+              <div className="ui inverted list">
                 {this.state.reasons2.map((r, i) =>
                   <a onClick={() => {
                     fetch(`/reason/${this.state.id}/${r.reason}/reason2`, { method: 'POST' })
@@ -183,7 +188,7 @@ class DetailedPost extends React.Component {
           </div>
         </div>
 
-        <hr/>
+        <div className="ui hidden divider"></div>
 
         <ProgressBar opt1votes={this.state.option1votes} opt2votes={this.state.option2votes}/>
       </div>

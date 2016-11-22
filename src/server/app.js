@@ -5,7 +5,7 @@
 import express from 'express'
 import log from 'gutil-color-log'
 import bodyParser from 'body-parser'
-import logger from './logger'
+import logger from './tools/logger'
 
 
 const app = express()

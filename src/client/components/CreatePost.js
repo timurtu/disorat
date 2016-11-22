@@ -14,6 +14,10 @@ let title, option1, option2
 
 class CreatePost extends React.Component {
 
+  componentWillMount() {
+    this.setState({ error: '' })
+  }
+
   componentDidMount() {
     const docTitle = document.querySelector('title')
     docTitle.textContent = 'disorat | Create a Vote'
@@ -35,7 +39,10 @@ class CreatePost extends React.Component {
     e.preventDefault()
 
     if (title && option1 && option2) {
-      fetch(`/create?post=${JSON.stringify({ title, option1, option2 })}`, {
+
+      const post = JSON.stringify({ title, option1, option2 })
+
+      fetch(`/create?post=${post}`, {
         method: 'POST'
       })
         .then(res => res.json())
@@ -44,15 +51,15 @@ class CreatePost extends React.Component {
         })
         .catch(e => console.error(e))
     } else {
-      alert('All fields are required')
+      $('.ui.basic.modal').modal('show')
     }
   }
 
   render() {
     return (
-      <div className="ui segment">
+      <div className="ui inverted segment">
         <h1>Create a New Vote</h1>
-        <form onSubmit={this.createPost} className="ui form">
+        <form onSubmit={this.createPost} className="ui inverted form">
           <div className="required field">
             <label>Title</label>
             <input onChange={this.handleTitleChange} name="title" type="text" placeholder="What are we voting on?"/>
@@ -70,14 +77,40 @@ class CreatePost extends React.Component {
             </div>
           </div>
 
-          <Link to="/" className="ui button">
+          <Link to="/" className="ui large inverted button">
             Cancel
           </Link>
 
-          <button className="ui right floated color blue submit button">
+          <button className="ui large right floated inverted color blue submit button">
             Create
           </button>
         </form>
+        <div className="ui basic modal">
+          <i className="close icon"></i>
+          <div className="header">
+            All fields are required.
+          </div>
+          <div className="image content">
+            <div className="image">
+              <i className="archive icon"></i>
+            </div>
+            <div className="description">
+              <p>Fill out every field in order to create a new vote.</p>
+            </div>
+          </div>
+          <div className="actions">
+            <div className="two fluid ui inverted buttons">
+              <Link to="/" className="ui cancel red basic inverted button">
+                <i className="remove icon"></i>
+                Cancel
+              </Link>
+              <div className="ui cancel green basic inverted button">
+                <i className="checkmark icon"></i>
+                Okay
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

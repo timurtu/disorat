@@ -18,14 +18,15 @@ class Navbar extends React.Component {
           zIndex: 3,
           top: '0',
           left: '0',
-          background: '#f7f7f7'
+          background: 'rgba(0,0,0,0.82)',
+          opacity: '.9'
         }}>
-          <nav className="ui secondary pointing menu">
+          <nav className="ui inverted secondary pointing menu">
             <Link to="/feed" className="item" activeClassName="active">
               Feed
             </Link>
             {/*<Link to="/profile" className="item" activeClassName="active">*/}
-            {/*Profile*/}
+              {/*Profile*/}
             {/*</Link>*/}
             <div className="right menu">
               <Link to="/create" className="ui item" activeClassName="active">

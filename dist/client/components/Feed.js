@@ -77,7 +77,7 @@ var Feed = function (_React$Component) {
         null,
         _react2.default.createElement(
           'div',
-          { className: 'ui cards' },
+          { className: 'ui one cards' },
           this.state.posts.map(function (p, i) {
             return _react2.default.createElement(
               _reactLazyload2.default,
@@ -94,7 +94,7 @@ var Feed = function (_React$Component) {
               bottom: '2em',
               zIndex: '4',
               boxShadow: '0 3px 5px rgba(0, 0, 0, .25)'
-            }, className: 'massive circular ui color blue icon button' },
+            }, className: 'massive circular ui inverted color blue icon button' },
           _react2.default.createElement('i', { className: 'plus icon' })
         )
       );
@@ -109,7 +109,7 @@ var ProgressBar = function ProgressBar(_ref) {
       opt2votes = _ref.opt2votes;
   return _react2.default.createElement(
     'div',
-    { className: 'ui right floated', style: { width: '3em' } },
+    { className: 'ui right floated', style: { width: '5em' } },
     _react2.default.createElement(_reactSimplePieChart2.default, { slices: [{
         color: '#00B5AD',
         value: opt1votes || 1
@@ -139,24 +139,35 @@ var Post = function (_React$Component2) {
       this.setState({ post: post, totalVotes: totalVotes });
     }
   }, {
+    key: 'inverted',
+    value: function inverted() {
+      return {
+        color: 'rgba(255,255,261,.9)'
+      };
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this4 = this;
 
       return _react2.default.createElement(
         'div',
-        { className: 'ui centered card' },
+        { className: 'card', style: {
+            backgroundColor: '#1B1C1D',
+            border: '1px solid #1B1C1D',
+            boxShadow: '0 1px 3px rgba(0,0,0, 0.25)'
+          } },
         _react2.default.createElement(
           _reactRouter.Link,
           { to: '/' + this.state.post.id, className: 'content' },
           _react2.default.createElement(
             'div',
-            { className: 'header' },
+            { style: this.inverted(), className: 'header' },
             this.state.post.title
           ),
           _react2.default.createElement(
             'div',
-            { className: 'meta' },
+            { style: this.inverted(), className: 'meta' },
             this.state.totalVotes,
             ' votes'
           ),
@@ -184,7 +195,7 @@ var Post = function (_React$Component2) {
                   }).catch(function (e) {
                     return console.error(e);
                   });
-                }, className: 'ui teal button' },
+                }, className: 'ui inverted teal button' },
               this.state.post.option1
             ),
             _react2.default.createElement(
@@ -198,7 +209,7 @@ var Post = function (_React$Component2) {
                   }).catch(function (e) {
                     return console.error(e);
                   });
-                }, className: 'ui orange button' },
+                }, className: 'ui inverted orange button' },
               this.state.post.option2
             )
           )

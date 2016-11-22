@@ -32,7 +32,7 @@ class Feed extends React.Component {
   render() {
     return (
       <div>
-        <div className="ui cards">
+        <div className="ui one cards">
           {this.state.posts.map((p, i) =>
             <LazyLoad key={i} height={170}>
               <Post post={p}/>
@@ -45,7 +45,7 @@ class Feed extends React.Component {
           bottom: '2em',
           zIndex: '4',
           boxShadow: '0 3px 5px rgba(0, 0, 0, .25)'
-        }} className="massive circular ui color blue icon button">
+        }} className="massive circular ui inverted color blue icon button">
           <i className="plus icon"></i>
         </Link>
       </div>
@@ -55,7 +55,7 @@ class Feed extends React.Component {
 }
 
 const ProgressBar = ({ opt1votes, opt2votes }) =>
-  <div className="ui right floated" style={{ width: '3em' }}>
+  <div className="ui right floated" style={{ width: '5em' }}>
     <PieChart slices={
       [{
         color: '#00B5AD',
@@ -77,17 +77,26 @@ class Post extends React.Component {
     this.setState({ post, totalVotes })
   }
 
+  inverted() {
+    return {
+      color: 'rgba(255,255,261,.9)'
+    }
+  }
 
   render() {
 
     return (
-      <div className="ui centered card">
+      <div className="card" style={{
+        backgroundColor: '#1B1C1D',
+        border: '1px solid #1B1C1D',
+        boxShadow: '0 1px 3px rgba(0,0,0, 0.25)'
+      }}>
         <Link to={`/${this.state.post.id}`} className="content">
-          <div className="header">
+          <div style={this.inverted()} className="header">
             {this.state.post.title}
           </div>
 
-          <div className="meta">
+          <div style={this.inverted()} className="meta">
             {this.state.totalVotes} votes
           </div>
 
@@ -109,7 +118,7 @@ class Post extends React.Component {
                   this.setState({ post, totalVotes })
                 })
                 .catch(e => console.error(e))
-            }} className="ui teal button">{this.state.post.option1}</button>
+            }} className="ui inverted teal button">{this.state.post.option1}</button>
             <button onClick={() => {
               fetch(`/posts/${this.state.post.id}/upvote2`, { method: 'POST' })
                 .then(res => res.json())
@@ -118,7 +127,7 @@ class Post extends React.Component {
                   this.setState({ post, totalVotes })
                 })
                 .catch(e => console.error(e))
-            }} className="ui orange button">{this.state.post.option2}</button>
+            }} className="ui inverted orange button">{this.state.post.option2}</button>
           </div>
         </div>
       </div>

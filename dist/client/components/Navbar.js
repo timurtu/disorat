@@ -47,11 +47,12 @@ var Navbar = function (_React$Component) {
               zIndex: 3,
               top: '0',
               left: '0',
-              background: '#f7f7f7'
+              background: 'rgba(0,0,0,0.82)',
+              opacity: '.9'
             } },
           _react2.default.createElement(
             'nav',
-            { className: 'ui secondary pointing menu' },
+            { className: 'ui inverted secondary pointing menu' },
             _react2.default.createElement(
               _reactRouter.Link,
               { to: '/feed', className: 'item', activeClassName: 'active' },

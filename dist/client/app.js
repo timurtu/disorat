@@ -18,25 +18,25 @@ var _reactGa = require('react-ga');
 
 var _reactGa2 = _interopRequireDefault(_reactGa);
 
-var _Navbar = require('./Navbar');
+var _Navbar = require('./components/Navbar');
 
 var _Navbar2 = _interopRequireDefault(_Navbar);
 
-var _Feed = require('./Feed');
+var _Feed = require('./components/Feed');
 
 var _Feed2 = _interopRequireDefault(_Feed);
 
-var _CreatePost = require('./CreatePost');
+var _CreatePost = require('./components/CreatePost');
 
 var _CreatePost2 = _interopRequireDefault(_CreatePost);
 
-var _DetailedPost = require('./DetailedPost');
+var _DetailedPost = require('./components/DetailedPost');
 
 var _DetailedPost2 = _interopRequireDefault(_DetailedPost);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import Profile from './Profile'
+// import Profile from './components/Profile'
 _reactGa2.default.initialize('UA-87619352-1'); /**
                                                 * Created by timur on 11/11/16.
                                                 */
@@ -50,8 +50,9 @@ var App = function App(_ref) {
     _react2.default.createElement(
       'div',
       { style: {
-          marginTop: '3em'
-        }, className: 'ui segment' },
+          marginTop: '3em',
+          backgroundColor: '#000'
+        }, className: 'ui inverted segment' },
       children
     )
   );
