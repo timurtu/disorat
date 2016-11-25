@@ -54,6 +54,11 @@ export default class Post extends React.Component {
             {this.state.totalVotes} votes
           </div>
 
+          <div style={{
+            marginTop: '1em',
+            fontSize: '1.125em'
+          }}>View more info</div>
+
           <ProgressBar opt1votes={this.state.post.option1votes} opt2votes={this.state.post.option2votes}/>
         </Link>
 

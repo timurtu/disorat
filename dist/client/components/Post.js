@@ -101,6 +101,14 @@ var Post = function (_React$Component) {
             this.state.totalVotes,
             ' votes'
           ),
+          _react2.default.createElement(
+            'div',
+            { style: {
+                marginTop: '1em',
+                fontSize: '1.125em'
+              } },
+            'View more info'
+          ),
           _react2.default.createElement(ProgressBar, { opt1votes: this.state.post.option1votes, opt2votes: this.state.post.option2votes })
         ),
         this.props.ad ? _react2.default.createElement(_Ad2.default, null) : null,
