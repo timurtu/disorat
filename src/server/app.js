@@ -9,7 +9,7 @@ import logger from './tools/logger'
 
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3001
 
 app.use(require('prerender-node').set('prerenderToken', 'u6ibgJaOKEDjYTox0TRE'))
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -18,6 +18,6 @@ app.use(express.json())
 app.use(express.static('public'))
 app.use(logger)
 
-app.listen(port, () => log('cyan', 'listening on port ' + port))
+app.listen(port, () => log('cyan', `listening on port ${port}`))
 
 export default app
