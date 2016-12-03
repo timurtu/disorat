@@ -11,6 +11,7 @@ import logger from './tools/logger'
 const app = express()
 const port = process.env.PORT || 3000
 
+app.use(require('prerender-node').set('prerenderToken', 'u6ibgJaOKEDjYTox0TRE'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.json())

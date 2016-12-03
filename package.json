@@ -40,6 +40,7 @@
     "npm-run-all": "^3.1.1",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
+    "prerender-node": "^2.5.0",
     "psydux": "^2.0.4",
     "react": "^15.3.2",
     "react-chartjs": "^0.8.0",

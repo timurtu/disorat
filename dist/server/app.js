@@ -29,6 +29,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var app = (0, _express2.default)();
 var port = process.env.PORT || 3000;
 
+app.use(require('prerender-node').set('prerenderToken', 'u6ibgJaOKEDjYTox0TRE'));
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 app.use(_bodyParser2.default.json());
 app.use(_express2.default.json());
