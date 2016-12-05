@@ -18,14 +18,15 @@ function logPageView() {
   ReactGA.pageview(window.location.pathname)
 }
 
-const AppRouter = () => <Router onUpdate={logPageView} history={browserHistory}>
-  <Route path="/" component={App}>
-    <IndexRedirect to="/feed"/>
-    <Route path="/feed" component={Posts}/>
-    {/*<Route path="/profile" component={Profile}/>*/}
-    <Route path="/create" component={CreatePost}/>
-    <Route path="/:id" component={DetailedPost}/>
-  </Route>
-</Router>
+const AppRouter = () =>
+  <Router onUpdate={logPageView} history={browserHistory}>
+    <Route path="/" component={App}>
+      <IndexRedirect to="/feed"/>
+      <Route path="/feed" component={Posts}/>
+      {/*<Route path="/profile" component={Profile}/>*/}
+      <Route path="/create" component={CreatePost}/>
+      <Route path="/:id" component={DetailedPost}/>
+    </Route>
+  </Router>
 
 export default AppRouter

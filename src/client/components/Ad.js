@@ -13,13 +13,12 @@ export default class Ad extends React.Component {
 
   render() {
     return (
-      <ins className="adsbygoogle"
-         style={{
-           display: 'block'
-         }}
-         data-ad-client="ca-pub-1252778884078131"
-         data-ad-slot="2677453370"
-         data-ad-format="auto"/>
+      <ins style={{
+        display: 'block'
+      }} className="adsbygoogle"
+           data-ad-client="ca-pub-1252778884078131"
+           data-ad-slot="2677453370"
+           data-ad-format="auto"/>
     )
   }
 }
