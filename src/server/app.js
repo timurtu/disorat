@@ -2,6 +2,7 @@
  * Created by timur on 11/11/16.
  */
 
+import 'babel-register'
 import express from 'express'
 import log from 'gutil-color-log'
 import bodyParser from 'body-parser'
@@ -9,7 +10,7 @@ import logger from './tools/logger'
 
 
 const app = express()
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 3000
 
 app.use(require('prerender-node').set('prerenderToken', 'u6ibgJaOKEDjYTox0TRE'))
 app.use(bodyParser.urlencoded({ extended: false }))
