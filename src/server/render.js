@@ -12,7 +12,7 @@ import app from './app'
 
 app.get('*', (req, res) => {
   match({routes, location: req.url }, (err, redirect, props) => {
-    const html = renderPage(<RouterContext {...props}/>)
+    const html = renderToString(<RouterContext {...props}/>)
     res.send(renderPage(html))
   })
 })
