@@ -5,11 +5,8 @@
 import React from 'react'
 import { Link } from 'react-router'
 import Ad from './Ad'
+const $ = require('jquery')
 
-
-$(function () {
-  $('.dropdown').dropdown()
-})
 
 let title, option1, option2
 
