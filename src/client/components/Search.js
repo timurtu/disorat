@@ -22,8 +22,9 @@ export default class Navbar extends React.Component {
   render() {
     return (
       <div style={{
-        display: 'table',
-        margin: '.5em 1.5em'
+        position: 'fixed',
+        left: '6.5em',
+        top: '.5em'
       }} className={`ui right aligned category search ${this.state.loading ? 'loading' : ''}`}>
         <div className="ui icon input">
           <input onChange={e => {
