@@ -13,7 +13,7 @@ class Navbar extends React.Component {
       <nav>
         <div style={{
           width: '100%',
-          height: '3em',
+          height: '4em',
           position: 'fixed',
           zIndex: 3,
           top: '0',

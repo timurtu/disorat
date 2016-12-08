@@ -23,7 +23,7 @@ export default class Navbar extends React.Component {
     return (
       <div style={{
         position: 'fixed',
-        left: '6.5em',
+        left: '5.5em',
         zIndex: 4,
         top: '.5em'
       }} className={`ui right aligned category search ${this.state.loading ? 'loading' : ''}`}>

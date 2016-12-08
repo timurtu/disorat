@@ -34,7 +34,14 @@ export default class Post extends React.Component {
 
   inverted() {
     return {
-      color: 'rgba(255,255,261,.9)'
+      color: 'rgba(255,255,261,.9)',
+      overflowWrap: 'break-word'
+    }
+  }
+
+  breakWord() {
+    return {
+      overflowWrap: 'break-word'
     }
   }
 
@@ -65,7 +72,7 @@ export default class Post extends React.Component {
         {this.props.ad ? <Ad/> : null}
 
         <div className="extra content">
-          <div className="ui two buttons">
+          <div style={this.breakWord()} className="ui two buttons">
             <button onClick={() => {
               fetch(`/posts/${this.state.post.id}/upvote1`, { method: 'POST' })
                 .then(res => res.json())
@@ -79,7 +86,7 @@ export default class Post extends React.Component {
                   this.setState({ post, totalVotes })
                 })
                 .catch(e => console.error(e))
-            }} className="ui inverted teal button">{this.state.post.option1}</button>
+            }} className="ui teal button">{this.state.post.option1}</button>
             <button onClick={() => {
               fetch(`/posts/${this.state.post.id}/upvote2`, { method: 'POST' })
                 .then(res => res.json())
@@ -88,7 +95,7 @@ export default class Post extends React.Component {
                   this.setState({ post, totalVotes })
                 })
                 .catch(e => console.error(e))
-            }} className="ui inverted orange button">{this.state.post.option2}</button>
+            }} className="ui orange button">{this.state.post.option2}</button>
           </div>
         </div>
       </div>
