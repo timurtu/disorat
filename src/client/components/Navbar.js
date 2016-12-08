@@ -4,7 +4,6 @@
 
 import React from 'react'
 import { Link } from 'react-router'
-import Search from './Search'
 
 class Navbar extends React.Component {
 
@@ -28,8 +27,6 @@ class Navbar extends React.Component {
             {/*<Link to="/profile" className="item" activeClassName="active">*/}
             {/*Profile*/}
             {/*</Link>*/}
-
-            <Search default="Search..."/>
 
             <div className="right menu">
               <Link to="/create" className="ui item" activeClassName="active">

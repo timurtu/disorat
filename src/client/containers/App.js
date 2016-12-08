@@ -9,6 +9,7 @@ import Search from '../components/Search'
 const App = ({ children }) =>
   <div>
     <Navbar/>
+    <Search default="Search..."/>
     <div style={{
       marginTop: '3em',
       backgroundColor: '#000'

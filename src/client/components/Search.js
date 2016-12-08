@@ -24,6 +24,7 @@ export default class Navbar extends React.Component {
       <div style={{
         position: 'fixed',
         left: '6.5em',
+        zIndex: 4,
         top: '.5em'
       }} className={`ui right aligned category search ${this.state.loading ? 'loading' : ''}`}>
         <div className="ui icon input">
