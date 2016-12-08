@@ -7,7 +7,7 @@
     "start": "npm-run-all build --parallel watch serve",
     "build": "gulp build",
     "watch": "gulp watch",
-    "serve": "node dist/server/index.js",
+    "serve": "NODE_ENV=production forever start dist/server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
@@ -27,6 +27,7 @@
     "body-parser": "^1.15.2",
     "chart.js": "^1.1.1",
     "co": "^4.6.0",
+    "compression": "^1.6.2",
     "css-loader": "^0.25.0",
     "domali": "^2.1.1",
     "express": "^3.21.2",
