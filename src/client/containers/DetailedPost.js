@@ -37,6 +37,12 @@ class DetailedPost extends React.Component {
     })
   }
 
+  breakWord() {
+    return {
+      overflowWrap: 'break-word'
+    }
+  }
+
   refresh() {
 
     window.scrollTo(0, 0)
@@ -88,7 +94,7 @@ class DetailedPost extends React.Component {
     return (
       <div>
         {this.state.loading ? <Loading/> :
-          <div>
+          <div style={this.breakWord()}>
             <h1>{this.state.title}</h1>
             <div className="ui grid">
               <div className="eight wide column">
@@ -140,8 +146,8 @@ class DetailedPost extends React.Component {
                       }} className="item" key={i}>
                         <i className="plus icon"></i>
                         <div className="content">
-                          <div className="header">{r.count}</div>
-                          <div className="description">{r.reason}</div>
+                          <div style={{ maxWidth: '8em' }} className="header">{r.count}</div>
+                          <div style={{ maxWidth: '8em' }} className="description">{r.reason}</div>
                         </div>
                       </a>)}
                   </div>
@@ -195,8 +201,8 @@ class DetailedPost extends React.Component {
                       }} className="item" key={i}>
                         <i className="plus icon"></i>
                         <div className="content">
-                          <div className="header">{r.count}</div>
-                          <div className="description">{r.reason}</div>
+                          <div style={{ maxWidth: '8em' }} className="header">{r.count}</div>
+                          <div style={{ maxWidth: '8em' }} className="description">{r.reason}</div>
                         </div>
                       </a>)}
                   </div>

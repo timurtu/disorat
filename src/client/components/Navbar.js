@@ -29,10 +29,7 @@ class Navbar extends React.Component {
               {/*Profile*/}
             {/*</Link>*/}
 
-            <div style={{
-              position: 'fixed',
-              right: '1em'
-            }} className="right menu">
+            <div className="right menu">
               <Link to="/create" className="ui item" activeClassName="active">
                 Create
               </Link>

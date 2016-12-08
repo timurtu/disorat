@@ -33,6 +33,7 @@ export default class Navbar extends React.Component {
             const query = e.target.value.toLowerCase()
             this.setState({ loading: true })
 
+
             fetch('/posts', { method: 'POST' })
               .then(res => res.json())
               .then(posts => {
@@ -54,7 +55,7 @@ export default class Navbar extends React.Component {
 
                     return x.concat(words.map(w => {
                       return {
-                        title, id, content: w
+                        title, id, content: w, fullContent: content
                       }
                     }))
                   }, [])
@@ -71,6 +72,7 @@ export default class Navbar extends React.Component {
               })
               .catch(err => console.error(err))
 
+
           }} className="prompt" type="text" placeholder={this.props.default}/>
           <i className="search icon"/>
         </div>
@@ -81,8 +83,8 @@ export default class Navbar extends React.Component {
                 <Link to={`/${top.id}`} key={i} className="item" onClick={() => {
                   this.setState({ results: [] })
                 }}>
-                  <div style={{ minWidth: '10em' }} className="content">
-                    <div className="header">{top.content}</div>
+                  <div style={{ minWidth: '10em', overflowWrap: 'break-word' }} className="content">
+                    <div className="header">{top.fullContent}</div>
                     {top.title}
                   </div>
                 </Link>
