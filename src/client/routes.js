@@ -4,10 +4,10 @@
 
 import React from 'react'
 import { Route, IndexRedirect } from 'react-router'
-import App from './components/App'
-import Feed from './components/Feed'
+import App from './containers/App'
+import Feed from './containers/Feed'
 import CreatePost from './components/CreatePost'
-import DetailedPost from './components/DetailedPost'
+import DetailedPost from './containers/DetailedPost'
 
 
 const NotFound = () => <h1>404 - Page not found</h1>

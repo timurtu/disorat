@@ -6,20 +6,26 @@ import 'whatwg-fetch'
 import React from 'react'
 import { Link } from 'react-router'
 import LazyLoad from 'react-lazyload'
-import Post from './Post'
-
+import Post from '../components/Post'
+import Loading from '../components/Loading'
 
 class Feed extends React.Component {
 
   componentWillMount() {
-    this.setState({ posts: [] })
+    this.setState({
+      posts: [],
+      loading: true
+    })
   }
 
   componentDidMount() {
     fetch('/posts', { method: 'POST' })
       .then(res => res.json())
       .then(posts => {
-        this.setState({ posts })
+        this.setState({
+          posts,
+          loading: false
+        })
 
         const docTitle = document.querySelector('title')
         docTitle.textContent = 'disorat | Vote on Anything'
@@ -48,19 +54,21 @@ class Feed extends React.Component {
   render() {
     return (
       <div>
-        <div className="ui one cards">
-          {this.posts()}
-        </div>
-
-        <Link to="/create" style={{
-          position: 'fixed',
-          right: '1em',
-          bottom: '1em',
-          zIndex: '4',
-          boxShadow: '0 3px 5px rgba(0, 0, 0, .25)'
-        }} className="massive circular ui color blue icon button">
-          <i className="plus icon"></i>
-        </Link>
+        {this.state.loading ? <Loading/> :
+          <div>
+            <div className="ui one cards">
+              {this.posts()}
+            </div>
+            <Link to="/create" style={{
+              position: 'fixed',
+              right: '1em',
+              bottom: '1em',
+              zIndex: '4',
+              boxShadow: '0 3px 5px rgba(0, 0, 0, .25)'
+            }} className="massive circular ui color blue icon button">
+              <i className="plus icon"/>
+            </Link>
+          </div>}
       </div>
     )
   }

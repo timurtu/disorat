@@ -12,6 +12,10 @@ ReactGA.initialize('UA-87619352-1')
 
 
 render(
-  <Router routes={routes} history={browserHistory}/>,
+  <Router onUpdate={() => {
+    window.scrollTo(0, 0)
+    ReactGA.set({ page: window.location.pathname })
+    ReactGA.pageview(window.location.pathname)
+  }} routes={routes} history={browserHistory}/>,
   document.getElementById('root')
 )

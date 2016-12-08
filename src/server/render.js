@@ -31,14 +31,6 @@ function renderPage(html) {
         <meta name="robots" content="index,follow"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.6/semantic.min.css">
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <script>
-          (adsbygoogle = window.adsbygoogle || []).push({
-            google_ad_client: "ca-pub-1252778884078131",
-            enable_page_level_ads: true
-          })
-        </script>
     </head>
     
     <body style="background:rgba(0,0,0,0.82);">
@@ -53,3 +45,5 @@ function renderPage(html) {
     </html>
   `
 }
+
+{/*<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>*/}
