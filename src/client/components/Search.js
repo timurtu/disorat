@@ -17,10 +17,6 @@ export default class Navbar extends React.Component {
     }
   }
 
-  componentDidMount() {
-    $('select.dropdown').dropdown()
-  }
-
   render() {
     return (
       <div style={{

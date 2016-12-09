@@ -40,11 +40,6 @@ var Navbar = function (_React$Component) {
   }
 
   _createClass(Navbar, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      $('select.dropdown').dropdown();
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
