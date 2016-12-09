@@ -1,7 +1,5 @@
 'use strict';
 
-require('./routes/index');
-
 require('./routes/feed');
 
 require('./routes/create');

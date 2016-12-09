@@ -50,7 +50,7 @@ class DetailedPost extends React.Component {
     fetch(`/posts${location.pathname}`, { method: 'POST' })
       .then(res => res.json())
       .then(p => {
-        const { id, title, option1, option2, option1votes, option2votes, reasons1, reasons2 } = p
+        const { id, title, option1, option2, option1votes, option2votes, reasons1, reasons2, date } = p
 
         this.setState({
           id,
@@ -61,7 +61,8 @@ class DetailedPost extends React.Component {
           option2votes,
           reasons1: this.sortReasons(reasons1),
           reasons2: this.sortReasons(reasons2),
-          loading: false
+          loading: false,
+          date
         })
 
         const docTitle = document.querySelector('title')
@@ -96,6 +97,7 @@ class DetailedPost extends React.Component {
         {this.state.loading ? <Loading/> :
           <div style={this.breakWord()}>
             <h1>{this.state.title}</h1>
+            <h2>{this.state.date}</h2>
             <div className="ui grid">
               <div className="eight wide column">
                 <div className="ui inverted segment">

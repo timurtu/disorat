@@ -5,6 +5,8 @@
 import React from 'react'
 import { Link } from 'react-router'
 
+let cachedPosts
+
 export default class Navbar extends React.Component {
 
   constructor(props) {
@@ -33,46 +35,58 @@ export default class Navbar extends React.Component {
             const query = e.target.value.toLowerCase()
             this.setState({ loading: true })
 
+            if (cachedPosts) {
 
-            fetch('/posts', { method: 'POST' })
-              .then(res => res.json())
-              .then(posts => {
+              const data = cachedPosts.filter(x => x.content.toLowerCase().startsWith(query))
 
-                const data = posts.reduce((x, y) => {
-                  const { title, id } = y
-                  return x.concat([
-                    { id, title, content: y.title },
-                    { id, title, content: y.option1 },
-                    { id, title, content: y.option2 }
-                  ])
-                }, [])
-                  .reduce((x, y) => {
+              this.setState({
+                loading: false,
+                results: data.slice(0, 5)
+              })
 
-                    const { title, id, content } = y
-                    const words = content
-                      .trim()
-                      .split(/\s/)
+            } else {
+              fetch('/posts', { method: 'POST' })
+                .then(res => res.json())
+                .then(posts => {
 
-                    return x.concat(words.map(w => {
-                      return {
-                        title, id, content: w, fullContent: content
-                      }
-                    }))
+                  cachedPosts = posts.reduce((x, y) => {
+                    const { title, id } = y
+                    return x.concat([
+                      { id, title, content: y.title },
+                      { id, title, content: y.option1 },
+                      { id, title, content: y.option2 }
+                    ])
                   }, [])
-                .filter(x => x.content.toLowerCase().startsWith(query))
+                    .reduce((x, y) => {
 
+                      const { title, id, content } = y
+                      const words = content
+                        .trim()
+                        .split(/\s/)
+
+                      return x.concat(words.map(w => {
+                        return {
+                          title, id, content: w, fullContent: content
+                        }
+                      }))
+                    }, [])
+
+                  const data = cachedPosts.filter(x => x.content.toLowerCase().startsWith(query))
+
+                  this.setState({
+                    loading: false,
+                    results: data.slice(0, 5)
+                  })
+                })
+                .catch(err => console.error(err))
+
+              if (!query) {
                 this.setState({
                   loading: false,
-                  results: data.slice(0, 5)
+                  results: []
                 })
-
-                if (!query) {
-                  this.setState({ results: [] })
-                }
-              })
-              .catch(err => console.error(err))
-
-
+              }
+            }
           }} className="prompt" type="text" placeholder={this.props.default}/>
           <i className="search icon"/>
         </div>

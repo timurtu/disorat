@@ -28,7 +28,8 @@ _app2.default.post('/create', function (req, res) {
     option1votes: 0,
     option2votes: 0,
     reasons1: [],
-    reasons2: []
+    reasons2: [],
+    date: Date.now()
   });
 
   _db2.default.hsetAsync('feed', id, JSON.stringify(post)).then(function (p) {

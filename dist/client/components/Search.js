@@ -22,6 +22,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * Created by timur on 11/14/16.
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
+var cachedPosts = void 0;
+
 var Navbar = function (_React$Component) {
   _inherits(Navbar, _React$Component);
 
@@ -63,28 +65,9 @@ var Navbar = function (_React$Component) {
               var query = e.target.value.toLowerCase();
               _this2.setState({ loading: true });
 
-              fetch('/posts', { method: 'POST' }).then(function (res) {
-                return res.json();
-              }).then(function (posts) {
+              if (cachedPosts) {
 
-                var data = posts.reduce(function (x, y) {
-                  var title = y.title,
-                      id = y.id;
-
-                  return x.concat([{ id: id, title: title, content: y.title }, { id: id, title: title, content: y.option1 }, { id: id, title: title, content: y.option2 }]);
-                }, []).reduce(function (x, y) {
-                  var title = y.title,
-                      id = y.id,
-                      content = y.content;
-
-                  var words = content.trim().split(/\s/);
-
-                  return x.concat(words.map(function (w) {
-                    return {
-                      title: title, id: id, content: w, fullContent: content
-                    };
-                  }));
-                }, []).filter(function (x) {
+                var data = cachedPosts.filter(function (x) {
                   return x.content.toLowerCase().startsWith(query);
                 });
 
@@ -92,13 +75,49 @@ var Navbar = function (_React$Component) {
                   loading: false,
                   results: data.slice(0, 5)
                 });
+              } else {
+                fetch('/posts', { method: 'POST' }).then(function (res) {
+                  return res.json();
+                }).then(function (posts) {
+
+                  cachedPosts = posts.reduce(function (x, y) {
+                    var title = y.title,
+                        id = y.id;
+
+                    return x.concat([{ id: id, title: title, content: y.title }, { id: id, title: title, content: y.option1 }, { id: id, title: title, content: y.option2 }]);
+                  }, []).reduce(function (x, y) {
+                    var title = y.title,
+                        id = y.id,
+                        content = y.content;
+
+                    var words = content.trim().split(/\s/);
+
+                    return x.concat(words.map(function (w) {
+                      return {
+                        title: title, id: id, content: w, fullContent: content
+                      };
+                    }));
+                  }, []);
+
+                  var data = cachedPosts.filter(function (x) {
+                    return x.content.toLowerCase().startsWith(query);
+                  });
+
+                  _this2.setState({
+                    loading: false,
+                    results: data.slice(0, 5)
+                  });
+                }).catch(function (err) {
+                  return console.error(err);
+                });
 
                 if (!query) {
-                  _this2.setState({ results: [] });
+                  _this2.setState({
+                    loading: false,
+                    results: []
+                  });
                 }
-              }).catch(function (err) {
-                return console.error(err);
-              });
+              }
             }, className: 'prompt', type: 'text', placeholder: this.props.default }),
           _react2.default.createElement('i', { className: 'search icon' })
         ),

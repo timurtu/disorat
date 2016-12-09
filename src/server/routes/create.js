@@ -16,7 +16,8 @@ app.post('/create', (req, res) => {
     option1votes: 0,
     option2votes: 0,
     reasons1: [],
-    reasons2: []
+    reasons2: [],
+    date: Date.now()
   })
 
   db.hsetAsync('feed', id, JSON.stringify(post))

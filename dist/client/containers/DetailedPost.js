@@ -99,7 +99,8 @@ var DetailedPost = function (_React$Component) {
             option1votes = p.option1votes,
             option2votes = p.option2votes,
             reasons1 = p.reasons1,
-            reasons2 = p.reasons2;
+            reasons2 = p.reasons2,
+            date = p.date;
 
 
         _this2.setState({
@@ -111,7 +112,8 @@ var DetailedPost = function (_React$Component) {
           option2votes: option2votes,
           reasons1: _this2.sortReasons(reasons1),
           reasons2: _this2.sortReasons(reasons2),
-          loading: false
+          loading: false,
+          date: date
         });
 
         var docTitle = document.querySelector('title');
@@ -160,6 +162,11 @@ var DetailedPost = function (_React$Component) {
             'h1',
             null,
             this.state.title
+          ),
+          _react2.default.createElement(
+            'h2',
+            null,
+            this.state.date
           ),
           _react2.default.createElement(
             'div',
