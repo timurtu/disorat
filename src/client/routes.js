@@ -9,10 +9,9 @@ import Feed from './containers/Feed'
 import CreatePost from './components/CreatePost'
 import DetailedPost from './containers/DetailedPost'
 
-
 const NotFound = () => <h1>404 - Page not found</h1>
 
-module.exports = (
+export default (
   <Route path="/" component={App}>
     <IndexRedirect to="/feed"/>
     <Route path="/feed" component={Feed}/>

@@ -16,6 +16,6 @@ render(
     window.scrollTo(0, 0)
     ReactGA.set({ page: window.location.pathname })
     ReactGA.pageview(window.location.pathname)
-  }} routes={routes} history={browserHistory}/>,
+  }} history={browserHistory} routes={routes}/>,
   document.getElementById('root')
 )

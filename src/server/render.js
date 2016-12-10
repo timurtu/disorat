@@ -11,8 +11,8 @@ import app from './app'
 
 
 app.get('*', (req, res) => {
-  match({routes, location: req.url }, (err, redirect, props) => {
-    const html = renderToString(<RouterContext {...props}/>)
+  match({ routes, location: req.url }, (err, redirect, props) => {
+    const html = renderToString(<RouterContext {...props} location={{}} params={{}} components={[]}/>)
     res.send(renderPage(html))
   })
 })
@@ -46,4 +46,5 @@ function renderPage(html) {
   `
 }
 
-{/*<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>*/}
+{/*<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>*/
+}
