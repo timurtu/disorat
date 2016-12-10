@@ -28,6 +28,7 @@
     "chart.js": "^1.1.1",
     "co": "^4.6.0",
     "compression": "^1.6.2",
+    "cors": "^2.8.1",
     "css-loader": "^0.25.0",
     "domali": "^2.1.1",
     "express": "^3.21.2",
