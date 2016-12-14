@@ -90,6 +90,11 @@ class DetailedPost extends React.Component {
     reason2 = e.target.value
   }
 
+  maxWidth() {
+    const maxWidth = `${window.innerWidth / 45}em`
+    return { maxWidth }
+  }
+
   render() {
 
     return (
@@ -153,8 +158,8 @@ class DetailedPost extends React.Component {
                       }} className="item" key={i}>
                         <i className="plus icon"/>
                         <div className="content">
-                          <div style={{ maxWidth: '8em' }} className="header">{r.count}</div>
-                          <div style={{ maxWidth: '8em' }} className="description">{r.reason}</div>
+                          <div style={this.maxWidth()} className="header">{r.count}</div>
+                          <div style={this.maxWidth()} className="description">{r.reason}</div>
                         </div>
                       </a>)}
                   </div>
@@ -208,8 +213,8 @@ class DetailedPost extends React.Component {
                       }} className="item" key={i}>
                         <i className="plus icon"/>
                         <div className="content">
-                          <div style={{ maxWidth: '8em' }} className="header">{r.count}</div>
-                          <div style={{ maxWidth: '8em' }} className="description">{r.reason}</div>
+                          <div style={this.maxWidth()} className="header">{r.count}</div>
+                          <div style={this.maxWidth()} className="description">{r.reason}</div>
                         </div>
                       </a>)}
                   </div>
