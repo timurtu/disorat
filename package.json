@@ -52,6 +52,7 @@
     "passport-facebook": "^2.1.1",
     "prerender-node": "^2.5.0",
     "psydux": "^2.0.4",
+    "pushstate-server": "^2.1.0",
     "react": "^15.3.2",
     "react-chartjs": "^0.8.0",
     "react-dom": "^15.3.2",
