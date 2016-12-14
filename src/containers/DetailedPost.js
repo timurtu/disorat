@@ -4,6 +4,7 @@
 
 import 'whatwg-fetch'
 import React from 'react'
+import Helmet from 'react-helmet'
 import PieChart from 'react-simple-pie-chart'
 import Ad from '../components/Ad'
 import Loading from '../components/Loading'
@@ -66,9 +67,6 @@ class DetailedPost extends React.Component {
           loading: false,
           date: formattedDate ? formattedDate : null
         })
-
-        const docTitle = document.querySelector('title')
-        docTitle.textContent = `disorat | ${title} | ${option1} vs ${option2}`
       })
   }
 
@@ -96,6 +94,9 @@ class DetailedPost extends React.Component {
 
     return (
       <div>
+        <Helmet
+          title={`${this.state.title} | ${this.state.option1} vs ${this.state.option2}`}
+        />
         {this.state.loading ? <Loading/> :
           <div style={this.breakWord()}>
             <h1>{this.state.title}</h1>

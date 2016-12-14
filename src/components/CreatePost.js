@@ -4,8 +4,9 @@
 
 import React from 'react'
 import { Link } from 'react-router'
+import Helmet from 'react-helmet'
 import Ad from './Ad'
-import {apiUrl} from '../globals'
+import { apiUrl } from '../globals'
 const $ = require('jquery')
 
 
@@ -15,11 +16,6 @@ class CreatePost extends React.Component {
 
   componentWillMount() {
     this.setState({ error: '' })
-  }
-
-  componentDidMount() {
-    const docTitle = document.querySelector('title')
-    docTitle.textContent = 'disorat | Create a Vote'
   }
 
   handleTitleChange(e) {
@@ -56,6 +52,7 @@ class CreatePost extends React.Component {
   render() {
     return (
       <div className="ui inverted segment">
+        <Helmet title="Create a Vote"/>
         <h1>Create a New Vote</h1>
         <form onSubmit={this.createPost} className="ui inverted form">
           <div className="required field">

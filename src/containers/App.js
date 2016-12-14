@@ -3,11 +3,17 @@
  */
 
 import React from 'react'
+import Helmet from 'react-helmet'
 import Navbar from '../components/Navbar'
 import Search from '../components/Search'
 
 const App = ({ children }) =>
   <div>
+    <Helmet
+      defaultTitle="disorat | Vote on Anything"
+      title="disorat"
+      titleTemplate="disorat | %s"
+    />
     <Navbar/>
     <Search default="Search..."/>
     <div style={{
