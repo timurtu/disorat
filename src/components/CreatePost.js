@@ -52,7 +52,9 @@ class CreatePost extends React.Component {
   render() {
     return (
       <div className="ui inverted segment">
+
         <Helmet title="Create a Vote"/>
+
         <h1>Create a New Vote</h1>
         <form onSubmit={this.createPost} className="ui inverted form">
           <div className="required field">

@@ -15,10 +15,13 @@ const App = ({ children }) =>
       titleTemplate="disorat | %s"
     />
     <Navbar/>
+
     <Search default="Search..."/>
+
     <div style={{
-      marginTop: '3em',
-      backgroundColor: '#000'
+      backgroundColor: '#000',
+      maxWidth: '50em',
+      margin: '3em auto 0'
     }} className="ui inverted segment">
       {children}
     </div>
