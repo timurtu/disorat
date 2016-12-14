@@ -5,6 +5,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 import Ad from './Ad'
+import {apiUrl} from '../globals'
 const $ = require('jquery')
 
 
@@ -40,14 +41,13 @@ class CreatePost extends React.Component {
 
       const post = JSON.stringify({ title, option1, option2 })
 
-      fetch(`/create?post=${post}`, {
+      fetch(`${apiUrl}/create?post=${post}`, {
         method: 'POST'
       })
         .then(res => res.json())
         .then(p => {
           location.href = p.id
         })
-        .catch(e => console.error(e))
     } else {
       $('.ui.basic.modal').modal('show')
     }
@@ -85,13 +85,13 @@ class CreatePost extends React.Component {
           <Ad/>
         </form>
         <div className="ui basic modal">
-          <i className="close icon"></i>
+          <i className="close icon"/>
           <div className="header">
             All fields are required.
           </div>
           <div className="image content">
             <div className="image">
-              <i className="archive icon"></i>
+              <i className="archive icon"/>
             </div>
             <div className="description">
               <p>Fill out every field in order to create a new vote.</p>
@@ -100,11 +100,11 @@ class CreatePost extends React.Component {
           <div className="actions">
             <div className="two fluid ui inverted buttons">
               <Link to="/" className="ui cancel red basic inverted button">
-                <i className="remove icon"></i>
+                <i className="remove icon"/>
                 Cancel
               </Link>
               <div className="ui cancel green basic inverted button">
-                <i className="checkmark icon"></i>
+                <i className="checkmark icon"/>
                 Okay
               </div>
             </div>

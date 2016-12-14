@@ -7,19 +7,17 @@ import { Link } from 'react-router'
 import PieChart from 'react-simple-pie-chart'
 import ReactGA from 'react-ga'
 import Ad from './Ad'
-
+import { apiUrl } from '../globals'
 
 const ProgressBar = ({ opt1votes, opt2votes }) =>
   <div className="ui right floated" style={{ width: '5em' }}>
-    <PieChart slices={
-      [{
-        color: '#00B5AD',
-        value: opt1votes || 1,
-      }, {
-        color: '#F2711C',
-        value: opt2votes || 1,
-      }]
-    }/>
+    <PieChart slices={[{
+      color: '#00B5AD',
+      value: opt1votes || 1,
+    }, {
+      color: '#F2711C',
+      value: opt2votes || 1,
+    }]}/>
   </div>
 
 export default class Post extends React.Component {
@@ -64,7 +62,8 @@ export default class Post extends React.Component {
           <div style={{
             marginTop: '1em',
             fontSize: '1.125em'
-          }}>View more info</div>
+          }}>View more info
+          </div>
 
           <ProgressBar opt1votes={this.state.post.option1votes} opt2votes={this.state.post.option2votes}/>
         </Link>
@@ -74,7 +73,7 @@ export default class Post extends React.Component {
         <div className="extra content">
           <div style={this.breakWord()} className="ui two buttons">
             <button onClick={() => {
-              fetch(`/posts/${this.state.post.id}/upvote1`, { method: 'POST' })
+              fetch(`${apiUrl}/posts/${this.state.post.id}/upvote1`, { method: 'POST' })
                 .then(res => res.json())
                 .then(post => {
                   const totalVotes = this.state.totalVotes + 1
@@ -85,16 +84,14 @@ export default class Post extends React.Component {
                   })
                   this.setState({ post, totalVotes })
                 })
-                .catch(e => console.error(e))
             }} className="ui teal button">{this.state.post.option1}</button>
             <button onClick={() => {
-              fetch(`/posts/${this.state.post.id}/upvote2`, { method: 'POST' })
+              fetch(`${apiUrl}/posts/${this.state.post.id}/upvote2`, { method: 'POST' })
                 .then(res => res.json())
                 .then(post => {
                   const totalVotes = this.state.totalVotes + 1
                   this.setState({ post, totalVotes })
                 })
-                .catch(e => console.error(e))
             }} className="ui orange button">{this.state.post.option2}</button>
           </div>
         </div>

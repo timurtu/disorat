@@ -4,6 +4,7 @@
 
 import React from 'react'
 import { Link } from 'react-router'
+import { apiUrl } from '../globals'
 
 let cachedPosts
 
@@ -41,7 +42,7 @@ export default class Navbar extends React.Component {
               })
 
             } else {
-              fetch('/posts', { method: 'POST' })
+              fetch(`${apiUrl}/posts`, { method: 'POST' })
                 .then(res => res.json())
                 .then(posts => {
 
@@ -74,7 +75,6 @@ export default class Navbar extends React.Component {
                     results: data.slice(0, 5)
                   })
                 })
-                .catch(err => console.error(err))
 
               if (!query) {
                 this.setState({

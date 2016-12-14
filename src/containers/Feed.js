@@ -8,6 +8,7 @@ import { Link } from 'react-router'
 import LazyLoad from 'react-lazyload'
 import Post from '../components/Post'
 import Loading from '../components/Loading'
+import { apiUrl } from '../globals'
 
 class Feed extends React.Component {
 
@@ -19,7 +20,7 @@ class Feed extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/posts', { method: 'POST' })
+    fetch(`${apiUrl}/posts`, { method: 'POST' })
       .then(res => res.json())
       .then(posts => {
         this.setState({
@@ -30,7 +31,6 @@ class Feed extends React.Component {
         const docTitle = document.querySelector('title')
         docTitle.textContent = 'disorat | Vote on Anything'
       })
-      .catch(e => console.error(e))
   }
 
   posts() {

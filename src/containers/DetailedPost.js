@@ -7,21 +7,20 @@ import React from 'react'
 import PieChart from 'react-simple-pie-chart'
 import Ad from '../components/Ad'
 import Loading from '../components/Loading'
+import { apiUrl } from '../globals'
 
 const ProgressBar = ({ opt1votes, opt2votes }) =>
   <div style={{
     maxWidth: '50%',
     margin: '0 auto'
   }}>
-    <PieChart slices={
-      [{
-        color: '#00B5AD',
-        value: opt1votes || 1,
-      }, {
-        color: '#F2711C',
-        value: opt2votes || 1,
-      }]
-    }/>
+    <PieChart slices={[{
+      color: '#00B5AD',
+      value: opt1votes || 1,
+    }, {
+      color: '#F2711C',
+      value: opt2votes || 1,
+    }]}/>
   </div>
 
 let reason1, reason2
@@ -47,10 +46,12 @@ class DetailedPost extends React.Component {
 
     window.scrollTo(0, 0)
 
-    fetch(`/posts${location.pathname}`, { method: 'POST' })
+    fetch(`${apiUrl}/posts${location.pathname}`, { method: 'POST' })
       .then(res => res.json())
       .then(p => {
         const { id, title, option1, option2, option1votes, option2votes, reasons1, reasons2, date } = p
+
+        const formattedDate = new Date(date).toUTCString()
 
         this.setState({
           id,
@@ -62,7 +63,7 @@ class DetailedPost extends React.Component {
           reasons1: this.sortReasons(reasons1),
           reasons2: this.sortReasons(reasons2),
           loading: false,
-          date
+          formattedDate
         })
 
         const docTitle = document.querySelector('title')
@@ -74,7 +75,7 @@ class DetailedPost extends React.Component {
     this.refresh()
   }
 
-  componentWillReceiveProps(e) {
+  componentWillReceiveProps() {
     this.refresh()
   }
 
@@ -97,14 +98,14 @@ class DetailedPost extends React.Component {
         {this.state.loading ? <Loading/> :
           <div style={this.breakWord()}>
             <h1>{this.state.title}</h1>
-            <h2>{this.state.date}</h2>
+            <h2>{this.state.formattedDate}</h2>
             <div className="ui grid">
               <div className="eight wide column">
                 <div className="ui inverted segment">
                   <h3>{this.state.option1}</h3>
                   <h5>{this.state.option1votes} votes</h5>
                   <button onClick={() => {
-                    fetch(`/posts/${this.state.id}/upvote1`, { method: 'POST' })
+                    fetch(`${apiUrl}/posts/${this.state.id}/upvote1`, { method: 'POST' })
                       .then(res => res.json())
                       .then(post => {
                         this.setState({ option1votes: post.option1votes })
@@ -120,7 +121,7 @@ class DetailedPost extends React.Component {
                     e.preventDefault()
 
                     if (reason1) {
-                      fetch(`/reason/${this.state.id}/${reason1}/reason1`, { method: 'POST' })
+                      fetch(`${apiUrl}/reason/${this.state.id}/${reason1}/reason1`, { method: 'POST' })
                         .then(res => res.json())
                         .then(p => this.setState({ reasons1: this.sortReasons(p.reasons1) }))
                     }
@@ -142,11 +143,11 @@ class DetailedPost extends React.Component {
                   <div className="ui inverted list">
                     {this.state.reasons1.map((r, i) =>
                       <a onClick={() => {
-                        fetch(`/reason/${this.state.id}/${r.reason}/reason1`, { method: 'POST' })
+                        fetch(`${apiUrl}/reason/${this.state.id}/${r.reason}/reason1`, { method: 'POST' })
                           .then(res => res.json())
                           .then(p => this.setState({ reasons1: this.sortReasons(p.reasons1) }))
                       }} className="item" key={i}>
-                        <i className="plus icon"></i>
+                        <i className="plus icon"/>
                         <div className="content">
                           <div style={{ maxWidth: '8em' }} className="header">{r.count}</div>
                           <div style={{ maxWidth: '8em' }} className="description">{r.reason}</div>
@@ -161,7 +162,7 @@ class DetailedPost extends React.Component {
                   <h3>{this.state.option2}</h3>
                   <h5>{this.state.option2votes} votes</h5>
                   <button onClick={() => {
-                    fetch(`/posts/${this.state.id}/upvote2`, { method: 'POST' })
+                    fetch(`${apiUrl}/posts/${this.state.id}/upvote2`, { method: 'POST' })
                       .then(res => res.json())
                       .then(post => {
                         this.setState({ option2votes: post.option2votes })
@@ -175,7 +176,7 @@ class DetailedPost extends React.Component {
                   <form onSubmit={e => {
                     e.preventDefault()
                     if (reason2) {
-                      fetch(`/reason/${this.state.id}/${reason2}/reason2`, { method: 'POST' })
+                      fetch(`${apiUrl}/reason/${this.state.id}/${reason2}/reason2`, { method: 'POST' })
                         .then(res => res.json())
                         .then(p => this.setState({ reasons2: this.sortReasons(p.reasons2) }))
                     }
@@ -197,11 +198,11 @@ class DetailedPost extends React.Component {
                   <div className="ui inverted list">
                     {this.state.reasons2.map((r, i) =>
                       <a onClick={() => {
-                        fetch(`/reason/${this.state.id}/${r.reason}/reason2`, { method: 'POST' })
+                        fetch(`${apiUrl}/reason/${this.state.id}/${r.reason}/reason2`, { method: 'POST' })
                           .then(res => res.json())
                           .then(p => this.setState({ reasons2: this.sortReasons(p.reasons2) }))
                       }} className="item" key={i}>
-                        <i className="plus icon"></i>
+                        <i className="plus icon"/>
                         <div className="content">
                           <div style={{ maxWidth: '8em' }} className="header">{r.count}</div>
                           <div style={{ maxWidth: '8em' }} className="description">{r.reason}</div>
