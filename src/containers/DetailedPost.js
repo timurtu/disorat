@@ -32,7 +32,8 @@ class DetailedPost extends React.Component {
       message: '404: Page not found!',
       reasons1: [],
       reasons2: [],
-      loading: true
+      loading: true,
+      formattedDate: false
     })
   }
 
@@ -51,7 +52,7 @@ class DetailedPost extends React.Component {
       .then(p => {
         const { id, title, option1, option2, option1votes, option2votes, reasons1, reasons2, date } = p
 
-        const formattedDate = new Date(date).toUTCString()
+        const formattedDate = date ? new Date(date).toUTCString() : null
 
         this.setState({
           id,
@@ -63,7 +64,7 @@ class DetailedPost extends React.Component {
           reasons1: this.sortReasons(reasons1),
           reasons2: this.sortReasons(reasons2),
           loading: false,
-          formattedDate
+          date: formattedDate ? formattedDate : null
         })
 
         const docTitle = document.querySelector('title')
@@ -98,7 +99,9 @@ class DetailedPost extends React.Component {
         {this.state.loading ? <Loading/> :
           <div style={this.breakWord()}>
             <h1>{this.state.title}</h1>
-            <h2>{this.state.formattedDate}</h2>
+
+            <h3>{this.state.date}</h3>
+
             <div className="ui grid">
               <div className="eight wide column">
                 <div className="ui inverted segment">
