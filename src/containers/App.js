@@ -20,8 +20,7 @@ const App = ({ children }) =>
 
     <div style={{
       backgroundColor: '#000',
-      maxWidth: '50em',
-      margin: '3em auto 0'
+      marginTop: '3em'
     }} className="ui inverted segment">
       {children}
     </div>
