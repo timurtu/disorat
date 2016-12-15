@@ -91,7 +91,7 @@ class DetailedPost extends React.Component {
   }
 
   maxWidth() {
-    const maxWidth = `${window.innerWidth / 45}em`
+    const maxWidth = `${window.innerWidth / 65}em`
     return { maxWidth }
   }
 
