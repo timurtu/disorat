@@ -4,42 +4,51 @@
 
 import React from 'react'
 import { Link } from 'react-router'
+import Search from './Search'
+const $ = window.$
 
-class Navbar extends React.Component {
-
-  render() {
-
-    return (
-      <nav>
-        <div style={{
-          width: '100%',
-          height: '4em',
-          position: 'fixed',
-          zIndex: 3,
-          top: '0',
-          left: '0',
-          background: 'rgba(0, 0, 0, 0.82)',
-          opacity: '.9'
-        }}>
-          <nav className="ui inverted secondary pointing menu">
-            <Link to="/feed" className="item" activeClassName="active">
-              Feed
-            </Link>
-
-            {/*<Link to="/profile" className="item" activeClassName="active">*/}
-              {/*Profile*/}
-            {/*</Link>*/}
-
-            <div className="right menu">
-              <Link to="/create" className="ui item" activeClassName="active">
-                Create
-              </Link>
-            </div>
-          </nav>
-        </div>
-      </nav>
-    )
-  }
+function collapse() {
+  $('.collapse').collapse('hide')
 }
 
-export default Navbar
+export default ({ title, links, id }) =>
+  <nav className="navbar navbar-default navbar-fixed-top">
+    <div className="container">
+      <div className="navbar-header">
+        <Link className="navbar-brand" to="/feed">{title}</Link>
+
+        <button className="navbar-toggle collapsed" data-target={`#${id}`} data-toggle="collapse" aria-expanded="false">
+          <span className="sr-only">Toggle navigation</span>
+          <span className="icon-bar"/>
+          <span className="icon-bar"/>
+          <span className="icon-bar"/>
+        </button>
+      </div>
+
+      <div className="collapse navbar-collapse" id={id}>
+        <form className="navbar-form navbar-left">
+          <div className="form-group">
+            <Search
+              default="Search..."
+              onSubmit={collapse}
+            />
+          </div>
+        </form>
+
+        <ul className="nav navbar-nav navbar-right">
+          {links.map((link, i) =>
+            <li key={i}>
+              <Link
+                onClick={collapse}
+                to={`/${link}`}
+                style={{
+                  textTransform: 'capitalize'
+                }}>
+                {link}
+              </Link>
+            </li>
+          )}
+        </ul>
+      </div>
+    </div>
+  </nav>

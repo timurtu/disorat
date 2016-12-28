@@ -44,25 +44,17 @@ export default class Post extends React.Component {
 
   render() {
     return (
-      <div className="card" style={{
-        backgroundColor: '#1B1C1D',
-        border: '1px solid #1B1C1D',
-        boxShadow: '0 1px 3px rgba(0,0,0, 0.25)'
-      }}>
-        <Link to={`/votes/${this.state.post.id}`} className="content">
-          <div style={this.inverted()} className="header">
+      <div>
+        <Link to={`/votes/${this.state.post.id}`}>
+          <div>
             {this.state.post.title}
           </div>
 
-          <div style={this.inverted()} className="meta">
+          <div className="meta">
             {this.state.totalVotes} votes
           </div>
 
-          <div style={{
-            marginTop: '1em',
-            fontSize: '1.125em'
-          }}>View more info
-          </div>
+          <div>View more info</div>
 
           <ProgressBar opt1votes={this.state.post.option1votes} opt2votes={this.state.post.option2votes}/>
         </Link>

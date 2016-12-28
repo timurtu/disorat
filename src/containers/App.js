@@ -5,7 +5,6 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import Navbar from '../components/Navbar'
-import Search from '../components/Search'
 
 const App = ({ children }) =>
   <div>
@@ -15,16 +14,18 @@ const App = ({ children }) =>
       titleTemplate="disorat | %s"
     />
 
-    <Navbar/>
+    <Navbar
+      title="Disorat"
+      links={['feed', 'create']}
+      id="nav-collapse"
+    />
 
-    <Search default="Search..."/>
 
     <div style={{
-      backgroundColor: '#000',
-      marginTop: '3em'
-    }} className="ui inverted segment">
-      {children}
-    </div>
+      marginTop: '4.75em'
+    }}/>
+
+    {children}
   </div>
 
 export default App

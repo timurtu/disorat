@@ -13,95 +13,96 @@ export default class Navbar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: false,
       results: []
     }
   }
 
   render() {
     return (
-      <div style={{
-        position: 'fixed',
-        left: '5.5em',
-        zIndex: 4,
-        top: '.5em'
-      }} className={`ui right aligned category search ${this.state.loading ? 'loading' : ''}`}>
-        <div className="ui icon input">
-          <input onChange={e => {
+      <div>
+        <input onChange={e => {
 
-            const query = e.target.value.toLowerCase()
-            this.setState({ loading: true })
+          const query = e.target.value.toLowerCase()
 
-            if (cachedPosts) {
+          if(query === '') {
+            this.setState({
+              results: []
+            })
+            return
+          }
 
-              const data = cachedPosts.filter(x => x.content.toLowerCase().startsWith(query))
+          if (cachedPosts) {
 
-              this.setState({
-                loading: false,
-                results: data.slice(0, 5)
+            const data = cachedPosts.filter(x => x.content.toLowerCase().startsWith(query))
+
+            this.setState({
+              results: data.slice(0, 5)
+            })
+
+          } else {
+            fetch(`${apiUrl}/posts`, { method: 'POST' })
+              .then(res => res.json())
+              .then(posts => {
+
+                cachedPosts = posts.reduce((x, y) => {
+                  const { title, id } = y
+                  return x.concat([
+                    { id, title, content: y.title },
+                    { id, title, content: y.option1 },
+                    { id, title, content: y.option2 }
+                  ])
+                }, [])
+                  .reduce((x, y) => {
+
+                    const { title, id, content } = y
+                    const words = content
+                      .trim()
+                      .split(/\s/)
+
+                    return x.concat(words.map(w => {
+                      return {
+                        title, id, content: w, fullContent: content
+                      }
+                    }))
+                  }, [])
+
+                const data = cachedPosts.filter(x => x.content.toLowerCase().startsWith(query))
+
+                this.setState({
+                  results: data.slice(0, 5)
+                })
               })
 
-            } else {
-              fetch(`${apiUrl}/posts`, { method: 'POST' })
-                .then(res => res.json())
-                .then(posts => {
-
-                  cachedPosts = posts.reduce((x, y) => {
-                    const { title, id } = y
-                    return x.concat([
-                      { id, title, content: y.title },
-                      { id, title, content: y.option1 },
-                      { id, title, content: y.option2 }
-                    ])
-                  }, [])
-                    .reduce((x, y) => {
-
-                      const { title, id, content } = y
-                      const words = content
-                        .trim()
-                        .split(/\s/)
-
-                      return x.concat(words.map(w => {
-                        return {
-                          title, id, content: w, fullContent: content
-                        }
-                      }))
-                    }, [])
-
-                  const data = cachedPosts.filter(x => x.content.toLowerCase().startsWith(query))
-
-                  this.setState({
-                    loading: false,
-                    results: data.slice(0, 5)
-                  })
-                })
-
-              if (!query) {
-                this.setState({
-                  loading: false,
-                  results: []
-                })
-              }
+            if (!query) {
+              this.setState({
+                results: []
+              })
             }
-          }} className="prompt" type="text" placeholder={this.props.default}/>
-          <i className="search icon"/>
-        </div>
-        {this.state.results.length > 0 ? <div style={{ position: 'fixed' }}>
-          <div className="ui inverted segment">
-            <div className="ui inverted relaxed divided list">
-              {this.state.results.map((top, i) =>
-                <Link to={`/votes/${top.id}`} key={i} className="item" onClick={() => {
+          }
+        }} className="prompt" type="text" placeholder={this.props.default}/>
+        <i className="search icon"/>
+        {this.state.results.length > 0 ?
+          <div className="well" style={{
+            position: 'fixed',
+            zIndex: 5
+          }}>
+            {this.state.results.map((top, i) =>
+              <Link
+                key={i}
+                to={`/votes/${top.id}`}
+                onClick={() => {
                   this.setState({ results: [] })
+                  this.props.onSubmit()
                 }}>
-                  <div style={{ minWidth: '10em', overflowWrap: 'break-word' }} className="content">
-                    <div className="header">{top.fullContent}</div>
-                    {top.title}
-                  </div>
-                </Link>
-              )}
-            </div>
-          </div>
-        </div> : null}
+                <ul className="list-group">
+                  <li className="list-group-item">
+                    <h4>{top.fullContent}</h4>
+                    <p>{top.title}</p>
+                  </li>
+                </ul>
+              </Link>
+            )}
+          </div> : null}
       </div>
     )
   }
