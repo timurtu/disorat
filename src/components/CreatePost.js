@@ -5,7 +5,6 @@
 import React from 'react'
 import { Link } from 'react-router'
 import Helmet from 'react-helmet'
-import Ad from './Ad'
 import { apiUrl } from '../globals'
 const $ = require('jquery')
 
@@ -42,7 +41,7 @@ class CreatePost extends React.Component {
       })
         .then(res => res.json())
         .then(p => {
-          location.href = p.id
+          location.href = `/votes/${p.id}`
         })
     } else {
       $('.ui.basic.modal').modal('show')
@@ -81,7 +80,6 @@ class CreatePost extends React.Component {
           <button className="ui large right floated inverted color blue submit button">
             Create
           </button>
-          <Ad/>
         </form>
         <div className="ui basic modal">
           <i className="close icon"/>

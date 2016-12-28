@@ -3,20 +3,19 @@
  */
 
 import React from 'react'
-import { Route, IndexRedirect } from 'react-router'
+import { Route, IndexRoute, Redirect } from 'react-router'
 import App from './containers/App'
 import Feed from './containers/Feed'
 import CreatePost from './components/CreatePost'
 import DetailedPost from './containers/DetailedPost'
-
-const NotFound = () => <h1>404 - Page not found</h1>
+import PageNotFound from './components/PageNotFound'
 
 export default (
   <Route path="/" component={App}>
-    <IndexRedirect to="/feed"/>
-    <Route path="/feed" component={Feed}/>
+    <IndexRoute component={Feed}/>
+    <Redirect from="/feed" to="/"/>
     <Route path="/create" component={CreatePost}/>
-    <Route path="/:post" component={DetailedPost}/>
-    <Route path="*" component={NotFound}/>
+    <Route path="/votes/:post" component={DetailedPost}/>
+    <Route path="*" component={PageNotFound}/>
   </Route>
 )

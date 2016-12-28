@@ -90,7 +90,7 @@ export default class Navbar extends React.Component {
           <div className="ui inverted segment">
             <div className="ui inverted relaxed divided list">
               {this.state.results.map((top, i) =>
-                <Link to={`/${top.id}`} key={i} className="item" onClick={() => {
+                <Link to={`/votes/${top.id}`} key={i} className="item" onClick={() => {
                   this.setState({ results: [] })
                 }}>
                   <div style={{ minWidth: '10em', overflowWrap: 'break-word' }} className="content">

@@ -6,7 +6,6 @@ import 'whatwg-fetch'
 import React from 'react'
 import Helmet from 'react-helmet'
 import PieChart from 'react-simple-pie-chart'
-import Ad from '../components/Ad'
 import Loading from '../components/Loading'
 import { apiUrl } from '../globals'
 
@@ -48,7 +47,9 @@ class DetailedPost extends React.Component {
 
     window.scrollTo(0, 0)
 
-    fetch(`${apiUrl}/posts${location.pathname}`, { method: 'POST' })
+    const path = location.pathname.split('votes')[1]
+
+    fetch(`${apiUrl}/posts${path}`, { method: 'POST' })
       .then(res => res.json())
       .then(p => {
         const { id, title, option1, option2, option1votes, option2votes, reasons1, reasons2, date } = p
@@ -123,8 +124,6 @@ class DetailedPost extends React.Component {
                     {this.state.option1}
                   </button>
 
-                  <Ad/>
-
                   <form onSubmit={e => {
 
                     e.preventDefault()
@@ -179,8 +178,6 @@ class DetailedPost extends React.Component {
                   }} className="fluid ui inverted button colored orange">
                     {this.state.option2}
                   </button>
-
-                  <Ad/>
 
                   <form onSubmit={e => {
                     e.preventDefault()

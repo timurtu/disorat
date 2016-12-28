@@ -6,7 +6,6 @@ import React from 'react'
 import { Link } from 'react-router'
 import PieChart from 'react-simple-pie-chart'
 import ReactGA from 'react-ga'
-import Ad from './Ad'
 import { apiUrl } from '../globals'
 
 const ProgressBar = ({ opt1votes, opt2votes }) =>
@@ -50,7 +49,7 @@ export default class Post extends React.Component {
         border: '1px solid #1B1C1D',
         boxShadow: '0 1px 3px rgba(0,0,0, 0.25)'
       }}>
-        <Link to={`/${this.state.post.id}`} className="content">
+        <Link to={`/votes/${this.state.post.id}`} className="content">
           <div style={this.inverted()} className="header">
             {this.state.post.title}
           </div>
@@ -67,8 +66,6 @@ export default class Post extends React.Component {
 
           <ProgressBar opt1votes={this.state.post.option1votes} opt2votes={this.state.post.option2votes}/>
         </Link>
-
-        {this.props.ad ? <Ad/> : null}
 
         <div className="extra content">
           <div style={this.breakWord()} className="ui two buttons">

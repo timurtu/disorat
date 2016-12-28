@@ -14,6 +14,7 @@ const App = ({ children }) =>
       title="disorat"
       titleTemplate="disorat | %s"
     />
+
     <Navbar/>
 
     <Search default="Search..."/>

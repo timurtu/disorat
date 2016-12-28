@@ -31,24 +31,6 @@ class Feed extends React.Component {
       })
   }
 
-  posts() {
-    return this.state.posts.map((p, i) => {
-      if (i % 3 === 0) {
-        return (
-          <LazyLoad key={i} height={170}>
-            <Post ad={true} post={p}/>
-          </LazyLoad>
-        )
-      } else {
-        return (
-          <LazyLoad key={i} height={170}>
-            <Post ad={false} post={p}/>
-          </LazyLoad>
-        )
-      }
-    })
-  }
-
   render() {
     return (
       <div>
@@ -56,7 +38,11 @@ class Feed extends React.Component {
         {this.state.loading ? <Loading/> :
           <div>
             <div className="ui one cards">
-              {this.posts()}
+              {this.state.posts.map((p, i) =>
+                <LazyLoad key={i} height={170}>
+                  <Post post={p}/>
+                </LazyLoad>
+              )}
             </div>
             <Link to="/create" style={{
               position: 'fixed',
