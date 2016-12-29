@@ -19,6 +19,11 @@ class Feed extends React.Component {
   }
 
   componentWillMount() {
+    this.fetchPosts()
+    setInterval(() => this.fetchPosts(), 1000)
+  }
+
+  fetchPosts() {
     fetch(`${apiUrl}/posts`, { method: 'POST' })
       .then(res => res.json())
       .then(posts => {
