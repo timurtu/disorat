@@ -9,7 +9,7 @@ import { apiUrl } from '../globals'
 
 let title, option1, option2
 
-class CreatePost extends React.Component {
+export default class extends React.Component {
 
   componentWillMount() {
     this.setState({ error: '' })
@@ -118,5 +118,3 @@ class CreatePost extends React.Component {
     )
   }
 }
-
-export default CreatePost
