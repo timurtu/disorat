@@ -4,20 +4,9 @@
 
 import React from 'react'
 import { Link } from 'react-router'
-import PieChart from 'react-simple-pie-chart'
 import ReactGA from 'react-ga'
 import { apiUrl } from '../globals'
 
-const ProgressBar = ({ opt1votes, opt2votes }) =>
-  <div className="ui right floated" style={{ width: '5em' }}>
-    <PieChart slices={[{
-      color: '#00B5AD',
-      value: opt1votes || 1,
-    }, {
-      color: '#F2711C',
-      value: opt2votes || 1,
-    }]}/>
-  </div>
 
 export default class Post extends React.Component {
 
@@ -29,60 +18,63 @@ export default class Post extends React.Component {
     this.setState({ post, totalVotes })
   }
 
-  inverted() {
-    return {
-      color: 'rgba(255,255,261,.9)',
-      overflowWrap: 'break-word'
-    }
-  }
-
   breakWord() {
     return {
-      overflowWrap: 'break-word'
+      overflowWrap: 'break-word',
+      whiteSpace: 'normal'
     }
   }
 
   render() {
     return (
-      <div>
-        <Link to={`/votes/${this.state.post.id}`}>
-          <div>
-            {this.state.post.title}
+      <div className="panel panel-primary">
+
+        <div style={this.breakWord()} className="panel-heading">
+          <div className="panel-title">
+            <Link to={`/votes/${this.state.post.id}`}>
+              {this.state.post.title}
+            </Link>
           </div>
+        </div>
 
-          <div className="meta">
-            {this.state.totalVotes} votes
-          </div>
+        <div className="panel-body">
+          <div className="btn-group btn-group-justified" role="group">
 
-          <div>View more info</div>
-
-          <ProgressBar opt1votes={this.state.post.option1votes} opt2votes={this.state.post.option2votes}/>
-        </Link>
-
-        <div className="extra content">
-          <div style={this.breakWord()} className="ui two buttons">
-            <button onClick={() => {
-              fetch(`${apiUrl}/posts/${this.state.post.id}/upvote1`, { method: 'POST' })
-                .then(res => res.json())
-                .then(post => {
-                  const totalVotes = this.state.totalVotes + 1
-                  ReactGA.event({
-                    category: 'Vote',
-                    action: `Voted for ${this.state.post.option1}`,
-                    label: 'Homepage Thing'
+            <div className="btn-group" role="group">
+              <button style={this.breakWord()} onClick={() => {
+                fetch(`${apiUrl}/posts/${this.state.post.id}/upvote1`, { method: 'POST' })
+                  .then(res => res.json())
+                  .then(post => {
+                    const totalVotes = this.state.totalVotes + 1
+                    ReactGA.event({
+                      category: 'Vote',
+                      action: `Voted for ${this.state.post.option1}`,
+                      label: 'Homepage Thing'
+                    })
+                    this.setState({ post, totalVotes })
                   })
-                  this.setState({ post, totalVotes })
-                })
-            }} className="ui teal button">{this.state.post.option1}</button>
-            <button onClick={() => {
-              fetch(`${apiUrl}/posts/${this.state.post.id}/upvote2`, { method: 'POST' })
-                .then(res => res.json())
-                .then(post => {
-                  const totalVotes = this.state.totalVotes + 1
-                  this.setState({ post, totalVotes })
-                })
-            }} className="ui orange button">{this.state.post.option2}</button>
+              }} className="btn btn-info">
+                {this.state.post.option1}
+              </button>
+            </div>
+
+            <div className="btn-group" role="group">
+              <button style={this.breakWord()} onClick={() => {
+                fetch(`${apiUrl}/posts/${this.state.post.id}/upvote2`, { method: 'POST' })
+                  .then(res => res.json())
+                  .then(post => {
+                    const totalVotes = this.state.totalVotes + 1
+                    this.setState({ post, totalVotes })
+                  })
+              }} className="btn btn-warning">
+                {this.state.post.option2}
+              </button>
+            </div>
           </div>
+        </div>
+
+        <div className="panel-footer">
+          {this.state.totalVotes} votes
         </div>
       </div>
     )

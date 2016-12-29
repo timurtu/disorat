@@ -110,7 +110,6 @@ export default class Navbar extends React.Component {
               </Link>
             )}
           </div> : null}
-
       </span>
     )
   }

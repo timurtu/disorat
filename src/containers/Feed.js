@@ -7,7 +7,6 @@ import React from 'react'
 import LazyLoad from 'react-lazyload'
 import Helmet from 'react-helmet'
 import Post from '../components/Post'
-import Loading from '../components/Loading'
 import { apiUrl } from '../globals'
 
 class Feed extends React.Component {
@@ -34,16 +33,12 @@ class Feed extends React.Component {
     return (
       <div>
         <Helmet title="Feed"/>
-        {this.state.loading ? <Loading/> :
-          <div>
-            <div className="ui one cards">
-              {this.state.posts.map((p, i) =>
-                <LazyLoad key={i} height={170}>
-                  <Post post={p}/>
-                </LazyLoad>
-              )}
-            </div>
-          </div>}
+
+        {this.state.posts.map((p, i) =>
+          <LazyLoad key={i} height={170}>
+            <Post post={p}/>
+          </LazyLoad>
+        )}
       </div>
     )
   }
