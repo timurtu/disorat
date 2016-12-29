@@ -11,20 +11,19 @@ import { apiUrl } from '../globals'
 
 class Feed extends React.Component {
 
-  componentWillMount() {
-    this.setState({
-      posts: [],
-      loading: true
-    })
+  constructor() {
+    super()
+    this.state = {
+      posts: []
+    }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     fetch(`${apiUrl}/posts`, { method: 'POST' })
       .then(res => res.json())
       .then(posts => {
         this.setState({
-          posts,
-          loading: false
+          posts
         })
       })
   }
@@ -34,9 +33,9 @@ class Feed extends React.Component {
       <div>
         <Helmet title="Feed"/>
 
-        {this.state.posts.map((p, i) =>
+        {this.state.posts.map((post, i) =>
           <LazyLoad key={i} height={170}>
-            <Post post={p}/>
+            <Post post={post}/>
           </LazyLoad>
         )}
       </div>
