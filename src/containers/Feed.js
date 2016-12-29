@@ -20,7 +20,6 @@ class Feed extends React.Component {
 
   componentWillMount() {
     this.fetchPosts()
-    setInterval(() => this.fetchPosts(), 5000)
   }
 
   fetchPosts() {
