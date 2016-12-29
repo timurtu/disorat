@@ -6,8 +6,6 @@ import React from 'react'
 import { Link } from 'react-router'
 import Helmet from 'react-helmet'
 import { apiUrl } from '../globals'
-const $ = require('jquery')
-
 
 let title, option1, option2
 
@@ -29,6 +27,12 @@ class CreatePost extends React.Component {
     option2 = e.target.value
   }
 
+  someMargin() {
+    return {
+      margin: '1em 0'
+    }
+  }
+
   createPost(e) {
     e.preventDefault()
 
@@ -44,7 +48,7 @@ class CreatePost extends React.Component {
           location.href = `/votes/${p.id}`
         })
     } else {
-      $('.ui.basic.modal').modal('show')
+      alert('All fields are required.')
     }
   }
 
@@ -54,57 +58,60 @@ class CreatePost extends React.Component {
 
         <Helmet title="Create a Vote"/>
 
-        <h1>Create a New Vote</h1>
-        <form onSubmit={this.createPost} className="ui inverted form">
-          <div className="required field">
-            <label>Title</label>
-            <input onChange={this.handleTitleChange} name="title" type="text" placeholder="What are we voting on?"/>
-          </div>
-
-          <div className="two fields">
-            <div className="required field">
-              <label style={{ color: '#00B5AD' }}>Option 1</label>
-              <input onChange={this.handleOption1Change} name="option1" type="text" placeholder="First option"/>
-            </div>
-
-            <div className="required field">
-              <label style={{ color: '#F2711C' }}>Option 2</label>
-              <input onChange={this.handleOption2Change} name="option2" type="text" placeholder="Second option"/>
+        <div className="panel panel-primary">
+          <div className="panel-heading">
+            <div className="panel-title">
+              Create a New Vote
             </div>
           </div>
 
-          <Link to="/" className="ui large inverted button">
-            Cancel
-          </Link>
-
-          <button className="ui large right floated inverted color blue submit button">
-            Create
-          </button>
-        </form>
-        <div className="ui basic modal">
-          <i className="close icon"/>
-          <div className="header">
-            All fields are required.
-          </div>
-          <div className="image content">
-            <div className="image">
-              <i className="archive icon"/>
-            </div>
-            <div className="description">
-              <p>Fill out every field in order to create a new vote.</p>
-            </div>
-          </div>
-          <div className="actions">
-            <div className="two fluid ui inverted buttons">
-              <Link to="/" className="ui cancel red basic inverted button">
-                <i className="remove icon"/>
-                Cancel
-              </Link>
-              <div className="ui cancel green basic inverted button">
-                <i className="checkmark icon"/>
-                Okay
+          <div className="panel-body">
+            <form onSubmit={this.createPost} className="ui inverted form">
+              <div className="required field">
+                <label style={this.someMargin()}>Title</label>
+                <input
+                  className="form-control"
+                  onChange={this.handleTitleChange}
+                  name="title"
+                  type="text"
+                  placeholder="What are we voting on?"
+                />
               </div>
-            </div>
+
+              <label style={Object.assign({}, this.someMargin(), {
+                color: '#00B5AD'
+              })}>Option 1</label>
+              <input
+                className="form-control"
+                onChange={this.handleOption1Change}
+                name="option1"
+                type="text"
+                placeholder="First option"
+              />
+
+              <label style={Object.assign({}, this.someMargin(), {
+                color: '#F2711C'
+              })}>Option 2</label>
+              <input
+                className="form-control"
+                onChange={this.handleOption2Change}
+                name="option2"
+                type="text"
+                placeholder="Second option"
+              />
+
+              <div style={{
+                margin: '2em 1em 0'
+              }}>
+                <Link to="/" className="btn btn-default">
+                  Cancel
+                </Link>
+
+                <button className="btn btn-primary pull-right">
+                  Create
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

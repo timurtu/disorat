@@ -81,6 +81,12 @@ export default class extends React.Component {
     return { maxWidth }
   }
 
+  someMargin() {
+    return {
+      margin: '1em 0'
+    }
+  }
+
   render() {
 
     return (
@@ -88,118 +94,171 @@ export default class extends React.Component {
         <Helmet
           title={`${this.state.title} | ${this.state.option1} vs ${this.state.option2}`}
         />
+
         <div style={this.breakWord()}>
-          <h1>{this.state.title}</h1>
+          <h1>
+            {this.state.title}
+          </h1>
 
-          <h3>{this.state.date}</h3>
+          <h3>
+            {this.state.date}
+          </h3>
 
-          <div className="ui grid">
-            <div className="eight wide column">
-              <div className="ui inverted segment">
-                <h3>{this.state.option1}</h3>
-                <h5>{this.state.option1votes} votes</h5>
-                <button onClick={() => {
-                  fetch(`${apiUrl}/posts/${this.state.id}/upvote1`, { method: 'POST' })
-                    .then(res => res.json())
-                    .then(post => {
-                      this.setState({ option1votes: post.option1votes })
-                    })
-                }} className="fluid ui inverted button colored teal">
-                  {this.state.option1}
-                </button>
+          <div className="progress">
+            <div className="progress-bar progress-bar-info" style={{
+              width: `${this.state.option1votes / (this.state.option1votes + this.state.option2votes) * 100}%`
+            }}>
+              <span className="sr-only">20% Complete (warning)</span>
+            </div>
+            <div className="progress-bar progress-bar-warning" style={{
+              width: `${this.state.option2votes / (this.state.option1votes + this.state.option2votes) * 100}%`
+            }}>
+              <span className="sr-only">10% Complete (danger)</span>
+            </div>
+          </div>
 
-                <form onSubmit={e => {
+          <div className="row">
+            <div className="col-md-6">
+              <div className="panel panel-info">
+                <div className="panel-heading">
+                  <div className="panel-title">{this.state.option1}</div>
+                </div>
+                <div className="panel-body">
+                  <h5>{this.state.option1votes} votes</h5>
 
-                  e.preventDefault()
+                  <button
+                    style={this.someMargin()}
+                    className="btn btn-info btn-block"
+                    onClick={() => {
+                      fetch(`${apiUrl}/posts/${this.state.id}/upvote1`, { method: 'POST' })
+                        .then(res => res.json())
+                        .then(post => {
+                          this.setState({ option1votes: post.option1votes })
+                        })
+                    }}>
+                    Vote for {this.state.option1}
+                  </button>
 
-                  if (reason1) {
-                    fetch(`${apiUrl}/reason/${this.state.id}/${reason1}/reason1`, { method: 'POST' })
-                      .then(res => res.json())
-                      .then(p => this.setState({ reasons1: this.sortReasons(p.reasons1) }))
-                  }
-                }} className="ui inverted form">
-                  <div className="field">
-                    <label>Add a new reason</label>
-                    <input onChange={this.handleReason1Change}
-                           placeholder={`Reason to vote for ${this.state.option1}`}
-                           type="text"/>
-                  </div>
-                  <button className="ui inverted tiny right floated submit button">Add reason</button>
-                </form>
+                  <form onSubmit={e => {
+                    e.preventDefault()
 
-                <div className="ui hidden divider"></div>
-                <div className="ui hidden divider"></div>
-
-                <h5>Reasons</h5>
-
-                <div className="ui inverted list">
-                  {this.state.reasons1.map((r, i) =>
-                    <a onClick={() => {
-                      fetch(`${apiUrl}/reason/${this.state.id}/${r.reason}/reason1`, { method: 'POST' })
+                    if (reason1) {
+                      fetch(`${apiUrl}/reason/${this.state.id}/${reason1}/reason1`, { method: 'POST' })
                         .then(res => res.json())
                         .then(p => this.setState({ reasons1: this.sortReasons(p.reasons1) }))
-                    }} className="item" key={i}>
-                      <i className="plus icon"/>
-                      <div className="content">
-                        <div style={this.maxWidth()} className="header">{r.count}</div>
-                        <div style={this.maxWidth()} className="description">{r.reason}</div>
-                      </div>
-                    </a>)}
+                    }
+                  }}>
+
+                    <input
+                      style={this.someMargin()}
+                      className="form-control"
+                      onChange={this.handleReason1Change}
+                      placeholder={`Reason to vote for ${this.state.option1}`}
+                      type="text"
+                    />
+
+                    <button
+                      style={this.someMargin()}
+                      className="btn btn-default btn-block">
+                      Add reason
+                    </button>
+                  </form>
+
+                  <h5>Reasons</h5>
+
+                  <div>
+                    {this.state.reasons1.map((r, i) =>
+                      <a
+                        style={{
+                          userSelect: 'none'
+                        }}
+                        role="button"
+                        className="list-group-item"
+                        key={i}
+                        onClick={() => {
+                          fetch(`${apiUrl}/reason/${this.state.id}/${r.reason}/reason1`, { method: 'POST' })
+                            .then(res => res.json())
+                            .then(p => this.setState({ reasons1: this.sortReasons(p.reasons1) }))
+                        }}
+                      >
+                        <span className="badge">{r.count}</span>
+                        {r.reason}
+                      </a>)}
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="eight wide column">
-              <div className="ui inverted segment">
-                <h3>{this.state.option2}</h3>
-                <h5>{this.state.option2votes} votes</h5>
-                <button onClick={() => {
-                  fetch(`${apiUrl}/posts/${this.state.id}/upvote2`, { method: 'POST' })
-                    .then(res => res.json())
-                    .then(post => {
-                      this.setState({ option2votes: post.option2votes })
-                    })
-                }} className="fluid ui inverted button colored orange">
-                  {this.state.option2}
-                </button>
-
-                <form onSubmit={e => {
-                  e.preventDefault()
-                  if (reason2) {
-                    fetch(`${apiUrl}/reason/${this.state.id}/${reason2}/reason2`, { method: 'POST' })
-                      .then(res => res.json())
-                      .then(p => this.setState({ reasons2: this.sortReasons(p.reasons2) }))
-                  }
-                }} className="ui inverted form">
-                  <div className="field">
-                    <label>Add a new reason</label>
-                    <input onChange={this.handleReason2Change}
-                           placeholder={`Reason to vote for ${this.state.option2}`}
-                           type="text"/>
+            <div className="col-md-6">
+              <div className="panel panel-warning">
+                <div className="panel-heading">
+                  <div className="panel-title">
+                    {this.state.option2}
                   </div>
-                  <button className="ui inverted tiny right floated submit button">Add reason</button>
-                </form>
-
-                <div className="ui hidden divider"></div>
-                <div className="ui hidden divider"></div>
-
-                <h5>Reasons</h5>
-
-                <div className="ui inverted list">
-                  {this.state.reasons2.map((r, i) =>
-                    <a onClick={() => {
-                      fetch(`${apiUrl}/reason/${this.state.id}/${r.reason}/reason2`, { method: 'POST' })
-                        .then(res => res.json())
-                        .then(p => this.setState({ reasons2: this.sortReasons(p.reasons2) }))
-                    }} className="item" key={i}>
-                      <i className="plus icon"/>
-                      <div className="content">
-                        <div style={this.maxWidth()} className="header">{r.count}</div>
-                        <div style={this.maxWidth()} className="description">{r.reason}</div>
-                      </div>
-                    </a>)}
                 </div>
 
+                <div className="panel-body">
+                  <p>{this.state.option2votes} votes</p>
+
+                  <button
+                    style={this.someMargin()}
+                    className="btn btn-warning btn-block"
+                    onClick={() => {
+                      fetch(`${apiUrl}/posts/${this.state.id}/upvote2`, { method: 'POST' })
+                        .then(res => res.json())
+                        .then(post => {
+                          this.setState({ option2votes: post.option2votes })
+                        })
+                    }}>
+                    Vote for {this.state.option2}
+                  </button>
+
+                  <form onSubmit={e => {
+                    e.preventDefault()
+
+                    if (reason2) {
+                      fetch(`${apiUrl}/reason/${this.state.id}/${reason2}/reason2`, { method: 'POST' })
+                        .then(res => res.json())
+                        .then(p => this.setState({ reasons2: this.sortReasons(p.reasons2) }))
+                    }
+                  }}>
+                    <input
+                      style={this.someMargin()}
+                      className="form-control"
+                      onChange={this.handleReason2Change}
+                      placeholder={`Reason to vote for ${this.state.option2}`}
+                      type="text"
+                    />
+
+                    <button
+                      style={this.someMargin()}
+                      className="btn btn-default btn-block">
+                      Add reason
+                    </button>
+                  </form>
+
+                  <h5>Reasons</h5>
+
+                  <div className="list-group">
+                    {this.state.reasons2.map((r, i) =>
+                      <a
+                        style={{
+                          userSelect: 'none'
+                        }}
+                        role="button"
+                        key={i}
+                        className="list-group-item"
+                        onClick={() => {
+                          fetch(`${apiUrl}/reason/${this.state.id}/${r.reason}/reason2`, { method: 'POST' })
+                            .then(res => res.json())
+                            .then(p => this.setState({ reasons2: this.sortReasons(p.reasons2) }))
+                        }}
+                      >
+                        <span className="badge">{r.count}</span>
+                        {r.reason}
+                      </a>)}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
