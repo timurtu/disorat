@@ -27,8 +27,7 @@ export default class Post extends React.Component {
 
   render() {
     return (
-      <div className={this.state.post.option1votes > this.state.post.option2votes ?
-        'panel panel-info' : 'panel panel-warning'}>
+      <div className="panel panel-primary">
         <div style={this.breakWord()} className="panel-heading">
           <div className="panel-title">
             <Link to={`/votes/${this.state.post.id}`}>
