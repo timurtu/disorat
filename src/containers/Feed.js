@@ -4,7 +4,6 @@
 
 import 'whatwg-fetch'
 import React from 'react'
-import { Link } from 'react-router'
 import LazyLoad from 'react-lazyload'
 import Helmet from 'react-helmet'
 import Post from '../components/Post'
@@ -44,15 +43,6 @@ class Feed extends React.Component {
                 </LazyLoad>
               )}
             </div>
-            <Link to="/create" style={{
-              position: 'fixed',
-              right: '1em',
-              bottom: '1em',
-              zIndex: '4',
-              boxShadow: '0 3px 5px rgba(0, 0, 0, .25)'
-            }} className="massive circular ui color blue icon button">
-              <i className="plus icon"/>
-            </Link>
           </div>}
       </div>
     )

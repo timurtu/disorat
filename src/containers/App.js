@@ -6,7 +6,7 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import Navbar from '../components/Navbar'
 
-const App = ({ children }) =>
+export default ({ children }) =>
   <div>
     <Helmet
       defaultTitle="disorat | Vote on Anything"
@@ -20,12 +20,11 @@ const App = ({ children }) =>
       id="nav-collapse"
     />
 
-
     <div style={{
       marginTop: '4.75em'
     }}/>
 
-    {children}
+    <div className="container">
+      {children}
+    </div>
   </div>
-
-export default App

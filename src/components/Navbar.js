@@ -15,6 +15,12 @@ export default ({ title, links, id }) =>
   <nav className="navbar navbar-default navbar-fixed-top">
     <div className="container">
       <div className="navbar-header">
+        <Link className="navbar-brand" to="/feed">
+          <img style={{
+            width: '1.125em'
+          }} src="res/pie-chart.png" alt="Disorat Brand Logo"/>
+        </Link>
+
         <Link className="navbar-brand" to="/feed">{title}</Link>
 
         <button className="navbar-toggle collapsed" data-target={`#${id}`} data-toggle="collapse" aria-expanded="false">
@@ -29,7 +35,7 @@ export default ({ title, links, id }) =>
         <form className="navbar-form navbar-left">
           <div className="form-group">
             <Search
-              default="Search..."
+              placeholder="Search..."
               onSubmit={collapse}
             />
           </div>
