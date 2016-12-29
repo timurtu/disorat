@@ -27,8 +27,8 @@ export default class Post extends React.Component {
 
   render() {
     return (
-      <div className="panel panel-primary">
-
+      <div className={this.state.post.option1votes > this.state.post.option2votes ?
+        'panel panel-info' : 'panel panel-warning'}>
         <div style={this.breakWord()} className="panel-heading">
           <div className="panel-title">
             <Link to={`/votes/${this.state.post.id}`}>
@@ -38,6 +38,20 @@ export default class Post extends React.Component {
         </div>
 
         <div className="panel-body">
+
+          <div className="progress">
+            <div className="progress-bar progress-bar-info" style={{
+              width: `${this.state.post.option1votes / this.state.totalVotes * 100}%`
+            }}>
+              <span className="sr-only">20% Complete (warning)</span>
+            </div>
+            <div className="progress-bar progress-bar-warning" style={{
+              width: `${this.state.post.option2votes / this.state.totalVotes * 100}%`
+            }}>
+              <span className="sr-only">10% Complete (danger)</span>
+            </div>
+          </div>
+
           <div className="btn-group btn-group-justified" role="group">
 
             <div className="btn-group" role="group">
