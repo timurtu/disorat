@@ -3,15 +3,17 @@
  */
 
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
 import ReactGA from 'react-ga'
 import { Router, browserHistory } from 'react-router'
 import routes from './routes'
-
+import 'bootswatch/flatly/bootstrap.css'
+window.jQuery = require('jquery/dist/jquery')
+require('bootstrap/dist/js/bootstrap')
 
 ReactGA.initialize('UA-87619352-1')
 
-ReactDOM.render(
+render(
   <Router onUpdate={() => {
     window.scrollTo(0, 0)
     ReactGA.set({ page: window.location.pathname })

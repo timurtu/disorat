@@ -5,10 +5,9 @@
 import React from 'react'
 import { Link } from 'react-router'
 import Search from './Search'
-const $ = window.$
 
 function collapse() {
-  $('.collapse').collapse('hide')
+  window.jQuery('.collapse').collapse('hide')
 }
 
 export default ({ title, links, id }) =>
