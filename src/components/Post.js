@@ -28,14 +28,18 @@ export default class Post extends React.Component {
 
   render() {
     return (
+
       <div className="panel panel-primary">
         <div style={this.breakWord()} className="panel-heading">
-          <div className="panel-title">
-            <Link to={`/votes/${this.props.post.id}`}>
+          <Link style={{
+            color: '#fff'
+          }} to={`/votes/${this.props.post.id}`}>
+            <div className="panel-title">
               {this.props.post.title}
-            </Link>
-          </div>
+            </div>
+          </Link>
         </div>
+
 
         <div className="panel-body">
 
@@ -82,9 +86,14 @@ export default class Post extends React.Component {
           </div>
         </div>
 
-        <div className="panel-footer">
-          {this.state.totalVotes} votes
-        </div>
+        <Link
+          className="text-primary"
+          to={`/votes/${this.props.post.id}`}
+        >
+          <div className="panel-footer">
+            {this.state.totalVotes} votes
+          </div>
+        </Link>
       </div>
     )
   }

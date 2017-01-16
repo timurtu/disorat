@@ -1,20 +1,20 @@
 /**
- * Created by timur on 12/5/16.
+ * Created by timur on 1/16/17.
  */
 
 import React from 'react'
-import { Route, IndexRoute, Redirect } from 'react-router'
-import App from './containers/App'
-import Feed from './containers/Feed'
-import CreatePost from './components/CreatePost'
-import DetailedPost from './containers/DetailedPost'
+import { Route, IndexRoute } from 'react-router'
+import App from './components/App'
+import Feed from './components/Feed'
+// import CreatePost from './CreatePost'
+import CreateVote from './components/CreateVote'
+import DetailedPost from './components/DetailedPost'
 import PageNotFound from './components/PageNotFound'
 
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={Feed}/>
-    <Redirect from="/feed" to="/"/>
-    <Route path="/create" component={CreatePost}/>
+    <Route path="/create" component={CreateVote}/>
     <Route path="/votes/:post" component={DetailedPost}/>
     <Route path="*" component={PageNotFound}/>
   </Route>

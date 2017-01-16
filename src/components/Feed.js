@@ -6,7 +6,7 @@ import 'whatwg-fetch'
 import React from 'react'
 import LazyLoad from 'react-lazyload'
 import Helmet from 'react-helmet'
-import Post from '../components/Post'
+import Post from './Post'
 import { apiUrl } from '../globals'
 
 class Feed extends React.Component {

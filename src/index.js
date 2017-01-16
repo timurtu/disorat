@@ -3,21 +3,45 @@
  */
 
 import React from 'react'
-import { render } from 'react-dom'
-import ReactGA from 'react-ga'
-import { Router, browserHistory } from 'react-router'
-import routes from './routes'
+import ReactDOM from 'react-dom'
+import { createStore } from 'redux'
+import Root from './components/Root'
 import 'bootswatch/flatly/bootstrap.css'
 window.jQuery = require('jquery/dist/jquery')
 require('bootstrap/dist/js/bootstrap')
 
-ReactGA.initialize('UA-87619352-1')
 
-render(
-  <Router onUpdate={() => {
-    window.scrollTo(0, 0)
-    ReactGA.set({ page: window.location.pathname })
-    ReactGA.pageview(window.location.pathname)
-  }} history={browserHistory} routes={routes}/>,
-  document.getElementById('root')
-)
+const votes = (state = [], action) => {
+  switch (action.type) {
+
+    case 'ADD_VOTE':
+      const { title, option1, option2 } = action
+      return [
+        ...state,
+        {
+          title,
+          option1,
+          option2,
+          option1votes: 0,
+          option2votes: 0,
+          reasons1: [],
+          reasons2: []
+        }
+      ]
+
+    default:
+      return state
+  }
+}
+
+const store = createStore(votes)
+
+const render = () => {
+  ReactDOM.render(
+    <Root store={store}/>,
+    document.getElementById('root')
+  )
+}
+
+store.subscribe(render)
+render()

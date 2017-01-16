@@ -96,9 +96,9 @@ export default class extends React.Component {
         />
 
         <div style={this.breakWord()}>
-          <h1>
+          <h2>
             {this.state.title}
-          </h1>
+          </h2>
 
           <h3>
             {this.state.date}

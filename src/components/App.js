@@ -4,7 +4,7 @@
 
 import React from 'react'
 import Helmet from 'react-helmet'
-import Navbar from '../components/Navbar'
+import Navbar from './Navbar'
 
 export default ({ children }) =>
   <div>
@@ -16,7 +16,16 @@ export default ({ children }) =>
 
     <Navbar
       title="Disorat"
-      links={['feed', 'create']}
+      links={[
+        {
+          name: 'View All Votes',
+          path: '/'
+        },
+        {
+          name: 'Create a New Vote',
+          path: '/create'
+        }
+      ]}
       id="nav-collapse"
     />
 

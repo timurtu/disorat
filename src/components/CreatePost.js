@@ -48,7 +48,7 @@ export default class extends React.Component {
           location.href = `/votes/${p.id}`
         })
     } else {
-      alert('All fields are required.')
+      alert('All fields are required to create a new vote.')
     }
   }
 
@@ -89,9 +89,10 @@ export default class extends React.Component {
                 placeholder="First option"
               />
 
-              <label style={Object.assign({}, this.someMargin(), {
+              <label style={{
+                ...this.someMargin(),
                 color: '#F2711C'
-              })}>Option 2</label>
+              }}>Option 2</label>
               <input
                 className="form-control"
                 onChange={this.handleOption2Change}
