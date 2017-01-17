@@ -17,8 +17,12 @@ class App extends React.Component {
       const state = store.getState()
 
       if (prevState !== state) {
-        fetch(`${apiUrl}/change?state=${JSON.stringify(state)}`, {
-          method: 'POST'
+        fetch(`${apiUrl}/change`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(state)
         })
           .then(() => {
             prevState = state

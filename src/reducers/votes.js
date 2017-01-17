@@ -69,15 +69,15 @@ const votes = (state = [], action) => {
 
     case 'VOTE1':
       return state.map(vote => vote.id === action.id ? {
-          ...vote,
-          option1votes: vote.option1votes + 1
-        } : vote)
+        ...vote,
+        option1votes: vote.option1votes + 1
+      } : vote)
 
     case 'VOTE2':
       return state.map(vote => vote.id === action.id ? {
-          ...vote,
-          option2votes: vote.option2votes + 1
-        } : vote)
+        ...vote,
+        option2votes: vote.option2votes + 1
+      } : vote)
 
     case 'ADD_REASON1':
       return addReason(state, action, 1)
