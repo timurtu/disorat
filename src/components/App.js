@@ -22,7 +22,6 @@ class App extends React.Component {
         })
           .then(() => {
             prevState = state
-            console.log('updated db')
           })
       }
     }, 1000)
