@@ -15,9 +15,49 @@ const votes = (state = [], action) => {
           option1: action.option1,
           option2: action.option2,
           option1votes: 1,
-          option2votes: 1
+          option2votes: 1,
+          reasons1: [],
+          reasons2: [],
         }
       ]
+
+    case 'ADD_REASON1':
+      return state.map(vote => {
+
+        if (vote.id === action.id) {
+
+          const reason = vote.reasons1.find(r => r.title === action.reason.title)
+
+          if (reason) {
+
+            const index = vote.reasons1.indexOf(reason)
+
+            return {
+              ...vote,
+              reasons1: [
+                ...vote.reasons1.slice(0, index),
+                {
+                  title: reason.title,
+                  count: reason.count + 1
+                },
+                ...vote.reasons1.slice(index + 1, vote.reasons1.length)
+              ]
+            }
+          } else {
+            return {
+              ...vote,
+              reasons1: [
+                ...vote.reasons1,
+                {
+                  title: action.reason.title,
+                  count: 1
+                }
+              ]
+            }
+          }
+        }
+        return vote
+      })
 
     default:
       return state

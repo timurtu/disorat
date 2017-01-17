@@ -6,49 +6,8 @@ import React from 'react'
 import { browserHistory } from 'react-router'
 import Helmet from 'react-helmet'
 import { v4 } from 'node-uuid'
-
-class InputBox extends React.Component {
-
-  componentDidMount() {
-    const { onMount } = this.props
-    if (onMount) {
-      onMount(this.input)
-    }
-  }
-
-  render() {
-
-    const {
-      type,
-      label,
-      onInputChange,
-      placeholder
-    } = this.props
-
-    const labelWithType = type ?
-      <label className={`text-${type}`}>{label}</label> :
-      <label>{label}</label>
-
-    return (
-      <div style={{
-        margin: '0 0 1em'
-      }}>
-        {labelWithType}
-        <input
-          ref={node => {
-            this.input = node
-          }}
-          onChange={() => {
-            onInputChange(this.input)
-          }}
-          type="text"
-          placeholder={placeholder}
-          className="form-control"
-        />
-      </div>
-    )
-  }
-}
+import InputBox from './InputBox'
+import notify from '../notify'
 
 const CreateVote = (props, { store }) => {
 
@@ -82,10 +41,11 @@ const CreateVote = (props, { store }) => {
                 option2,
               })
 
+              notify('Vote Created Successfully!')
               browserHistory.push(`/votes/${id}`)
 
             } else {
-              alert('All fields are required to create a new vote.')
+              notify('All fields are required to create a new vote.')
             }
           }}
         >
