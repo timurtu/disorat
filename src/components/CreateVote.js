@@ -31,7 +31,7 @@ const CreateVote = (props, { store }) => {
 
             if (title && option1 && option2) {
 
-              const id = v4()
+              const id = v4().toString()
 
               store.dispatch({
                 type: 'CREATE_VOTE',

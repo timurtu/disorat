@@ -13,7 +13,7 @@ const Panel = ({
   children,
 }) => {
 
-  const percent = votes / totalVotes * 100
+  const percent = Math.floor(votes / totalVotes * 100)
   const voteAmountText = votes > 1 ? 'votes' : 'vote'
 
   return (
@@ -27,15 +27,15 @@ const Panel = ({
 
       <div className="panel-body">
 
-        <h2 className="pull-right">{votes} {voteAmountText}</h2>
-        <h2>{percent} %</h2>
-
         <button
           className={`btn btn-block btn-${type}`}
           onClick={onVoteClick}
         >
           Vote for {title}
         </button>
+
+        <h2 className="pull-right">{votes} {voteAmountText}</h2>
+        <h2>{percent} %</h2>
 
         {children}
       </div>

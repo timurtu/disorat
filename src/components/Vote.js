@@ -8,7 +8,7 @@ import InputBox from './InputBox'
 import notify from '../notify'
 import Panel from './Panel'
 import Reasons from './Reasons'
-import {FacebookShareButton, TwitterShareButton} from './ShareButtons'
+import { FacebookShareButton, TwitterShareButton } from './ShareButtons'
 
 const Vote = ({
   params
@@ -16,7 +16,7 @@ const Vote = ({
   store
 }) => {
   const state = store.getState()
-  const vote = state.find(v => v.id === params.id)
+  const vote = state.find(v => v.id.toString() === params.id)
   const totalVotes = vote.option1votes + vote.option2votes
 
   return (
@@ -69,7 +69,7 @@ const Vote = ({
               onAddReason={title => {
 
                 const reason = {
-                  title
+                  reason: title
                 }
 
                 store.dispatch({

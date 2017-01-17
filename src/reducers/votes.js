@@ -26,7 +26,7 @@ const votes = (state = [], action) => {
 
         if (vote.id === action.id) {
 
-          const reason = vote.reasons1.find(r => r.title === action.reason.title)
+          const reason = vote.reasons1.find(r => r.reason === action.reason.reason)
 
           if (reason) {
 
@@ -37,7 +37,7 @@ const votes = (state = [], action) => {
               reasons1: [
                 ...vote.reasons1.slice(0, index),
                 {
-                  title: reason.title,
+                  reason: reason.reason,
                   count: reason.count + 1
                 },
                 ...vote.reasons1.slice(index + 1, vote.reasons1.length)
@@ -49,7 +49,7 @@ const votes = (state = [], action) => {
               reasons1: [
                 ...vote.reasons1,
                 {
-                  title: action.reason.title,
+                  reason: action.reason.reason,
                   count: 1
                 }
               ]

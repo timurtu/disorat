@@ -10,14 +10,15 @@ import 'bootswatch/flatly/bootstrap.css'
 window.jQuery = require('jquery/dist/jquery')
 require('bootstrap/dist/js/bootstrap')
 
-const store = configureStore()
+configureStore().then(store => {
 
-const render = () => {
-  ReactDOM.render(
-    <Root store={store}/>,
-    document.getElementById('root')
-  )
-}
+  const render = () => {
+    ReactDOM.render(
+      <Root store={store}/>,
+      document.getElementById('root')
+    )
+  }
 
-store.subscribe(render)
-render()
+  store.subscribe(render)
+  render()
+})

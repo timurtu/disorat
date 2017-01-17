@@ -3,3 +3,7 @@
  */
 
 export const apiUrl = 'https://disorat-api.herokuapp.com'
+
+export const breakWord = {
+  wordWrap: 'break-word'
+}

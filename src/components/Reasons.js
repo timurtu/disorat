@@ -3,6 +3,7 @@
  */
 
 import React from 'react'
+import { breakWord } from '../globals'
 
 const Reasons = ({
   reasons,
@@ -13,23 +14,28 @@ const Reasons = ({
 
   return (
     <div>
-      <h4>Reasons</h4>
+      <h3>Reasons</h3>
 
-      <div className="list-group">
-        {reasons.map((reason, i) =>
-          <a
-            key={i}
-            href="#"
-            className="list-group-item"
-            onClick={e => {
-              e.preventDefault()
-              onAddReason(reason.title)
-            }}
-          >
-            <span className="badge">{reason.count}</span>
-            {reason.title}
-          </a>
-        )}
+      <div
+        style={breakWord}
+        className="list-group"
+      >
+        {reasons
+          .sort((x, y) => y.count - x.count)
+          .map((reason, i) =>
+            <a
+              key={i}
+              href="#"
+              className="list-group-item"
+              onClick={e => {
+                e.preventDefault()
+                onAddReason(reason.reason)
+              }}
+            >
+              <span className="badge">{reason.count}</span>
+              {reason.reason}
+            </a>
+          )}
 
         <form onSubmit={e => {
           e.preventDefault()
