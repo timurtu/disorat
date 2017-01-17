@@ -6,34 +6,41 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import Navbar from './Navbar'
 
-export default ({ children }) =>
-  <div>
-    <Helmet
-      defaultTitle="disorat | Vote on Anything"
-      title="disorat"
-      titleTemplate="disorat | %s"
-    />
+class App extends React.Component {
+  render() {
+    const {children} = this.props
+    return(
+      <div>
+        <Helmet
+          defaultTitle="Disorat"
+          titleTemplate="%s | Disorat"
+        />
 
-    <Navbar
-      title="Disorat"
-      links={[
-        {
-          name: 'View All Votes',
-          path: '/'
-        },
-        {
-          name: 'Create a New Vote',
-          path: '/create'
-        }
-      ]}
-      id="nav-collapse"
-    />
+        <Navbar
+          title="Disorat"
+          links={[
+            {
+              name: 'View All Votes',
+              path: '/'
+            },
+            {
+              name: 'Create a New Vote',
+              path: '/create'
+            }
+          ]}
+          id="nav-collapse"
+        />
 
-    <div style={{
-      marginTop: '4.75em'
-    }}/>
+        <div style={{
+          marginTop: '4.75em'
+        }}/>
 
-    <div className="container">
-      {children}
-    </div>
-  </div>
+        <div className="container">
+          {children}
+        </div>
+      </div>
+    )
+  }
+}
+
+export default App

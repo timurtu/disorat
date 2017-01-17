@@ -2,6 +2,48 @@
  * Created by timur on 1/16/17.
  */
 
+const addReason = (state, action, opt) => state.map(vote => {
+
+  if (vote.id === action.id) {
+
+    const reason = vote[`reasons${opt}`].find(r => r.reason === action.reason.reason)
+
+    if (reason) {
+
+      const index = vote.reasons1.indexOf(reason)
+
+      const newVote = {
+        ...vote
+      }
+
+      newVote[`reasons${opt}`] = [
+        ...vote[`reasons${opt}`].slice(0, index),
+        {
+          reason: reason.reason,
+          count: reason.count + 1
+        },
+        ...vote[`reasons${opt}`].slice(index + 1, vote[`reasons${opt}`].length)
+      ]
+
+      return newVote
+
+    } else {
+      return {
+        ...vote,
+        reasons1: [
+          ...vote.reasons1,
+          {
+            reason: action.reason.reason,
+            count: 1
+          }
+        ]
+      }
+    }
+  }
+
+  return vote
+})
+
 const votes = (state = [], action) => {
 
   switch (action.type) {
@@ -21,43 +63,20 @@ const votes = (state = [], action) => {
         }
       ]
 
+    case 'VOTE1':
+      return state.map(vote => vote.id === action.id ? {
+        ...vote,
+        option1votes: vote.option1votes + 1
+      } : vote)
+
+    case 'VOTE2':
+      return state.map(vote => vote.id === action.id ? {
+        ...vote,
+        option2votes: vote.option2votes + 1
+      } : vote)
+
     case 'ADD_REASON1':
-      return state.map(vote => {
-
-        if (vote.id === action.id) {
-
-          const reason = vote.reasons1.find(r => r.reason === action.reason.reason)
-
-          if (reason) {
-
-            const index = vote.reasons1.indexOf(reason)
-
-            return {
-              ...vote,
-              reasons1: [
-                ...vote.reasons1.slice(0, index),
-                {
-                  reason: reason.reason,
-                  count: reason.count + 1
-                },
-                ...vote.reasons1.slice(index + 1, vote.reasons1.length)
-              ]
-            }
-          } else {
-            return {
-              ...vote,
-              reasons1: [
-                ...vote.reasons1,
-                {
-                  reason: action.reason.reason,
-                  count: 1
-                }
-              ]
-            }
-          }
-        }
-        return vote
-      })
+      return addReason(state, action, 1)
 
     default:
       return state

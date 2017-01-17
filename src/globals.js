@@ -5,5 +5,11 @@
 export const apiUrl = 'https://disorat-api.herokuapp.com'
 
 export const breakWord = {
-  wordWrap: 'break-word'
+  wordWrap: 'break-word',
+  whiteSpace: 'normal'
+}
+
+export const center = {
+  display: 'table',
+  margin: '0 auto'
 }

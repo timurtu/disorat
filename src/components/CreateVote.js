@@ -15,12 +15,12 @@ const CreateVote = (props, { store }) => {
 
   return (
     <div>
-      <Helmet title="Create a Vote"/>
+      <Helmet title="Create a New Vote"/>
 
       <div className="panel panel-primary">
         <div className="panel-heading">
           <div className="panel-title">
-            Create a new vote
+            Create a New Vote
           </div>
         </div>
 

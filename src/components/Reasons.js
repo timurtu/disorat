@@ -14,8 +14,6 @@ const Reasons = ({
 
   return (
     <div>
-      <h3>Reasons</h3>
-
       <div
         style={breakWord}
         className="list-group"
@@ -36,29 +34,38 @@ const Reasons = ({
               {reason.reason}
             </a>
           )}
-
-        <form onSubmit={e => {
-          e.preventDefault()
-          onAddReason(input.value.trim())
-          input.value = ''
-        }}>
-          <textarea
-            ref={node => {
-              input = node
-            }}
-            style={{
-              maxWidth: '100%',
-              margin: '1em 0'
-            }}
-            placeholder="Add a New Reason"
-            className="form-control"
-          />
-
-          <button className="btn btn-primary btn-block">
-            Add Reason
-          </button>
-        </form>
       </div>
+
+      <form onSubmit={e => {
+        e.preventDefault()
+
+        if (input.value === '') {
+          return
+        }
+
+        onAddReason(input.value.trim())
+        input.value = ''
+      }}>
+        <button
+          style={{
+            margin: '1em 0'
+          }}
+          className="btn btn-primary btn-block"
+        >
+          Add Reason
+        </button>
+
+        <textarea
+          ref={node => {
+            input = node
+          }}
+          style={{
+            maxWidth: '100%'
+          }}
+          placeholder="Add a New Reason"
+          className="form-control"
+        />
+      </form>
     </div>
   )
 }

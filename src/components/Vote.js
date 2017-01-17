@@ -9,6 +9,8 @@ import notify from '../notify'
 import Panel from './Panel'
 import Reasons from './Reasons'
 import { FacebookShareButton, TwitterShareButton } from './ShareButtons'
+import { breakWord, center } from '../globals'
+import ProgressBar from './ProgressBar'
 
 const Vote = ({
   params
@@ -20,31 +22,39 @@ const Vote = ({
   const totalVotes = vote.option1votes + vote.option2votes
 
   return (
-    <div>
+    <div style={breakWord}>
       <Helmet
-        title={`${vote.title} | ${vote.option1} or ${vote.option2}`}
+        title={`${vote.title} ${vote.option1} or ${vote.option2}`}
       />
 
-      <h2>{vote.title}</h2>
+      <h2>
+        {vote.title}
+      </h2>
+
+      <ProgressBar
+        portion1={vote.option1votes}
+        portion2={vote.option2votes}
+      />
 
       <InputBox
         label="Share"
         onClick={e => {
           e.target.select()
           document.execCommand('copy')
-          notify(`Vote copied to clipboard!`)
+          notify('Copied to clipboard!')
         }}
       >
         {location.href}
       </InputBox>
 
-      <div style={{
-        display: 'table',
-        margin: '0 auto'
-      }}>
-        <FacebookShareButton url={location.href}/>
+      <div style={center}>
+        <FacebookShareButton
+          url={location.href}
+        />
 
-        <TwitterShareButton url={location.href}/>
+        <TwitterShareButton
+          url={location.href}
+        />
       </div>
 
       <div className="row">
@@ -57,7 +67,7 @@ const Vote = ({
             onVoteClick={() => {
 
               store.dispatch({
-                type: 'VOTE_1',
+                type: 'VOTE1',
                 id: vote.id
               })
 
@@ -89,6 +99,14 @@ const Vote = ({
             title={vote.option2}
             votes={vote.option2votes}
             totalVotes={totalVotes}
+            onVoteClick={() => {
+
+              store.dispatch({
+                type: 'VOTE2',
+                id: vote.id
+              })
+
+            }}
           >
             <Reasons
               reasons={vote.reasons2}
