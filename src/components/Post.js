@@ -2,12 +2,12 @@
  * Created by timur on 11/21/16.
  */
 
-import React from 'react'
+import React, {Component} from 'react'
 import { Link } from 'react-router'
 import { apiUrl } from '../globals'
 
 
-export default class Post extends React.Component {
+class Post extends Component {
 
   componentWillMount() {
 
@@ -98,3 +98,5 @@ export default class Post extends React.Component {
     )
   }
 }
+
+export default Post

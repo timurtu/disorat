@@ -8,14 +8,15 @@ import App from './components/App'
 import Feed from './components/Feed'
 // import CreatePost from './CreatePost'
 import CreateVote from './components/CreateVote'
-import DetailedPost from './components/DetailedPost'
+// import DetailedPost from './components/DetailedPost'
+import Vote from './components/Vote'
 import PageNotFound from './components/PageNotFound'
 
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={Feed}/>
     <Route path="/create" component={CreateVote}/>
-    <Route path="/votes/:post" component={DetailedPost}/>
+    <Route path="/votes/:id" component={Vote}/>
     <Route path="*" component={PageNotFound}/>
   </Route>
 )
