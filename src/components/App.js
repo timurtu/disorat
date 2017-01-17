@@ -5,11 +5,32 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import Navbar from './Navbar'
+import { apiUrl } from '../globals'
+
+let prevState
 
 class App extends React.Component {
+
+  componentDidMount() {
+    setInterval(() => {
+      const { store } = this.context
+      const state = store.getState()
+
+      if (prevState !== state) {
+        fetch(`${apiUrl}/change?state=${JSON.stringify(state)}`, {
+          method: 'POST'
+        })
+          .then(() => {
+            prevState = state
+            console.log('updated db')
+          })
+      }
+    }, 1000)
+  }
+
   render() {
-    const {children} = this.props
-    return(
+    const { children } = this.props
+    return (
       <div>
         <Helmet
           defaultTitle="Disorat"
@@ -41,6 +62,9 @@ class App extends React.Component {
       </div>
     )
   }
+}
+App.contextTypes = {
+  store: React.PropTypes.object
 }
 
 export default App
