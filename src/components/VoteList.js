@@ -24,11 +24,16 @@ const Votes = (props, {
             style={breakWord}
             className="panel-heading"
           >
-            <div className="panel-title">
-              <Link to={`/votes/${vote.id}`}>
+            <Link
+              style={{
+                color: '#fff'
+              }}
+              to={`/votes/${vote.id}`}
+            >
+              <div className="panel-title">
                 {vote.title}
-              </Link>
-            </div>
+              </div>
+            </Link>
           </div>
 
           <div className="panel-body">
@@ -73,9 +78,16 @@ const Votes = (props, {
             </div>
           </div>
 
-          <div className="panel-footer">
-            {vote.option1votes + vote.option2votes} votes
-          </div>
+          <Link
+            style={{
+              color: '#000'
+            }}
+            to={`/votes/${vote.id}`}
+          >
+            <div className="panel-footer">
+              {vote.option1votes + vote.option2votes} votes
+            </div>
+          </Link>
         </div>
       )}
     </div>

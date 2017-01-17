@@ -70,7 +70,6 @@ const Vote = ({
                 type: 'VOTE1',
                 id: vote.id
               })
-
             }}
           >
             <Reasons
@@ -87,7 +86,6 @@ const Vote = ({
                   id: vote.id,
                   reason
                 })
-
               }}
             />
           </Panel>
@@ -105,11 +103,21 @@ const Vote = ({
                 type: 'VOTE2',
                 id: vote.id
               })
-
             }}
           >
             <Reasons
               reasons={vote.reasons2}
+              onAddReason={title => {
+                const reason = {
+                  reason: title
+                }
+
+                store.dispatch({
+                  type: 'ADD_REASON2',
+                  id: vote.id,
+                  reason
+                })
+              }}
             />
           </Panel>
         </div>

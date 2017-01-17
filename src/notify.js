@@ -2,25 +2,27 @@
  * Created by timur on 1/16/17.
  */
 
-const notify = message => {
-
+const notify = (message) => {
   if (!('Notification' in window)) {
-    return alert(message)
+    // This browser does not support desktop notification
+    alert(message)
+  }
+  // Let's check whether notification permissions have already been granted
+  else if (Notification.permission === 'granted') {
+    // If it's okay let's create a notification
+    const notification = new Notification(message)
+    return notification
   }
 
-  switch (Notification.permission) {
-    case 'granted':
-      return new Notification(message)
-
-    case 'denied':
-      return Notification.requestPermission(function (permission) {
-        if (permission === 'granted') {
-          return new Notification(message)
-        }
-      })
-
-    default:
-      return alert(message)
+  // Otherwise, we need to ask the user for permission
+  else if (Notification.permission !== 'denied') {
+    Notification.requestPermission(function (permission) {
+      // If the user accepts, let's create a notification
+      if (permission === 'granted') {
+        const notification = new Notification(message)
+        return notification
+      }
+    })
   }
 }
 

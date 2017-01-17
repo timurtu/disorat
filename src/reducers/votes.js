@@ -10,7 +10,7 @@ const addReason = (state, action, opt) => state.map(vote => {
 
     if (reason) {
 
-      const index = vote.reasons1.indexOf(reason)
+      const index = vote[`reasons${opt}`].indexOf(reason)
 
       const newVote = {
         ...vote
@@ -28,16 +28,20 @@ const addReason = (state, action, opt) => state.map(vote => {
       return newVote
 
     } else {
-      return {
-        ...vote,
-        reasons1: [
-          ...vote.reasons1,
-          {
-            reason: action.reason.reason,
-            count: 1
-          }
-        ]
+
+      const newVote = {
+        ...vote
       }
+
+      newVote[`reasons${opt}`] = [
+        ...vote[`reasons${opt}`],
+        {
+          reason: action.reason.reason,
+          count: 1
+        }
+      ]
+
+      return newVote
     }
   }
 
@@ -65,18 +69,21 @@ const votes = (state = [], action) => {
 
     case 'VOTE1':
       return state.map(vote => vote.id === action.id ? {
-        ...vote,
-        option1votes: vote.option1votes + 1
-      } : vote)
+          ...vote,
+          option1votes: vote.option1votes + 1
+        } : vote)
 
     case 'VOTE2':
       return state.map(vote => vote.id === action.id ? {
-        ...vote,
-        option2votes: vote.option2votes + 1
-      } : vote)
+          ...vote,
+          option2votes: vote.option2votes + 1
+        } : vote)
 
     case 'ADD_REASON1':
       return addReason(state, action, 1)
+
+    case 'ADD_REASON2':
+      return addReason(state, action, 2)
 
     default:
       return state

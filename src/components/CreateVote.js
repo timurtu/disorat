@@ -41,7 +41,7 @@ const CreateVote = (props, { store }) => {
                 option2,
               })
 
-              notify('Vote Created Successfully!')
+              notify(`Created new Vote ${title} successfully!`)
               browserHistory.push(`/votes/${id}`)
 
             } else {

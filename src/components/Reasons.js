@@ -23,14 +23,20 @@ const Reasons = ({
           .map((reason, i) =>
             <a
               key={i}
+
               href="#"
+
               className="list-group-item"
+
               onClick={e => {
                 e.preventDefault()
                 onAddReason(reason.reason)
               }}
             >
-              <span className="badge">{reason.count}</span>
+              <span className="badge">
+                {reason.count}
+              </span>
+
               {reason.reason}
             </a>
           )}
@@ -68,6 +74,9 @@ const Reasons = ({
       </form>
     </div>
   )
+}
+Reasons.propTypes = {
+  onAddReason: React.PropTypes.func.isRequired
 }
 
 export default Reasons
